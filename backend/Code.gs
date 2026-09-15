@@ -1,5 +1,5 @@
 // Set this to your actual email address where you want to receive admin notifications
-var ADMIN_EMAIL = "your-email@example.com";
+var ADMIN_EMAIL = "attarsahil9999@gmail.com";
 
 function doPost(e) {
   // Add CORS headers so your frontend can call this script
