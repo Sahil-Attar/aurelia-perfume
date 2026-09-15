@@ -134,8 +134,39 @@ function placeOrder(event) {
     // Clear cart and coupon
     clearCart();
     
-    // Redirect
-    window.location.href = "order-success.html";
+    // ------------------------------------------------------------------------
+    // EMAIL INTEGRATION (Google Apps Script)
+    // ------------------------------------------------------------------------
+    // Replace this URL with your actual Google Apps Script Web App URL
+    const SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL";
+    
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.innerHTML;
+    
+    // Only attempt to send if the URL has been updated
+    if (SCRIPT_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL") {
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Processing...';
+        submitBtn.disabled = true;
+        
+        fetch(SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify(orderData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Email status:", data);
+            window.location.href = "order-success.html";
+        })
+        .catch(error => {
+            console.error("Error sending email:", error);
+            // Still redirect to success page even if email fails, so user isn't stuck
+            window.location.href = "order-success.html";
+        });
+    } else {
+        // If no URL is set, just redirect immediately
+        console.warn("Google Apps Script URL not set. Skipping email notification.");
+        window.location.href = "order-success.html";
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
