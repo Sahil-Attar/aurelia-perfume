@@ -27,17 +27,69 @@ function updateCartCount() {
 // Add to Cart from product cards
 function addToCart(productId) {
     let cart = getCart();
-    const existingItem = cart.find(item => item.id === productId);
+    
+    // Look for a dropdown related to this product (e.g. on index or shop page)
+    const selectEl = document.getElementById(`var-${productId}`);
+    let variationId = "50ml"; // default fallback
+    
+    if (selectEl) {
+        variationId = selectEl.value;
+    }
+    
+    // Create composite ID to store in cart (e.g., aurelia-noir_50ml)
+    const cartItemId = `${productId}_${variationId}`;
+    
+    const existingItem = cart.find(item => item.cartItemId === cartItemId);
     
     if (existingItem) {
         existingItem.quantity += 1;
     } else {
-        cart.push({ id: productId, quantity: 1 });
+        cart.push({ 
+            cartItemId: cartItemId, 
+            id: productId, 
+            variationId: variationId, 
+            quantity: 1 
+        });
     }
     
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
     updateCartCount();
     showToast("Added to cart");
+}
+
+// Add to Cart with specific quantity (used on single product page)
+function addToCartWithQty(productId, variationId, qty) {
+    let cart = getCart();
+    const cartItemId = `${productId}_${variationId}`;
+    
+    const existingItem = cart.find(item => item.cartItemId === cartItemId);
+    
+    if (existingItem) {
+        existingItem.quantity += qty;
+    } else {
+        cart.push({ 
+            cartItemId: cartItemId, 
+            id: productId, 
+            variationId: variationId, 
+            quantity: qty 
+        });
+    }
+    
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    updateCartCount();
+    showToast(`Added ${qty} item(s) to cart`);
+}
+
+// Update price display when variation changes
+function updatePriceDisplay(productId) {
+    const selectEl = document.getElementById(`var-${productId}`);
+    const priceEl = document.getElementById(`price-${productId}`);
+    if (selectEl && priceEl) {
+        const variation = getProductVariation(productId, selectEl.value);
+        if (variation) {
+            priceEl.textContent = formatCurrency(variation.price);
+        }
+    }
 }
 
 // Show toast notification

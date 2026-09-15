@@ -16,13 +16,15 @@ function renderCheckoutSummary() {
     
     cart.forEach(item => {
         const product = getProductById(item.id);
-        if (product) {
-            const lineTotal = product.price * item.quantity;
+        const variation = getProductVariation(item.id, item.variationId || "50ml"); // Fallback for old carts
+        
+        if (product && variation) {
+            const lineTotal = variation.price * item.quantity;
             subtotal += lineTotal;
             
             html += `
                 <div class="d-flex justify-content-between mb-2 small">
-                    <span>${product.name} × ${item.quantity}</span>
+                    <span>${product.name} (${variation.name}) × ${item.quantity}</span>
                     <span>${formatCurrency(lineTotal)}</span>
                 </div>
             `;
@@ -150,11 +152,14 @@ function placeOrder(event) {
         
         fetch(SCRIPT_URL, {
             method: "POST",
+            headers: {
+                "Content-Type": "text/plain;charset=utf-8",
+            },
             body: JSON.stringify(orderData)
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Email status:", data);
+        .then(response => {
+            // Google Apps Script might return a CORS redirect, so we just assume success if fetch resolves
+            console.log("Email request sent.");
             window.location.href = "order-success.html";
         })
         .catch(error => {

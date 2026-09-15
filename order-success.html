@@ -103,11 +103,12 @@
       
       orderData.items.forEach(item => {
         const product = getProductById(item.id);
-        if (product) {
+        const variation = getProductVariation(item.id, item.variationId || "50ml");
+        if (product && variation) {
           itemsHtml += `
             <div class="d-flex justify-content-between small mb-1">
-              <span>${product.name} × ${item.quantity}</span>
-              <span class="text-muted">${formatCurrency(product.price * item.quantity)}</span>
+              <span>${product.name} (${variation.name}) × ${item.quantity}</span>
+              <span class="text-muted">${formatCurrency(variation.price * item.quantity)}</span>
             </div>
           `;
         }

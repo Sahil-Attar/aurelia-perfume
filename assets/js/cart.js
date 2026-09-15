@@ -31,9 +31,14 @@ function renderCart() {
     
     cart.forEach((item, index) => {
         const product = getProductById(item.id);
-        if (product) {
-            const lineTotal = product.price * item.quantity;
+        const variation = getProductVariation(item.id, item.variationId || "50ml"); // Fallback for old carts
+        
+        if (product && variation) {
+            const lineTotal = variation.price * item.quantity;
             subtotal += lineTotal;
+            
+            // Handle fallback if item.cartItemId is missing (legacy cart support)
+            const cartId = item.cartItemId || item.id;
             
             html += `
                 <div class="d-flex align-items-center mb-4 pb-4 border-bottom position-relative">
@@ -41,18 +46,18 @@ function renderCart() {
                         <div class="mini-bottle" data-label="${product.label}"></div>
                     </div>
                     <div class="flex-grow-1">
-                        <h5 class="mb-1">${product.name}</h5>
-                        <p class="text-muted mb-2">${formatCurrency(product.price)}</p>
+                        <h5 class="mb-1">${product.name} <span class="text-muted fs-6">(${variation.name})</span></h5>
+                        <p class="text-muted mb-2">${formatCurrency(variation.price)}</p>
                         
                         <div class="d-flex align-items-center">
-                            <button class="qty-btn" onclick="updateQuantity('${item.id}', -1)">-</button>
+                            <button class="qty-btn" onclick="updateQuantity('${cartId}', -1)">-</button>
                             <input type="text" class="qty-input" value="${item.quantity}" readonly>
-                            <button class="qty-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
+                            <button class="qty-btn" onclick="updateQuantity('${cartId}', 1)">+</button>
                         </div>
                     </div>
                     <div class="text-end">
                         <div class="fw-bold mb-3">${formatCurrency(lineTotal)}</div>
-                        <button class="btn btn-sm btn-link text-danger text-decoration-none p-0" onclick="removeFromCart('${item.id}')">Remove</button>
+                        <button class="btn btn-sm btn-link text-danger text-decoration-none p-0" onclick="removeFromCart('${cartId}')">Remove</button>
                     </div>
                 </div>
             `;
@@ -64,9 +69,9 @@ function renderCart() {
 }
 
 // Update quantity
-function updateQuantity(productId, change) {
+function updateQuantity(cartItemId, change) {
     let cart = getCart();
-    const itemIndex = cart.findIndex(item => item.id === productId);
+    const itemIndex = cart.findIndex(item => (item.cartItemId || item.id) === cartItemId);
     
     if (itemIndex > -1) {
         cart[itemIndex].quantity += change;
@@ -82,9 +87,9 @@ function updateQuantity(productId, change) {
 }
 
 // Remove from cart
-function removeFromCart(productId) {
+function removeFromCart(cartItemId) {
     let cart = getCart();
-    cart = cart.filter(item => item.id !== productId);
+    cart = cart.filter(item => (item.cartItemId || item.id) !== cartItemId);
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
     updateCartCount();
     renderCart();

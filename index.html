@@ -61,13 +61,23 @@
       <div class="row g-4">
         <div class="col-md-6 col-lg-3">
           <article class="product-card">
-            <div class="product-visual"><div class="mini-bottle" data-label="NOIR"></div></div>
-            <div class="p-4">
+            <a href="product.html?id=aurelia-noir" class="text-decoration-none">
+              <div class="product-visual"><div class="mini-bottle" data-label="NOIR"></div></div>
+            </a>
+            <div class="p-4 flex-grow-1 d-flex flex-column">
               <div class="small text-uppercase text-secondary">Woody</div>
-              <h3 class="h5 mt-2">Aurelia Noir</h3>
+              <a href="product.html?id=aurelia-noir" class="text-decoration-none text-dark">
+                <h3 class="h5 mt-2">Aurelia Noir</h3>
+              </a>
               <p class="muted small">Warm woods, amber and a soft musk finish.</p>
+              <div class="mb-3 mt-2">
+                <select id="var-aurelia-noir" class="form-select form-select-sm" onchange="updatePriceDisplay('aurelia-noir')">
+                  <option value="50ml">50ml</option>
+                  <option value="100ml">100ml</option>
+                </select>
+              </div>
               <div class="d-flex justify-content-between align-items-center">
-                <strong>₹799</strong>
+                <strong id="price-aurelia-noir">₹799.00</strong>
                 <button class="btn btn-sm btn-dark rounded-pill px-3" onclick="addToCart('aurelia-noir')">Add to Cart</button>
               </div>
             </div>
@@ -76,13 +86,23 @@
 
         <div class="col-md-6 col-lg-3">
           <article class="product-card">
-            <div class="product-visual"><div class="mini-bottle" data-label="MUSK"></div></div>
-            <div class="p-4">
+            <a href="product.html?id=aurelia-musk" class="text-decoration-none">
+              <div class="product-visual"><div class="mini-bottle" data-label="MUSK"></div></div>
+            </a>
+            <div class="p-4 flex-grow-1 d-flex flex-column">
               <div class="small text-uppercase text-secondary">Musk</div>
-              <h3 class="h5 mt-2">Aurelia Musk</h3>
+              <a href="product.html?id=aurelia-musk" class="text-decoration-none text-dark">
+                <h3 class="h5 mt-2">Aurelia Musk</h3>
+              </a>
               <p class="muted small">Clean, soft musk with a subtle floral sweetness.</p>
+              <div class="mb-3 mt-2">
+                <select id="var-aurelia-musk" class="form-select form-select-sm" onchange="updatePriceDisplay('aurelia-musk')">
+                  <option value="50ml">50ml</option>
+                  <option value="100ml">100ml</option>
+                </select>
+              </div>
               <div class="d-flex justify-content-between align-items-center">
-                <strong>₹699</strong>
+                <strong id="price-aurelia-musk">₹699.00</strong>
                 <button class="btn btn-sm btn-dark rounded-pill px-3" onclick="addToCart('aurelia-musk')">Add to Cart</button>
               </div>
             </div>
@@ -91,13 +111,23 @@
 
         <div class="col-md-6 col-lg-3">
           <article class="product-card">
-            <div class="product-visual"><div class="mini-bottle" data-label="OUD"></div></div>
-            <div class="p-4">
+            <a href="product.html?id=aurelia-oud" class="text-decoration-none">
+              <div class="product-visual"><div class="mini-bottle" data-label="OUD"></div></div>
+            </a>
+            <div class="p-4 flex-grow-1 d-flex flex-column">
               <div class="small text-uppercase text-secondary">Oud</div>
-              <h3 class="h5 mt-2">Aurelia Oud</h3>
+              <a href="product.html?id=aurelia-oud" class="text-decoration-none text-dark">
+                <h3 class="h5 mt-2">Aurelia Oud</h3>
+              </a>
               <p class="muted small">Rich oud, spice and resinous notes for evenings.</p>
+              <div class="mb-3 mt-2">
+                <select id="var-aurelia-oud" class="form-select form-select-sm" onchange="updatePriceDisplay('aurelia-oud')">
+                  <option value="50ml">50ml</option>
+                  <option value="100ml">100ml</option>
+                </select>
+              </div>
               <div class="d-flex justify-content-between align-items-center">
-                <strong>₹999</strong>
+                <strong id="price-aurelia-oud">₹999.00</strong>
                 <button class="btn btn-sm btn-dark rounded-pill px-3" onclick="addToCart('aurelia-oud')">Add to Cart</button>
               </div>
             </div>
@@ -106,13 +136,23 @@
 
         <div class="col-md-6 col-lg-3">
           <article class="product-card">
-            <div class="product-visual"><div class="mini-bottle" data-label="CITRUS"></div></div>
-            <div class="p-4">
+            <a href="product.html?id=aurelia-citrus" class="text-decoration-none">
+              <div class="product-visual"><div class="mini-bottle" data-label="CITRUS"></div></div>
+            </a>
+            <div class="p-4 flex-grow-1 d-flex flex-column">
               <div class="small text-uppercase text-secondary">Fresh</div>
-              <h3 class="h5 mt-2">Aurelia Citrus</h3>
+              <a href="product.html?id=aurelia-citrus" class="text-decoration-none text-dark">
+                <h3 class="h5 mt-2">Aurelia Citrus</h3>
+              </a>
               <p class="muted small">Bright citrus, clean florals and a fresh dry-down.</p>
+              <div class="mb-3 mt-2">
+                <select id="var-aurelia-citrus" class="form-select form-select-sm" onchange="updatePriceDisplay('aurelia-citrus')">
+                  <option value="50ml">50ml</option>
+                  <option value="100ml">100ml</option>
+                </select>
+              </div>
               <div class="d-flex justify-content-between align-items-center">
-                <strong>₹649</strong>
+                <strong id="price-aurelia-citrus">₹649.00</strong>
                 <button class="btn btn-sm btn-dark rounded-pill px-3" onclick="addToCart('aurelia-citrus')">Add to Cart</button>
               </div>
             </div>

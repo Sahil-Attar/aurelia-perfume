@@ -51,7 +51,8 @@ function sendAdminEmail(order) {
   
   var itemsHtml = "";
   order.items.forEach(function(item) {
-    itemsHtml += "<li>" + item.id + " x " + item.quantity + "</li>";
+    var variationStr = item.variationId ? " (" + item.variationId + ")" : "";
+    itemsHtml += "<li>" + item.id + variationStr + " x " + item.quantity + "</li>";
   });
   
   var htmlBody = `
@@ -88,9 +89,10 @@ function sendCustomerEmail(order) {
   
   var itemsHtml = "";
   order.items.forEach(function(item) {
+    var variationStr = item.variationId ? " (" + item.variationId + ")" : "";
     itemsHtml += `
       <tr>
-        <td style="padding: 10px; border-bottom: 1px solid #eee;">${item.id}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #eee;">${item.id}${variationStr}</td>
         <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">${item.quantity}</td>
       </tr>
     `;
