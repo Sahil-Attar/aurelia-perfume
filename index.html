@@ -3,163 +3,364 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Aurelia — premium fragrances crafted for unforgettable moments." />
-  <title>Aurelia Fragrances</title>
-
-  <!-- Bootstrap CDN: perfect for this first GitHub Pages test -->
+  <meta name="description" content="Shop Aurelia — premium fragrances crafted for unforgettable moments." />
+  <title>Aurelia Fragrances | Premium Perfumes in India</title>
+  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
   <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* Inline specific tweaks for index layout if needed beyond style.css */
+  </style>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg sticky-top border-bottom">
-    <div class="container py-2">
-      <a class="navbar-brand brand" href="index.html">AURELIA</a>
-      <div class="d-flex align-items-center gap-3">
-        <a class="text-dark text-decoration-none d-none d-md-block" href="shop.html">Shop</a>
-        <a class="text-dark text-decoration-none position-relative" href="cart.html">
-          Cart
-          <span id="cart-count-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
-            0
-          </span>
+  <!-- Top Announcement Bar -->
+  <div class="top-bar">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div class="d-flex gap-3">
+        <span>📞 +91 98765 43210</span>
+        <span class="d-none d-md-inline">✉️ support@aurelia.in</span>
+      </div>
+      <div class="d-flex gap-3 align-items-center">
+        <span class="fw-medium">Free shipping over ₹1,999</span>
+        <a href="#" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
         </a>
-        <a class="btn btn-sm btn-dark rounded-pill px-3 ms-2" href="shop.html">Shop Fragrances</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container d-flex justify-content-between align-items-center">
+      
+      <!-- Logo -->
+      <a class="navbar-brand brand mb-0" href="index.html">AURELIA</a>
+      
+      <!-- Center Links -->
+      <div class="d-none d-lg-flex gap-4">
+        <a class="nav-link text-decoration-none" href="index.html">Home</a>
+        <a class="nav-link text-decoration-none" href="shop.html">Shop</a>
+        <a class="nav-link text-decoration-none" href="#reviews">Reviews</a>
+        <a class="nav-link text-decoration-none" href="#footer">Contact</a>
+      </div>
+
+      <!-- Right Actions -->
+      <div class="d-flex align-items-center gap-3">
+        <!-- Search -->
+        <div class="d-none d-md-flex align-items-center position-relative">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="position-absolute ms-3" style="color: var(--muted);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" class="search-input ps-5" placeholder="Search perfumes...">
+        </div>
+        
+        <!-- Cart -->
+        <a class="text-dark text-decoration-none position-relative ms-2" href="cart.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          <span id="cart-count-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color: var(--coral); font-size: 0.7rem; padding: 0.25em 0.5em;">0</span>
+        </a>
       </div>
     </div>
   </nav>
 
-  <header class="hero">
-    <div class="container">
-      <div class="row align-items-center g-5">
-        <div class="col-lg-6">
-          <div class="eyebrow mb-3">Modern luxury fragrances</div>
-          <h1 class="mb-4">A scent that stays with you.</h1>
-          <p class="hero-copy mb-4">
-            Discover four carefully selected fragrances designed for everyday confidence,
-            special evenings and unforgettable first impressions.
-          </p>
-          <a class="btn btn-gold" href="shop.html">Explore the collection</a>
+  <!-- Hero Section -->
+  <section class="container my-4">
+    <div class="hero-wrapper p-4 p-md-5">
+      <div class="row align-items-center hero">
+        <!-- Left Content -->
+        <div class="col-lg-5 ps-lg-5 mb-5 mb-lg-0 text-center text-lg-start">
+          <span class="eyebrow mb-3">NEW COLLECTION</span>
+          <h1 class="mb-4">The Essence of Elegance</h1>
+          <p class="hero-copy mb-5 mx-auto mx-lg-0">Discover our signature line of handcrafted perfumes. Blended with pure ingredients to create unforgettable impressions.</p>
+          
+          <a href="shop.html" class="btn-primary w-100 text-center fs-5 mb-5" style="max-width: 350px;">Shop Now</a>
+          
+          <div class="d-flex gap-4 justify-content-center justify-content-lg-start">
+            <div>
+              <div class="fs-4 fw-bold" style="color: var(--slate);">50K+</div>
+              <div class="small text-muted">Happy Customers</div>
+            </div>
+            <div style="border-left: 1px solid #e2e8f0;"></div>
+            <div>
+              <div class="fs-4 fw-bold" style="color: var(--slate);">4.9/5</div>
+              <div class="small text-muted">Average Rating</div>
+            </div>
+          </div>
         </div>
-        <div class="col-lg-6">
+        
+        <!-- Right Visual -->
+        <div class="col-lg-6 offset-lg-1">
           <div class="bottle-stage">
-            <div class="bottle"></div>
+            <div class="floating-badge" style="top: 20px; right: 20px;">🎉 Up to 50% OFF</div>
+            <div class="floating-badge" style="bottom: 40px; left: -20px; animation-delay: 2s;">📦 Free Shipping</div>
+            
+            <div class="bottle" data-label="SIGNATURE"></div>
           </div>
         </div>
       </div>
     </div>
-  </header>
+  </section>
 
-  <section id="products" class="py-5">
-    <div class="container py-5">
-      <div class="text-center mb-5">
-        <div class="eyebrow mb-2">The collection</div>
-        <h2 class="section-title display-5">Four signatures. One identity.</h2>
-        <p class="muted mt-3">A simple product section for your first GitHub Pages test.</p>
+  <!-- Features Grid -->
+  <section class="container py-5 my-3">
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3">
+        <div class="feature-card">
+          <div class="feature-icon">🚚</div>
+          <h4 class="h5 fw-bold mb-2">Free Shipping</h4>
+          <p class="small text-muted mb-0">On all orders above ₹1,999</p>
+        </div>
       </div>
-
-      <div class="row g-4">
-        <div class="col-md-6 col-lg-3">
-          <article class="product-card">
-            <a href="product.html?id=aurelia-noir" class="text-decoration-none">
-              <div class="product-visual"><div class="mini-bottle" data-label="NOIR"></div></div>
-            </a>
-            <div class="p-4 flex-grow-1 d-flex flex-column">
-              <div class="small text-uppercase text-secondary">Woody</div>
-              <a href="product.html?id=aurelia-noir" class="text-decoration-none text-dark">
-                <h3 class="h5 mt-2">Aurelia Noir</h3>
-              </a>
-              <p class="muted small">Warm woods, amber and a soft musk finish.</p>
-              <div class="d-flex justify-content-between align-items-center mt-auto pt-3">
-                <strong class="fs-5 text-dark fw-bold">From ₹799</strong>
-                <a href="product.html?id=aurelia-noir" class="btn btn-sm btn-dark rounded-pill px-4 py-2 fw-medium">Select Size</a>
-              </div>
-            </div>
-          </article>
+      <div class="col-md-6 col-lg-3">
+        <div class="feature-card">
+          <div class="feature-icon">🔄</div>
+          <h4 class="h5 fw-bold mb-2">Easy Returns</h4>
+          <p class="small text-muted mb-0">15 days hassle-free return</p>
         </div>
-
-        <div class="col-md-6 col-lg-3">
-          <article class="product-card">
-            <a href="product.html?id=aurelia-musk" class="text-decoration-none">
-              <div class="product-visual"><div class="mini-bottle" data-label="MUSK"></div></div>
-            </a>
-            <div class="p-4 flex-grow-1 d-flex flex-column">
-              <div class="small text-uppercase text-secondary">Musk</div>
-              <a href="product.html?id=aurelia-musk" class="text-decoration-none text-dark">
-                <h3 class="h5 mt-2">Aurelia Musk</h3>
-              </a>
-              <p class="muted small">Clean, soft musk with a subtle floral sweetness.</p>
-              <div class="d-flex justify-content-between align-items-center mt-auto pt-3">
-                <strong class="fs-5 text-dark fw-bold">From ₹699</strong>
-                <a href="product.html?id=aurelia-musk" class="btn btn-sm btn-dark rounded-pill px-4 py-2 fw-medium">Select Size</a>
-              </div>
-            </div>
-          </article>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h4 class="h5 fw-bold mb-2">Secure Payment</h4>
+          <p class="small text-muted mb-0">100% secure checkout</p>
         </div>
-
-        <div class="col-md-6 col-lg-3">
-          <article class="product-card">
-            <a href="product.html?id=aurelia-oud" class="text-decoration-none">
-              <div class="product-visual"><div class="mini-bottle" data-label="OUD"></div></div>
-            </a>
-            <div class="p-4 flex-grow-1 d-flex flex-column">
-              <div class="small text-uppercase text-secondary">Oud</div>
-              <a href="product.html?id=aurelia-oud" class="text-decoration-none text-dark">
-                <h3 class="h5 mt-2">Aurelia Oud</h3>
-              </a>
-              <p class="muted small">Rich oud, spice and resinous notes for evenings.</p>
-              <div class="d-flex justify-content-between align-items-center mt-auto pt-3">
-                <strong class="fs-5 text-dark fw-bold">From ₹999</strong>
-                <a href="product.html?id=aurelia-oud" class="btn btn-sm btn-dark rounded-pill px-4 py-2 fw-medium">Select Size</a>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <div class="col-md-6 col-lg-3">
-          <article class="product-card">
-            <a href="product.html?id=aurelia-citrus" class="text-decoration-none">
-              <div class="product-visual"><div class="mini-bottle" data-label="CITRUS"></div></div>
-            </a>
-            <div class="p-4 flex-grow-1 d-flex flex-column">
-              <div class="small text-uppercase text-secondary">Fresh</div>
-              <a href="product.html?id=aurelia-citrus" class="text-decoration-none text-dark">
-                <h3 class="h5 mt-2">Aurelia Citrus</h3>
-              </a>
-              <p class="muted small">Bright citrus, clean florals and a fresh dry-down.</p>
-              <div class="d-flex justify-content-between align-items-center mt-auto pt-3">
-                <strong class="fs-5 text-dark fw-bold">From ₹649</strong>
-                <a href="product.html?id=aurelia-citrus" class="btn btn-sm btn-dark rounded-pill px-4 py-2 fw-medium">Select Size</a>
-              </div>
-            </div>
-          </article>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="feature-card">
+          <div class="feature-icon">🎧</div>
+          <h4 class="h5 fw-bold mb-2">24/7 Support</h4>
+          <p class="small text-muted mb-0">Dedicated support team</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="py-5 bg-white">
-    <div class="container py-5 text-center">
-      <div class="eyebrow mb-2">Why Aurelia</div>
-      <h2 class="section-title display-6">Simple. Elegant. Memorable.</h2>
-      <p class="muted mx-auto mt-3" style="max-width: 650px;">
-        This is intentionally a lightweight static website. Next, we can connect the
-        product data and orders to Google Sheets without adding WordPress or WooCommerce.
-      </p>
+  <!-- Bestsellers Section -->
+  <section class="container py-5 my-4">
+    <div class="text-center mb-5">
+      <span class="eyebrow mb-2">TRENDING NOW</span>
+      <h2 class="display-5 section-title">Bestsellers This Week</h2>
+    </div>
+
+    <div class="row g-4">
+      <!-- Product 1 -->
+      <div class="col-md-6 col-lg-3">
+        <article class="product-card">
+          <a href="product.html?id=aurelia-noir" class="text-decoration-none">
+            <div class="product-visual">
+              <span class="sale-badge">Hot</span>
+              <div class="mini-bottle" data-label="NOIR"></div>
+            </div>
+          </a>
+          <div class="p-4 flex-grow-1 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="small text-uppercase text-muted">Woody</div>
+              <div class="stars">★★★★★ <span class="text-muted small">(124)</span></div>
+            </div>
+            <a href="product.html?id=aurelia-noir" class="text-decoration-none text-dark">
+              <h3 class="h5 mb-3 fw-bold">Aurelia Noir</h3>
+            </a>
+            <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top" style="border-color: #f1f5f9 !important;">
+              <strong class="fs-5 text-dark fw-bold">From ₹799</strong>
+            </div>
+            <a href="product.html?id=aurelia-noir" class="btn-primary w-100 text-center mt-3 py-2">Select Size</a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="col-md-6 col-lg-3">
+        <article class="product-card">
+          <a href="product.html?id=aurelia-musk" class="text-decoration-none">
+            <div class="product-visual">
+              <div class="mini-bottle" data-label="MUSK"></div>
+            </div>
+          </a>
+          <div class="p-4 flex-grow-1 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="small text-uppercase text-muted">Musk</div>
+              <div class="stars">★★★★☆ <span class="text-muted small">(89)</span></div>
+            </div>
+            <a href="product.html?id=aurelia-musk" class="text-decoration-none text-dark">
+              <h3 class="h5 mb-3 fw-bold">Aurelia Musk</h3>
+            </a>
+            <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top" style="border-color: #f1f5f9 !important;">
+              <strong class="fs-5 text-dark fw-bold">From ₹699</strong>
+            </div>
+            <a href="product.html?id=aurelia-musk" class="btn-primary w-100 text-center mt-3 py-2">Select Size</a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="col-md-6 col-lg-3">
+        <article class="product-card">
+          <a href="product.html?id=aurelia-oud" class="text-decoration-none">
+            <div class="product-visual">
+              <span class="sale-badge" style="background: var(--slate);">Premium</span>
+              <div class="mini-bottle" data-label="OUD"></div>
+            </div>
+          </a>
+          <div class="p-4 flex-grow-1 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="small text-uppercase text-muted">Oud</div>
+              <div class="stars">★★★★★ <span class="text-muted small">(210)</span></div>
+            </div>
+            <a href="product.html?id=aurelia-oud" class="text-decoration-none text-dark">
+              <h3 class="h5 mb-3 fw-bold">Aurelia Oud</h3>
+            </a>
+            <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top" style="border-color: #f1f5f9 !important;">
+              <strong class="fs-5 text-dark fw-bold">From ₹999</strong>
+            </div>
+            <a href="product.html?id=aurelia-oud" class="btn-primary w-100 text-center mt-3 py-2">Select Size</a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Product 4 -->
+      <div class="col-md-6 col-lg-3">
+        <article class="product-card">
+          <a href="product.html?id=aurelia-citrus" class="text-decoration-none">
+            <div class="product-visual">
+              <span class="sale-badge">-20%</span>
+              <div class="mini-bottle" data-label="CITRUS"></div>
+            </div>
+          </a>
+          <div class="p-4 flex-grow-1 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="small text-uppercase text-muted">Fresh</div>
+              <div class="stars">★★★★☆ <span class="text-muted small">(67)</span></div>
+            </div>
+            <a href="product.html?id=aurelia-citrus" class="text-decoration-none text-dark">
+              <h3 class="h5 mb-3 fw-bold">Aurelia Citrus</h3>
+            </a>
+            <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top" style="border-color: #f1f5f9 !important;">
+              <strong class="fs-5 text-dark fw-bold">From ₹649</strong>
+            </div>
+            <a href="product.html?id=aurelia-citrus" class="btn-primary w-100 text-center mt-3 py-2">Select Size</a>
+          </div>
+        </article>
+      </div>
+    </div>
+    
+    <div class="text-center mt-5">
+      <a href="shop.html" class="btn-outline">View All Perfumes</a>
     </div>
   </section>
 
-  <footer class="footer py-4">
-    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
-      <span class="brand">AURELIA</span>
-      <div class="d-flex gap-4">
-        <a href="index.html">Home</a>
-        <a href="shop.html">Shop</a>
-        <a href="cart.html">Cart</a>
+  <!-- Promo Banner -->
+  <section class="container my-5">
+    <div class="promo-banner p-5 text-center">
+      <span class="eyebrow text-white border-white mb-3" style="background: rgba(255,255,255,0.1);">LIMITED TIME OFFER</span>
+      <h2 class="display-4 section-title mb-4">Summer Sale Up to 50% Off</h2>
+      <p class="fs-5 text-white-50 mb-5 max-w-lg mx-auto">Refresh your scent wardrobe with our exclusive summer collection. Use code SUMMER50 at checkout.</p>
+      <a href="shop.html" class="btn-primary fs-5 px-5">Shop Sale</a>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section id="reviews" class="container py-5 my-4">
+    <div class="text-center mb-5">
+      <span class="eyebrow mb-2">TESTIMONIALS</span>
+      <h2 class="display-5 section-title">What Our Customers Say</h2>
+    </div>
+    
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="review-card h-100">
+          <div class="stars mb-3">★★★★★</div>
+          <h5 class="fw-bold mb-3">"Absolutely breathtaking"</h5>
+          <p class="text-muted mb-4">Aurelia Noir is hands down the best perfume I've ever owned. The scent lasts all day and I constantly get compliments.</p>
+          <div class="d-flex align-items-center gap-3">
+            <div class="bg-light rounded-circle d-flex align-items-center justify-content-center fw-bold text-dark" style="width: 40px; height: 40px;">R</div>
+            <div>
+              <div class="fw-bold">Riya Sharma</div>
+              <div class="small text-muted">Verified Buyer</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <span class="text-white-50">© 2026 Aurelia Fragrances</span>
+      <div class="col-md-4">
+        <div class="review-card h-100">
+          <div class="stars mb-3">★★★★★</div>
+          <h5 class="fw-bold mb-3">"Premium quality"</h5>
+          <p class="text-muted mb-4">The packaging, the bottle, the scent — everything screams luxury. The Oud variation is perfect for evening events.</p>
+          <div class="d-flex align-items-center gap-3">
+            <div class="bg-light rounded-circle d-flex align-items-center justify-content-center fw-bold text-dark" style="width: 40px; height: 40px;">A</div>
+            <div>
+              <div class="fw-bold">Arjun Patel</div>
+              <div class="small text-muted">Verified Buyer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="review-card h-100">
+          <div class="stars mb-3">★★★★☆</div>
+          <h5 class="fw-bold mb-3">"Fresh and long-lasting"</h5>
+          <p class="text-muted mb-4">Aurelia Citrus is my new daily driver. It's incredibly fresh without being overpowering. Shipping was very fast too.</p>
+          <div class="d-flex align-items-center gap-3">
+            <div class="bg-light rounded-circle d-flex align-items-center justify-content-center fw-bold text-dark" style="width: 40px; height: 40px;">M</div>
+            <div>
+              <div class="fw-bold">Meera Desai</div>
+              <div class="small text-muted">Verified Buyer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer" class="footer mt-5">
+    <div class="container">
+      <div class="row g-4 mb-5">
+        <div class="col-lg-4 pe-lg-5">
+          <div class="brand text-white fs-3 mb-4">AURELIA</div>
+          <p class="text-white-50 mb-4">Premium handcrafted fragrances designed to make unforgettable impressions. Made with love in India.</p>
+          <div class="d-flex gap-3">
+            <a href="#" class="text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+            <a href="#" class="text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+            <a href="#" class="text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-6">
+          <h5>Shop</h5>
+          <a href="shop.html">All Perfumes</a>
+          <a href="shop.html">Bestsellers</a>
+          <a href="shop.html">New Arrivals</a>
+          <a href="shop.html">Gift Sets</a>
+        </div>
+        <div class="col-lg-2 col-6">
+          <h5>About</h5>
+          <a href="#">Our Story</a>
+          <a href="#">Ingredients</a>
+          <a href="#">Sustainability</a>
+          <a href="#reviews">Reviews</a>
+        </div>
+        <div class="col-lg-4">
+          <h5>Stay in the loop</h5>
+          <p class="text-white-50 mb-3">Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</p>
+          <div class="d-flex">
+            <input type="email" class="form-control me-2 bg-transparent text-white border-secondary" placeholder="Enter your email">
+            <button class="btn btn-primary px-4">Subscribe</button>
+          </div>
+        </div>
+      </div>
+      <div class="border-top border-secondary pt-4 mt-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <span class="text-white-50 mb-3 mb-md-0">© 2026 Aurelia Fragrances. All rights reserved.</span>
+        <div class="d-flex gap-4">
+          <a href="#" class="small text-white-50">Privacy Policy</a>
+          <a href="#" class="small text-white-50">Terms of Service</a>
+        </div>
+      </div>
     </div>
   </footer>
+
+  <div id="toast-container" class="toast-container"></div>
 
   <script src="assets/js/products.js"></script>
   <script src="assets/js/main.js"></script>
