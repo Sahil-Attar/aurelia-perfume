@@ -24,27 +24,37 @@ document.addEventListener("DOMContentLoaded", () => {
             // e.g. bottle.classList.add(`bottle-${product.id}`);
         }
         
-        // Populate variations dropdown
-        const selectEl = document.getElementById('product-variation');
-        if (selectEl && product.variations) {
-            selectEl.innerHTML = '';
-            product.variations.forEach(variation => {
-                const option = document.createElement('option');
-                option.value = variation.id;
-                option.textContent = variation.name;
-                selectEl.appendChild(option);
-            });
+        // Populate variations pill buttons
+        const pillsContainer = document.getElementById('product-variation-pills');
+        let selectedVariationId = "50ml"; // default
+        
+        if (pillsContainer && product.variations) {
+            pillsContainer.innerHTML = '';
             
-            // Set initial price
-            document.getElementById('product-price').textContent = formatCurrency(product.variations[0].price);
-            
-            // Listen for changes
-            selectEl.addEventListener('change', (e) => {
-                const varId = e.target.value;
-                const variation = getProductVariation(product.id, varId);
-                if (variation) {
+            product.variations.forEach((variation, index) => {
+                const btn = document.createElement('button');
+                btn.className = `pill-btn ${index === 0 ? 'active' : ''}`;
+                btn.textContent = variation.name;
+                btn.dataset.id = variation.id;
+                
+                // Set initial active variation
+                if (index === 0) {
+                    selectedVariationId = variation.id;
                     document.getElementById('product-price').textContent = formatCurrency(variation.price);
                 }
+                
+                // Click handler for pills
+                btn.addEventListener('click', () => {
+                    // Remove active from all
+                    pillsContainer.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+                    // Add active to clicked
+                    btn.classList.add('active');
+                    
+                    selectedVariationId = variation.id;
+                    document.getElementById('product-price').textContent = formatCurrency(variation.price);
+                });
+                
+                pillsContainer.appendChild(btn);
             });
         }
         
@@ -69,12 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const btnAddCart = document.getElementById('btn-add-cart');
         btnAddCart.addEventListener('click', () => {
             const qty = parseInt(qtyInput.value);
-            const varId = selectEl ? selectEl.value : null;
-            
-            // Calling custom version of addToCart that accepts quantity, or modifying main.js
-            // Let's call a specific function or rely on main.js addToCart modified to read product-qty if id matches.
-            // But since this is a dedicated page, we can write direct cart logic or call a new function in main.js
-            addToCartWithQty(product.id, varId, qty);
+            addToCartWithQty(product.id, selectedVariationId, qty);
         });
         
     } else {

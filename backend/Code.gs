@@ -1,5 +1,7 @@
 // Set this to your actual email address where you want to receive admin notifications
 var ADMIN_EMAIL = "attarsahil9999@gmail.com";
+// Set this to your Google Spreadsheet ID (found in the URL of your Sheet)
+var SPREADSHEET_ID = "YOUR_SPREADSHEET_ID_HERE";
 
 function doPost(e) {
   // Add CORS headers so your frontend can call this script
@@ -14,10 +16,15 @@ function doPost(e) {
     // Parse the incoming JSON data from checkout.js
     var orderData = JSON.parse(e.postData.contents);
     
-    // 1. Send Admin Email
+    // 1. Save to Google Sheets
+    if (SPREADSHEET_ID !== "YOUR_SPREADSHEET_ID_HERE") {
+      saveToSheet(orderData);
+    }
+    
+    // 2. Send Admin Email
     sendAdminEmail(orderData);
     
-    // 2. Send Customer Email
+    // 3. Send Customer Email
     if (orderData.email && orderData.email.trim() !== "") {
       sendCustomerEmail(orderData);
     }
@@ -44,6 +51,44 @@ function doOptions(e) {
       "Access-Control-Allow-Methods": "POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type"
     });
+}
+
+function saveToSheet(order) {
+  try {
+    var sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getActiveSheet();
+    
+    // Format items as a readable string
+    var itemsString = "";
+    order.items.forEach(function(item) {
+      var variationStr = item.variationId ? " (" + item.variationId + ")" : "";
+      itemsString += item.id + variationStr + " x" + item.quantity + "\n";
+    });
+    
+    // Create the row data array matching the 15 columns
+    var rowData = [
+      order.orderId,
+      new Date(order.date).toLocaleString(),
+      order.customer,
+      order.email || "N/A",
+      order.phone,
+      order.address,
+      order.city,
+      order.state,
+      order.pincode,
+      itemsString.trim(),
+      order.subtotal,
+      order.discount,
+      order.shipping,
+      order.total,
+      order.paymentMethod
+    ];
+    
+    // Append the row to the sheet
+    sheet.appendRow(rowData);
+  } catch(e) {
+    console.error("Error saving to sheet: " + e.message);
+    // We swallow the error so it doesn't prevent emails from sending if the sheet fails
+  }
 }
 
 function sendAdminEmail(order) {
