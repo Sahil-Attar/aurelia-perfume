@@ -1,0 +1,284 @@
+:root {
+  --ink: #151515;
+  --cream: #f8f5ef;
+  --gold: #b8904a;
+  --muted: #6d6a64;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--ink);
+  background: var(--cream);
+}
+
+.navbar {
+  background: rgba(248,245,239,.94);
+  backdrop-filter: blur(10px);
+}
+
+.brand {
+  letter-spacing: .18em;
+  font-weight: 700;
+}
+
+.hero {
+  min-height: 82vh;
+  display: flex;
+  align-items: center;
+  background:
+    radial-gradient(circle at 80% 30%, rgba(184,144,74,.18), transparent 32%),
+    linear-gradient(135deg, #fbfaf7 0%, #eee8dc 100%);
+}
+
+.eyebrow {
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: .22em;
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.hero h1 {
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  line-height: .95;
+  font-weight: 800;
+}
+
+.hero-copy {
+  max-width: 560px;
+  color: var(--muted);
+  font-size: 1.08rem;
+}
+
+.btn-gold {
+  background: var(--ink);
+  color: #fff;
+  border: 0;
+  padding: 13px 24px;
+  border-radius: 999px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-gold:hover {
+  background: var(--gold);
+  color: #fff;
+}
+
+.bottle-stage {
+  min-height: 460px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.bottle {
+  width: 170px;
+  height: 260px;
+  border-radius: 28px 28px 38px 38px;
+  background: linear-gradient(90deg, #d8bd86, #f5e3b8 45%, #c79c55);
+  box-shadow: 25px 35px 60px rgba(0,0,0,.2);
+  position: relative;
+}
+
+.bottle::before {
+  content: "";
+  position: absolute;
+  width: 68px;
+  height: 48px;
+  left: 51px;
+  top: -45px;
+  background: #171717;
+  border-radius: 8px 8px 3px 3px;
+}
+
+.bottle::after {
+  content: "AURELIA";
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  top: 104px;
+  padding: 18px 5px;
+  background: rgba(255,255,255,.88);
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 3px;
+  font-weight: 700;
+}
+
+.section-title {
+  font-weight: 800;
+  letter-spacing: -.03em;
+}
+
+.product-card {
+  background: #fff;
+  border: 0;
+  border-radius: 22px;
+  overflow: hidden;
+  height: 100%;
+  box-shadow: 0 12px 35px rgba(0,0,0,.06);
+  transition: transform .2s ease, box-shadow .2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 45px rgba(0,0,0,.10);
+}
+
+.product-visual {
+  height: 270px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1ede5;
+}
+
+.mini-bottle {
+  width: 105px;
+  height: 170px;
+  border-radius: 18px 18px 25px 25px;
+  background: linear-gradient(90deg, #c8a15f, #f1dca8, #bd9148);
+  box-shadow: 15px 20px 35px rgba(0,0,0,.18);
+  position: relative;
+}
+
+.mini-bottle::before {
+  content: "";
+  position: absolute;
+  width: 44px;
+  height: 30px;
+  left: 30px;
+  top: -28px;
+  background: #171717;
+  border-radius: 5px 5px 2px 2px;
+}
+
+.mini-bottle::after {
+  content: attr(data-label);
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 70px;
+  padding: 10px 2px;
+  background: rgba(255,255,255,.9);
+  text-align: center;
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+}
+
+.footer {
+  background: #151515;
+  color: #fff;
+}
+
+.footer a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer a:hover {
+  color: #fff;
+}
+
+.muted { color: var(--muted); }
+
+/* Cart and Checkout specific styles */
+.cart-item-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #f1ede5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-item-image .mini-bottle {
+  transform: scale(0.4);
+  transform-origin: center;
+  box-shadow: none;
+}
+
+.qty-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.qty-btn:hover {
+  background: #f1ede5;
+}
+
+.qty-input {
+  width: 40px;
+  text-align: center;
+  border: none;
+  background: transparent;
+  font-weight: 600;
+}
+
+.summary-card, .checkout-card {
+  background: #fff;
+  border-radius: 22px;
+  padding: 24px;
+  box-shadow: 0 12px 35px rgba(0,0,0,.04);
+}
+
+.form-control, .form-select {
+  border-radius: 12px;
+  padding: 12px 16px;
+  border: 1px solid #e0e0e0;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 0.25rem rgba(184, 144, 74, 0.25);
+}
+
+/* Toast container for notifications */
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1055;
+}
+
+.custom-toast {
+  background: #fff;
+  color: var(--ink);
+  border-left: 4px solid var(--gold);
+  border-radius: 8px;
+  padding: 16px 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.custom-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 767px) {
+  .hero { min-height: auto; padding: 90px 0; }
+  .bottle-stage { min-height: 360px; }
+}
