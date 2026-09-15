@@ -7,7 +7,7 @@ function renderCheckoutSummary() {
     const cart = getCart();
     
     if (cart.length === 0) {
-        window.location.href = "cart.html";
+        window.location.href = "cart";
         return;
     }
     
@@ -160,17 +160,17 @@ function placeOrder(event) {
         .then(response => {
             // Google Apps Script might return a CORS redirect, so we just assume success if fetch resolves
             console.log("Email request sent.");
-            window.location.href = "order-success.html";
+            window.location.href = "order-success";
         })
         .catch(error => {
             console.error("Error sending email:", error);
             // Still redirect to success page even if email fails, so user isn't stuck
-            window.location.href = "order-success.html";
+            window.location.href = "order-success";
         });
     } else {
         // If no URL is set, just redirect immediately
         console.warn("Google Apps Script URL not set. Skipping email notification.");
-        window.location.href = "order-success.html";
+        window.location.href = "order-success";
     }
 }
 

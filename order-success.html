@@ -24,7 +24,7 @@
 <body class="bg-light d-flex flex-column min-vh-100">
   <nav class="navbar navbar-expand-lg sticky-top border-bottom bg-white">
     <div class="container py-2 text-center">
-      <a class="navbar-brand brand mx-auto" href="index.html">AURELIA</a>
+      <a class="navbar-brand brand mx-auto" href="/">AURELIA</a>
     </div>
   </nav>
 
@@ -68,7 +68,7 @@
               <br>This is a frontend test order. No emails have been sent.
             </p>
           <div class="mt-5 pt-3">
-            <a href="shop.html" class="btn btn-primary rounded-pill px-5 py-3">Continue Shopping</a>
+            <a href="shop" class="btn btn-primary rounded-pill px-5 py-3">Continue Shopping</a>
           </div>  
           </div>
         </div>
@@ -89,7 +89,7 @@
       const orderData = JSON.parse(localStorage.getItem("aurelia_latest_order"));
       
       if (!orderData) {
-        window.location.href = "index.html";
+        window.location.href = "/";
         return;
       }
       
