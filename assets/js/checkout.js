@@ -140,7 +140,7 @@ function placeOrder(event) {
     // EMAIL INTEGRATION (Google Apps Script)
     // ------------------------------------------------------------------------
     // Replace this URL with your actual Google Apps Script Web App URL
-    const SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwsT7yWwrh20W25pU3DZ5-wGbiyr200hFlYdAQ4xbVyXNjRntPCixvi6u5YkrU5N4Q/exec";
     
     const submitBtn = form.querySelector('button[type="submit"]');
     const originalBtnText = submitBtn.innerHTML;

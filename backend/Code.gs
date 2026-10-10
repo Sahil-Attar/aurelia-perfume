@@ -1,7 +1,84 @@
 // Set this to your actual email address where you want to receive admin notifications
 var ADMIN_EMAIL = "attarsahil9999@gmail.com";
 // Set this to your Google Spreadsheet ID (found in the URL of your Sheet)
-var SPREADSHEET_ID = "YOUR_SPREADSHEET_ID_HERE";
+var SPREADSHEET_ID = "1Ck5E2vmMjdgkThpQgMG68sRmwWglVtYaDF2BCJFgv2s";
+var PRODUCT_SPREADSHEET_ID = "1Ck5E2vmMjdgkThpQgMG68sRmwWglVtYaDF2BCJFgv2s"; // Sheet containing products
+
+function doGet(e) {
+  // Add CORS headers
+  var headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Content-Type": "application/json"
+  };
+
+  try {
+    if (PRODUCT_SPREADSHEET_ID === "YOUR_SPREADSHEET_ID_HERE") {
+      throw new Error("Spreadsheet ID not configured.");
+    }
+    var sheet = SpreadsheetApp.openById(PRODUCT_SPREADSHEET_ID).getSheetByName("Products");
+    if (!sheet) {
+      sheet = SpreadsheetApp.openById(PRODUCT_SPREADSHEET_ID).getActiveSheet(); // fallback
+    }
+    
+    var data = sheet.getDataRange().getValues();
+    var headersRow = data[0];
+    
+    var products = [];
+    for (var i = 1; i < data.length; i++) {
+      var row = data[i];
+      var rowData = {};
+      for (var j = 0; j < headersRow.length; j++) {
+        rowData[headersRow[j]] = row[j];
+      }
+      
+      // Check Is_Active
+      if (rowData["Is_Active"] == 1) {
+        // Construct variations based on the columns
+        var variations = [];
+        var sizes = [
+          { key: "Price_3ml", name: "3ml" },
+          { key: "Price_6ml", name: "6ml" },
+          { key: "Price_9ml", name: "9ml" },
+          { key: "Price_12ml", name: "12ml" },
+          { key: "Price_50ml", name: "50ml" }
+        ];
+        
+        sizes.forEach(function(size) {
+          if (rowData[size.key] && !isNaN(rowData[size.key])) {
+            variations.push({
+              id: size.name,
+              name: size.name,
+              price: parseFloat(rowData[size.key])
+            });
+          }
+        });
+
+        products.push({
+          id: rowData["ID"],
+          name: rowData["Name"],
+          category: rowData["Category"],
+          description: rowData["Description"],
+          label: rowData["Name"] ? rowData["Name"].toUpperCase() : "",
+          imageUrl: rowData["Image_URL"],
+          variations: variations
+        });
+      }
+    }
+    
+    return ContentService.createTextOutput(JSON.stringify({
+      "status": "success",
+      "data": products
+    })).setMimeType(ContentService.MimeType.JSON);
+    
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({
+      "status": "error",
+      "message": error.toString()
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+}
 
 function doPost(e) {
   // Add CORS headers so your frontend can call this script
@@ -48,7 +125,7 @@ function doOptions(e) {
     .setMimeType(ContentService.MimeType.JSON)
     .setHeaders({
       "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type"
     });
 }
