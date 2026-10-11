@@ -3,392 +3,436 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Shop Aurelia — premium fragrances crafted for unforgettable moments." />
-  <title>Aurelia Fragrances | Premium Perfumes in India</title>
+  <meta name="description" content="Scent Aura X — Premium Attar Collection. Pure Fragrance, Lasting Impression. Discover alcohol-free artisanal attars." />
+  <title>Scent Aura X | Pure Fragrance, Lasting Impression</title>
   
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/premium.css">
-  <style>
-    /* Inline specific tweaks for index layout if needed beyond style.css */
-  </style>
 </head>
 
 <body>
-  <!-- Top Announcement Bar -->
-  <div class="top-bar">
-    <div class="container d-flex justify-content-between align-items-center">
-      <div class="d-flex gap-3">
-        <span>📞 +91 98765 43210</span>
-        <span class="d-none d-md-inline">✉️ support@aurelia.in</span>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <!-- Logo -->
+      <a href="/" class="brand-wrapper">
+        <svg class="brand-logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 2L24.5 13.5L36 18L24.5 22.5L20 34L15.5 22.5L4 18L15.5 13.5L20 2Z" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M20 8C20 8 26 15 26 21C26 24.3137 23.3137 27 20 27C16.6863 27 14 24.3137 14 21C14 15 20 8 20 8Z" fill="#D4AF37" fill-opacity="0.3" stroke="#D4AF37" stroke-width="1.5"/>
+          <circle cx="20" cy="20" r="3" fill="#D4AF37"/>
+        </svg>
+        <div class="brand-text-block">
+          <span class="brand-title">SCENT AURA X</span>
+          <span class="brand-tagline">PURE FRAGRANCE, LASTING IMPRESSION</span>
+        </div>
+      </a>
+
+      <!-- Center Links -->
+      <ul class="nav-links">
+        <li><a href="/" class="active">Home</a></li>
+        <li><a href="shop">Shop</a></li>
+        <li><a href="#about-story">About</a></li>
+        <li><a href="#footer-contact">Contact</a></li>
+      </ul>
+
+      <!-- Right Actions -->
+      <div class="header-actions">
+        <!-- Search icon -->
+        <a href="shop" class="header-icon-btn" aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </a>
+
+        <!-- Cart with badge -->
+        <a href="cart" class="header-icon-btn position-relative" aria-label="Cart">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span id="cart-count-badge" class="cart-counter">0</span>
+        </a>
+
+        <!-- WhatsApp Pill -->
+        <a href="javascript:void(0)" onclick="openWhatsAppInquiry()" class="btn-whatsapp-pill">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.974.551 1.834.814 2.8.814 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.766-5.772-5.766zm6.819 5.767c-.001 3.766-3.054 6.819-6.819 6.819-1.157 0-2.29-.296-3.29-.861l-3.663.96 1.002-3.666c-.633-1.042-.969-2.247-.968-3.252.001-3.766 3.054-6.819 6.819-6.819 3.765 0 6.819 3.053 6.819 6.819z"/>
+          </svg>
+          <span>Order on WhatsApp</span>
+        </a>
       </div>
-      <div class="d-flex gap-3 align-items-center">
-        <span class="fw-medium">Free shipping over ₹1,999</span>
-        <a href="#" aria-label="Instagram">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="hero-grid">
+        <!-- Hero Text -->
+        <div class="hero-text-content">
+          <div class="hero-subtitle-eyebrow">PREMIUM ATTAR COLLECTION</div>
+          <h1 class="hero-title">Fragrance<br>That Tells<br>Your Story</h1>
+          <p class="hero-description">
+            Discover the purity of traditional attars — long lasting, alcohol free, and crafted for every moment.
+          </p>
+
+          <div class="hero-buttons">
+            <a href="shop" class="btn-hero-primary">
+              <span>Explore Collection</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            <a href="javascript:void(0)" onclick="openWhatsAppInquiry()" class="btn-hero-whatsapp">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#071E18">
+                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.974.551 1.834.814 2.8.814 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.766-5.772-5.766zm6.819 5.767c-.001 3.766-3.054 6.819-6.819 6.819-1.157 0-2.29-.296-3.29-.861l-3.663.96 1.002-3.666c-.633-1.042-.969-2.247-.968-3.252.001-3.766 3.054-6.819 6.819-6.819 3.765 0 6.819 3.053 6.819 6.819z"/>
+              </svg>
+              <span>Order on WhatsApp</span>
+            </a>
+          </div>
+
+          <!-- 4 Trust Badges Strip -->
+          <div class="hero-badges-row">
+            <div class="hero-badge-item">
+              <svg class="hero-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+              </svg>
+              <div class="hero-badge-text">
+                <strong>Alcohol Free</strong>
+                <span>Pure & Natural</span>
+              </div>
+            </div>
+
+            <div class="hero-badge-item">
+              <svg class="hero-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M6 3h12l4 6-10 13L2 9Z"/>
+                <path d="M11 3 8 9l4 13 4-13-3-6"/>
+                <path d="M2 9h20"/>
+              </svg>
+              <div class="hero-badge-text">
+                <strong>Long Lasting</strong>
+                <span>Premium Quality</span>
+              </div>
+            </div>
+
+            <div class="hero-badge-item">
+              <svg class="hero-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+              </svg>
+              <div class="hero-badge-text">
+                <strong>Wide Variety</strong>
+                <span>For Every Mood</span>
+              </div>
+            </div>
+
+            <div class="hero-badge-item">
+              <svg class="hero-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <polyline points="9 12 11 14 15 10"/>
+              </svg>
+              <div class="hero-badge-text">
+                <strong>Trusted by Many</strong>
+                <span>100% Authentic</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Visual Frame with Gold Arabic Arch and Real Attar Bottles -->
+        <div class="hero-visual-frame">
+          <img src="assets/images/hero-banner.jpg" alt="Scent Aura X Luxury Attar Collection">
+          <div class="hero-overlay-callout">
+            <span class="hero-script-tag">More Than a Fragrance<br>It's a Feeling</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section ("Find Your Perfect Scent") -->
+  <section class="categories-section">
+    <div class="hero-container">
+      <div class="section-top-link-row">
+        <div>
+          <span class="section-label-gold">SHOP BY CATEGORY</span>
+          <h2 class="section-main-title">Find Your Perfect Scent</h2>
+        </div>
+        <a href="shop" class="view-all-link">
+          <span>View All Products</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
           </svg>
         </a>
       </div>
-    </div>
-  </div>
 
-  <!-- Main Header -->
-  <nav class="navbar navbar-expand-lg sticky-top">
-    <div class="container d-flex justify-content-between align-items-center">
-      
-      <!-- Logo -->
-      <a class="navbar-brand brand mb-0" href="/">AURELIA</a>
-      
-      <!-- Center Links -->
-      <div class="d-none d-lg-flex gap-4">
-        <a class="nav-link text-decoration-none" href="/">Home</a>
-        <a class="nav-link text-decoration-none" href="shop">Shop</a>
-        <a class="nav-link text-decoration-none" href="#reviews">Reviews</a>
-        <a class="nav-link text-decoration-none" href="#footer">Contact</a>
-      </div>
+      <div class="categories-grid">
+        <!-- Cat 1: Oud Attars -->
+        <a href="shop?cat=oud" class="category-card">
+          <div class="category-img-box">
+            <img src="assets/images/cat-oud.jpg" alt="Oud Attars">
+          </div>
+          <div class="category-info-bar">
+            <div>
+              <h3>Oud Attars</h3>
+              <p>Rich & Traditional</p>
+            </div>
+            <div class="category-circle-arrow">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </div>
+          </div>
+        </a>
 
-      <!-- Right Actions -->
-      <div class="d-flex align-items-center gap-3">
-        <!-- Search -->
-        <div class="d-none d-md-flex align-items-center position-relative">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="position-absolute ms-3" style="color: var(--muted);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          <input type="text" class="search-input ps-5" placeholder="Search perfumes...">
-        </div>
-        
-        <!-- Cart -->
-        <a class="text-dark text-decoration-none position-relative ms-2" href="cart">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-          <span id="cart-count-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color: var(--coral); font-size: 0.7rem; padding: 0.25em 0.5em;">0</span>
+        <!-- Cat 2: Floral Attars -->
+        <a href="shop?cat=floral" class="category-card">
+          <div class="category-img-box">
+            <img src="assets/images/cat-floral.jpg" alt="Floral Attars">
+          </div>
+          <div class="category-info-bar">
+            <div>
+              <h3>Floral Attars</h3>
+              <p>Soft & Refreshing</p>
+            </div>
+            <div class="category-circle-arrow">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Cat 3: Musk Attars -->
+        <a href="shop?cat=musk" class="category-card">
+          <div class="category-img-box">
+            <img src="assets/images/cat-musk.jpg" alt="Musk Attars">
+          </div>
+          <div class="category-info-bar">
+            <div>
+              <h3>Musk Attars</h3>
+              <p>Elegant & Long Lasting</p>
+            </div>
+            <div class="category-circle-arrow">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Cat 4: Citrus Attars -->
+        <a href="shop?cat=citrus" class="category-card">
+          <div class="category-img-box">
+            <img src="assets/images/cat-citrus.jpg" alt="Citrus Attars">
+          </div>
+          <div class="category-info-bar">
+            <div>
+              <h3>Citrus Attars</h3>
+              <p>Fresh & Energetic</p>
+            </div>
+            <div class="category-circle-arrow">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </div>
+          </div>
         </a>
       </div>
     </div>
-  </nav>
+  </section>
 
-  <!-- Hero Section -->
-  <section class="container my-4">
-    <div class="hero-wrapper p-4 p-md-5">
-      <div class="row align-items-center hero">
-        <!-- Left Content -->
-        <div class="col-lg-5 ps-lg-5 mb-5 mb-lg-0 text-center text-lg-start">
-          <span class="eyebrow mb-3">NEW COLLECTION</span>
-          <h1 class="mb-4">The Essence of Elegance</h1>
-          <p class="hero-copy mb-5 mx-auto mx-lg-0">Discover our signature line of handcrafted perfumes. Blended with pure ingredients to create unforgettable impressions.</p>
-          
-          <a href="shop" class="btn-primary w-100 text-center fs-5 mb-5" style="max-width: 350px;">Shop Now</a>
-          
-          <div class="d-flex gap-4 justify-content-center justify-content-lg-start">
-            <div>
-              <div class="fs-4 fw-bold" style="color: var(--slate);">50K+</div>
-              <div class="small text-muted">Happy Customers</div>
-            </div>
-            <div style="border-left: 1px solid #e2e8f0;"></div>
-            <div>
-              <div class="fs-4 fw-bold" style="color: var(--slate);">4.9/5</div>
-              <div class="small text-muted">Average Rating</div>
-            </div>
-          </div>
+  <!-- Bestsellers Section ("Our Most Loved Attars") -->
+  <section class="bestsellers-section">
+    <div class="hero-container">
+      <div class="section-center-header">
+        <span class="section-label-gold">BEST SELLERS</span>
+        <h2 class="section-main-title">Our Most Loved Attars</h2>
+        <div class="ornament-divider">
+          <span></span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z"/>
+          </svg>
+          <span></span>
         </div>
-        
-        <!-- Right Visual -->
-        <div class="col-lg-6 offset-lg-1">
-          <div class="bottle-stage">
-            <div class="floating-badge" style="top: 20px; right: 20px;">🎉 Up to 50% OFF</div>
-            <div class="floating-badge" style="bottom: 40px; left: -20px; animation-delay: 2s;">📦 Free Shipping</div>
-            
-            <div class="bottle" data-label="SIGNATURE"></div>
-          </div>
-        </div>
+      </div>
+
+      <div class="d-flex justify-content-end mb-3">
+        <a href="shop" class="view-all-link">
+          <span>View All</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Container dynamic or fallback filled -->
+      <div class="products-grid-row" id="index-products-container">
+        <!-- Products populated by JS below -->
       </div>
     </div>
   </section>
 
-  <!-- Features Grid -->
-  <section class="container py-5 my-3">
-    <div class="row g-4">
-      <div class="col-md-6 col-lg-3">
-        <div class="d-flex align-items-center p-3 border rounded-4 h-100" style="background: white; border-color: rgba(0,0,0,0.08) !important;">
-          <div class="rounded-4 d-flex align-items-center justify-content-center me-3 flex-shrink-0" style="width: 56px; height: 56px; background: #FEF2F2; color: #EF4444;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-          </div>
-          <div>
-            <h4 class="h6 fw-bold mb-1 text-dark" style="font-size: 0.95rem;">Free Shipping</h4>
-            <p class="small text-muted mb-0 lh-sm" style="font-size: 0.8rem;">Free express delivery on all orders over ₹1,999.</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-md-6 col-lg-3">
-        <div class="d-flex align-items-center p-3 border rounded-4 h-100" style="background: white; border-color: rgba(0,0,0,0.08) !important;">
-          <div class="rounded-4 d-flex align-items-center justify-content-center me-3 flex-shrink-0" style="width: 56px; height: 56px; background: #ECFDF5; color: #10B981;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
-          </div>
-          <div>
-            <h4 class="h6 fw-bold mb-1 text-dark" style="font-size: 0.95rem;">Secure Payments</h4>
-            <p class="small text-muted mb-0 lh-sm" style="font-size: 0.8rem;">256-bit encrypted checkout you can trust.</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-md-6 col-lg-3">
-        <div class="d-flex align-items-center p-3 border rounded-4 h-100" style="background: white; border-color: rgba(0,0,0,0.08) !important;">
-          <div class="rounded-4 d-flex align-items-center justify-content-center me-3 flex-shrink-0" style="width: 56px; height: 56px; background: #EFF6FF; color: #3B82F6;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg>
-          </div>
-          <div>
-            <h4 class="h6 fw-bold mb-1 text-dark" style="font-size: 0.95rem;">Easy Returns</h4>
-            <p class="small text-muted mb-0 lh-sm" style="font-size: 0.8rem;">30-day hassle-free returns, money back guaranteed.</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-md-6 col-lg-3">
-        <div class="d-flex align-items-center p-3 border rounded-4 h-100" style="background: white; border-color: rgba(0,0,0,0.08) !important;">
-          <div class="rounded-4 d-flex align-items-center justify-content-center me-3 flex-shrink-0" style="width: 56px; height: 56px; background: #F5F3FF; color: #8B5CF6;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
-          </div>
-          <div>
-            <h4 class="h6 fw-bold mb-1 text-dark" style="font-size: 0.95rem;">24/7 Support</h4>
-            <p class="small text-muted mb-0 lh-sm" style="font-size: 0.8rem;">Real humans, ready to help any time of day.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Our Story Section ("The Essence of Scent Aura X") -->
+  <section id="about-story" class="container my-5">
+    <div class="story-banner-section">
+      <div class="story-grid">
+        <!-- Content Side -->
+        <div class="story-content-side">
+          <span class="story-eyebrow">OUR STORY</span>
+          <h2 class="story-heading">The Essence of Scent Aura X</h2>
+          <p class="story-text">
+            At Scent Aura X, we bring you premium quality attars inspired by tradition and crafted for modern lifestyles. Our collection is carefully chosen to give you long lasting, alcohol free fragrances that make every moment special.
+          </p>
 
-  <!-- Bestsellers Section -->
-  <section class="container py-5 my-4">
-    <div class="text-center mb-5">
-      <span class="eyebrow mb-2">TRENDING NOW</span>
-      <h2 class="display-5 section-title">Bestsellers This Week</h2>
-    </div>
+          <div class="story-pillars-grid">
+            <div class="story-pillar">
+              <svg class="story-pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M6 3h12l4 6-10 13L2 9Z"/>
+                <path d="M11 3 8 9l4 13 4-13-3-6"/>
+              </svg>
+              <span>Premium Quality</span>
+            </div>
 
-    <div class="row g-4" id="index-products-container">
-        <div class="col-12 text-center py-5">
-            <div class="spinner-border text-dark" role="status">
-                <span class="visually-hidden">Loading...</span>
+            <div class="story-pillar">
+              <svg class="story-pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+              </svg>
+              <span>100% Natural Ingredients</span>
             </div>
-            <p class="mt-3 text-muted">Loading premium collection...</p>
-        </div>
-    </div>
-    
-    <div class="text-center mt-5">
-      <a href="shop" class="btn-outline">View All Perfumes</a>
-    </div>
-  </section>
 
-  <!-- Promo Banner -->
-  <section class="container my-5">
-    <div class="promo-banner p-5 text-center">
-      <span class="eyebrow text-white border-white mb-3" style="background: rgba(255,255,255,0.1);">LIMITED TIME OFFER</span>
-      <h2 class="display-4 section-title mb-4">Summer Sale Up to 50% Off</h2>
-      <p class="fs-5 text-white-50 mb-5 max-w-lg mx-auto">Refresh your scent wardrobe with our exclusive summer collection. Use code SUMMER50 at checkout.</p>
-      <a href="shop" class="btn-primary fs-5 px-5">Shop Sale</a>
-    </div>
-  </section>
-
-  <!-- Reviews -->
-  <section id="reviews" class="container py-5 my-4">
-    <div class="text-center mb-5">
-      <span class="eyebrow d-inline-flex align-items-center justify-content-center mb-3 text-uppercase fw-bold" style="letter-spacing: 2px;">
-        <span style="width: 25px; height: 1.5px; background: var(--coral); margin-right: 12px;"></span>
-        TESTIMONIALS
-      </span>
-      <h2 class="display-5 fw-bold text-dark">Loved by thousands of <span class="fst-italic fw-normal font-serif" style="font-family: 'Playfair Display', serif;">happy</span> customers</h2>
-      <p class="text-muted fs-5 mt-3">Don't just take our word for it — here's what real shoppers say about their Aurelia experience.</p>
-    </div>
-    
-    <div class="row g-4">
-      <!-- Col 1: Summary Card -->
-      <div class="col-lg-4">
-        <div class="review-summary-card h-100 p-4 p-md-5 d-flex flex-column" style="background: var(--cream); border-radius: 32px;">
-          <div class="d-flex align-items-baseline mb-2">
-            <span class="display-3 fw-bold text-dark" style="letter-spacing: -2px;">4.9</span>
-            <span class="fs-4 text-muted fw-bold">/5</span>
-          </div>
-          <div class="stars fs-5 mb-2" style="color: #FBBF24;">★★★★★</div>
-          <p class="small text-muted mb-4">Based on <strong>12,480</strong> verified reviews</p>
-          
-          <div class="rating-bars mb-4 flex-grow-1 mt-3">
-            <!-- Bars -->
-            <div class="d-flex align-items-center mb-2">
-              <span class="small fw-bold me-2" style="width: 20px; color: var(--slate);">5★</span>
-              <div class="progress flex-grow-1 mx-2 overflow-visible" style="height: 6px; background: #e2e8f0; border-radius: 10px;">
-                <div class="progress-bar rounded-pill" style="width: 86%; background-color: #FBBF24;"></div>
-              </div>
-              <span class="small text-muted" style="width: 35px; text-align: right;">86%</span>
-            </div>
-            <div class="d-flex align-items-center mb-2">
-              <span class="small fw-bold me-2" style="width: 20px; color: var(--slate);">4★</span>
-              <div class="progress flex-grow-1 mx-2 overflow-visible" style="height: 6px; background: #e2e8f0; border-radius: 10px;">
-                <div class="progress-bar rounded-pill" style="width: 10%; background-color: #FBBF24;"></div>
-              </div>
-              <span class="small text-muted" style="width: 35px; text-align: right;">10%</span>
-            </div>
-            <div class="d-flex align-items-center mb-2">
-              <span class="small fw-bold me-2" style="width: 20px; color: var(--slate);">3★</span>
-              <div class="progress flex-grow-1 mx-2 overflow-visible" style="height: 6px; background: #e2e8f0; border-radius: 10px;">
-                <div class="progress-bar rounded-pill" style="width: 3%; background-color: #FBBF24;"></div>
-              </div>
-              <span class="small text-muted" style="width: 35px; text-align: right;">3%</span>
-            </div>
-            <div class="d-flex align-items-center mb-2">
-              <span class="small fw-bold me-2" style="width: 20px; color: var(--slate);">2★</span>
-              <div class="progress flex-grow-1 mx-2 overflow-visible" style="height: 6px; background: #e2e8f0; border-radius: 10px;">
-                <div class="progress-bar rounded-pill" style="width: 1%; background-color: #FBBF24;"></div>
-              </div>
-              <span class="small text-muted" style="width: 35px; text-align: right;">1%</span>
-            </div>
-            <div class="d-flex align-items-center">
-              <span class="small fw-bold me-2" style="width: 20px; color: var(--slate);">1★</span>
-              <div class="progress flex-grow-1 mx-2 overflow-visible" style="height: 6px; background: #e2e8f0; border-radius: 10px;">
-                <div class="progress-bar rounded-pill" style="width: 0%; background-color: #FBBF24;"></div>
-              </div>
-              <span class="small text-muted" style="width: 35px; text-align: right;">0%</span>
-            </div>
-          </div>
-          
-          <div class="d-flex align-items-center border-top border-bottom py-4 mb-4" style="border-color: rgba(0,0,0,0.05) !important;">
-            <div class="bg-success text-white rounded p-1 me-3 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </div>
-            <div>
-              <div class="fw-bold text-dark">Rated Excellent</div>
-              <div class="small text-muted">On Trustpilot & Google Reviews</div>
-            </div>
-          </div>
-          
-          <button class="btn btn-dark w-100 rounded-pill py-3 fs-6 fw-bold" style="background: var(--slate); border: none;">Write a review</button>
-        </div>
-      </div>
-      
-      <!-- Col 2 & 3: Reviews Grid -->
-      <div class="col-lg-8">
-        <div class="row g-4 h-100">
-          <!-- Card 1 -->
-          <div class="col-md-6">
-            <div class="h-100 p-4 border rounded-4 d-flex flex-column position-relative" style="background: white; border-color: rgba(0,0,0,0.08) !important;">
-              <div class="position-absolute" style="top: 20px; right: 20px; color: rgba(242, 101, 34, 0.1); font-size: 4rem; line-height: 1; font-family: serif; font-style: italic;">"</div>
-              <div class="stars mb-3" style="color: #FBBF24;">★★★★★</div>
-              <p class="text-muted mb-4 flex-grow-1" style="font-size: 0.95rem; line-height: 1.6;">"The Aurelia Noir is unreal. I've bought perfumes twice the price that don't last half as long. Delivery took just two days. Aurelia is now my go-to store."</p>
-              <div class="mb-4">
-                <span class="badge rounded-pill bg-light text-dark border py-2 px-3 fw-normal text-muted" style="font-size: 0.8rem;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> Aurelia Noir</span>
-              </div>
-              <div class="d-flex align-items-center gap-3">
-                <img src="https://ui-avatars.com/api/?name=Sophie+Bennett&background=e2e8f0&color=0f172a&rounded=true" width="45" height="45" alt="Avatar">
-                <div>
-                  <div class="fw-bold text-dark" style="font-size: 0.9rem;">Sophie Bennett</div>
-                  <div class="small fw-medium" style="color: #10B981;"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="me-1"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Verified Buyer · London, UK</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Card 2 -->
-          <div class="col-md-6">
-            <div class="h-100 p-4 border rounded-4 d-flex flex-column position-relative" style="background: white; border-color: rgba(0,0,0,0.08) !important;">
-              <div class="position-absolute" style="top: 20px; right: 20px; color: rgba(242, 101, 34, 0.1); font-size: 4rem; line-height: 1; font-family: serif; font-style: italic;">"</div>
-              <div class="stars mb-3" style="color: #FBBF24;">★★★★★</div>
-              <p class="text-muted mb-4 flex-grow-1" style="font-size: 0.95rem; line-height: 1.6;">"Returned a size that didn't fit (gift box) and had a full refund within 48 hours, no questions asked. Customer service here actually feels human."</p>
-              <div class="mb-4">
-                <span class="badge rounded-pill bg-light text-dark border py-2 px-3 fw-normal text-muted" style="font-size: 0.8rem;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> Gift Set Collection</span>
-              </div>
-              <div class="d-flex align-items-center gap-3">
-                <img src="https://ui-avatars.com/api/?name=Marcus+Reid&background=e2e8f0&color=0f172a&rounded=true" width="45" height="45" alt="Avatar">
-                <div>
-                  <div class="fw-bold text-dark" style="font-size: 0.9rem;">Marcus Reid</div>
-                  <div class="small fw-medium" style="color: #10B981;"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="me-1"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Verified Buyer · Austin, TX</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Card 3 -->
-          <div class="col-md-6">
-            <div class="h-100 p-4 border rounded-4 d-flex flex-column position-relative" style="background: white; border-color: rgba(0,0,0,0.08) !important;">
-              <div class="position-absolute" style="top: 20px; right: 20px; color: rgba(242, 101, 34, 0.1); font-size: 4rem; line-height: 1; font-family: serif; font-style: italic;">"</div>
-              <div class="stars mb-3" style="color: #FBBF24;">★★★★★</div>
-              <p class="text-muted mb-4 flex-grow-1" style="font-size: 0.95rem; line-height: 1.6;">"Beautifully packaged, fast shipping, and the bottle quality is honestly better than in the photos. Already planning my next order."</p>
-              <div class="mb-4">
-                <span class="badge rounded-pill bg-light text-dark border py-2 px-3 fw-normal text-muted" style="font-size: 0.8rem;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> Aurelia Oud</span>
-              </div>
-              <div class="d-flex align-items-center gap-3">
-                <img src="https://ui-avatars.com/api/?name=Daniel+Okafor&background=e2e8f0&color=0f172a&rounded=true" width="45" height="45" alt="Avatar">
-                <div>
-                  <div class="fw-bold text-dark" style="font-size: 0.9rem;">Daniel Okafor</div>
-                  <div class="small fw-medium" style="color: #10B981;"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="me-1"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Verified Buyer · Toronto, CA</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Card 4 -->
-          <div class="col-md-6">
-            <div class="h-100 p-4 border rounded-4 d-flex flex-column position-relative" style="background: white; border-color: rgba(0,0,0,0.08) !important;">
-              <div class="position-absolute" style="top: 20px; right: 20px; color: rgba(242, 101, 34, 0.1); font-size: 4rem; line-height: 1; font-family: serif; font-style: italic;">"</div>
-              <div class="stars mb-3" style="color: #FBBF24;">★★★★☆</div>
-              <p class="text-muted mb-4 flex-grow-1" style="font-size: 0.95rem; line-height: 1.6;">"I love that everything is curated — no endless scrolling through junk. Every single product I've bought has been a keeper. Wish they shipped faster!"</p>
-              <div class="mb-4">
-                <span class="badge rounded-pill bg-light text-dark border py-2 px-3 fw-normal text-muted" style="font-size: 0.8rem;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> Aurelia Citrus</span>
-              </div>
-              <div class="d-flex align-items-center gap-3">
-                <img src="https://ui-avatars.com/api/?name=Elena+Marsh&background=e2e8f0&color=0f172a&rounded=true" width="45" height="45" alt="Avatar">
-                <div>
-                  <div class="fw-bold text-dark" style="font-size: 0.9rem;">Elena Marsh</div>
-                  <div class="small fw-medium" style="color: #10B981;"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="me-1"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Verified Buyer · Sydney, AU</div>
-                </div>
-              </div>
+            <div class="story-pillar">
+              <svg class="story-pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+              </svg>
+              <span>Loved by Fragrance Enthusiasts</span>
             </div>
           </div>
 
+          <a href="shop" class="btn-story-cta">
+            <span>Know More About Us</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Visual Side -->
+        <div class="story-image-side">
+          <img src="assets/images/story-banner.jpg" alt="Essence of Scent Aura X Heritage">
         </div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer id="footer" class="footer mt-5">
-    <div class="container">
-      <div class="row g-4 mb-5">
-        <div class="col-lg-4 pe-lg-5">
-          <div class="brand text-white fs-3 mb-4">AURELIA</div>
-          <p class="text-white-50 mb-4">Premium handcrafted fragrances designed to make unforgettable impressions. Made with love in India.</p>
-          <div class="d-flex gap-3">
-            <a href="#" class="text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-            <a href="#" class="text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-            <a href="#" class="text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+  <footer id="footer-contact" class="site-footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <!-- Col 1: Brand -->
+        <div>
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <svg class="brand-logo-icon" viewBox="0 0 40 40" fill="none" style="width: 28px; height: 28px;">
+              <path d="M20 2L24.5 13.5L36 18L24.5 22.5L20 34L15.5 22.5L4 18L15.5 13.5L20 2Z" stroke="#D4AF37" stroke-width="2"/>
+              <path d="M20 8C20 8 26 15 26 21C26 24.3137 23.3137 27 20 27C16.6863 27 14 24.3137 14 21C14 15 20 8 20 8Z" fill="#D4AF37" fill-opacity="0.3" stroke="#D4AF37" stroke-width="1.5"/>
+            </svg>
+            <span class="brand-title" style="font-size: 1.15rem;">SCENT AURA X</span>
+          </div>
+          <div class="brand-tagline mb-3" style="font-size: 0.65rem;">PURE FRAGRANCE, LASTING IMPRESSION</div>
+          <p style="font-size: 0.84rem; color: #9A958A; line-height: 1.6; max-width: 280px;">
+            Handcrafted artisanal attar oils made with the finest natural extracts, pure distillation, and zero alcohol.
+          </p>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div>
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-links-list">
+            <li><a href="/">Home</a></li>
+            <li><a href="shop">Shop</a></li>
+            <li><a href="#about-story">About Us</a></li>
+            <li><a href="#footer-contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Our Collections -->
+        <div>
+          <h4 class="footer-col-title">Our Collections</h4>
+          <ul class="footer-links-list">
+            <li><a href="shop?cat=oud">Oud Attars</a></li>
+            <li><a href="shop?cat=floral">Floral Attars</a></li>
+            <li><a href="shop?cat=musk">Musk Attars</a></li>
+            <li><a href="shop?cat=citrus">Citrus Attars</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Get in Touch -->
+        <div>
+          <h4 class="footer-col-title">Get in Touch</h4>
+          <a href="javascript:void(0)" onclick="openWhatsAppInquiry()" class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.974.551 1.834.814 2.8.814 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.766-5.772-5.766zm6.819 5.767c-.001 3.766-3.054 6.819-6.819 6.819-1.157 0-2.29-.296-3.29-.861l-3.663.96 1.002-3.666c-.633-1.042-.969-2.247-.968-3.252.001-3.766 3.054-6.819 6.819-6.819 3.765 0 6.819 3.053 6.819 6.819z"/>
+            </svg>
+            <span>Order on WhatsApp</span>
+          </a>
+          <a href="mailto:scentaurax@gmail.com" class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+            </svg>
+            <span>scentaurax@gmail.com</span>
+          </a>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span>All Over India Delivery</span>
           </div>
         </div>
-        <div class="col-lg-2 col-6">
-          <h5>Shop</h5>
-          <a href="shop">All Perfumes</a>
-          <a href="shop">Bestsellers</a>
-          <a href="shop">New Arrivals</a>
-          <a href="shop">Gift Sets</a>
-        </div>
-        <div class="col-lg-2 col-6">
-          <h5>About</h5>
-          <a href="#">Our Story</a>
-          <a href="#">Ingredients</a>
-          <a href="#">Sustainability</a>
-          <a href="#reviews">Reviews</a>
-        </div>
-        <div class="col-lg-4">
-          <h5>Stay in the loop</h5>
-          <p class="text-white-50 mb-3">Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</p>
-          <div class="d-flex">
-            <input type="email" class="form-control me-2 bg-transparent text-white border-secondary" placeholder="Enter your email">
-            <button class="btn btn-primary px-4">Subscribe</button>
+
+        <!-- Col 5: Follow Us -->
+        <div>
+          <h4 class="footer-col-title">Follow Us</h4>
+          <div class="footer-social-icons">
+            <a href="#" class="footer-social-icon" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-icon" aria-label="YouTube">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-icon" aria-label="Facebook">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+            </a>
           </div>
         </div>
       </div>
-      <div class="border-top border-secondary pt-4 mt-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
-        <span class="text-white-50 mb-3 mb-md-0">© 2026 Aurelia Fragrances. All rights reserved.</span>
-        <div class="d-flex gap-4">
-          <a href="#" class="small text-white-50">Privacy Policy</a>
-          <a href="#" class="small text-white-50">Terms of Service</a>
+
+      <div class="footer-bottom-bar">
+        <span>© 2024 Scent Aura X. All Rights Reserved.</span>
+        <div>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
         </div>
       </div>
     </div>
@@ -403,79 +447,53 @@
         const container = document.getElementById("index-products-container");
         const loadedProducts = await loadProducts();
         
-        if (loadedProducts.length === 0) {
+        if (!loadedProducts || loadedProducts.length === 0) {
             container.innerHTML = `<div class="col-12 text-center py-5"><p class="text-muted">No products available at the moment.</p></div>`;
             return;
         }
 
         container.innerHTML = "";
         
-        // Show up to 4 products on home page
-        loadedProducts.slice(0, 4).forEach(product => {
-            const defaultVariation = product.variations[0];
-            const hasVariations = product.variations.length > 0;
-            
-            let variationBtns = "";
-            if (hasVariations) {
-                variationBtns = product.variations.map((v, idx) => 
-                    `<button class="premium-size-btn ${idx === 0 ? 'active' : ''}" 
-                             onclick="selectSize('${product.id}', '${v.id}', ${v.price}, this)">${v.name}</button>`
-                ).join('');
-            }
-
-            let imageContent = product.imageUrl 
-                ? `<img src="${product.imageUrl}" alt="${product.name}" class="premium-card-img">`
-                : `<div class="product-visual" style="height:100%; display:flex; align-items:center; justify-content:center;"><div class="mini-bottle" data-label="${product.label}"></div></div>`;
+        // Render 5 bestsellers matching reference layout
+        loadedProducts.slice(0, 5).forEach((product, idx) => {
+            const defaultVariation = (product.variations && product.variations[0]) ? product.variations[0] : { price: 399, name: "3ml", id: "3ml" };
+            const isBestsellerBadge = idx === 0 || product.isBestseller;
+            const subText = product.subCategory || "Pure & Long Lasting Attar";
 
             const card = `
-            <div class="col-md-6 col-lg-3">
-              <article class="premium-product-card">
-                <a href="product?id=${product.id}" class="text-decoration-none">
-                  <div class="premium-card-img-wrapper">
-                    ${imageContent}
-                  </div>
+              <div class="attar-product-card">
+                ${isBestsellerBadge ? '<span class="card-badge-bestseller">Bestseller</span>' : ''}
+                <a href="product?id=${product.id}" class="product-img-wrap">
+                  <img src="${product.imageUrl}" alt="${product.name}">
                 </a>
-                <div class="premium-card-body">
-                  <div class="small text-uppercase text-secondary mb-1">${product.category}</div>
-                  <a href="product?id=${product.id}" class="text-decoration-none">
-                    <h3 class="premium-card-title">${product.name}</h3>
-                  </a>
-                  <p class="premium-card-desc" style="max-height: 4.5em; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">${product.description}</p>
+                <div class="product-card-details">
+                  <h3 class="product-item-title">
+                    <a href="product?id=${product.id}">${product.name}</a>
+                  </h3>
+                  <div class="product-item-price">₹${defaultVariation.price}</div>
+                  <div class="product-item-subtext">${subText}</div>
                   
-                  <div class="premium-size-selector">
-                    ${variationBtns}
+                  <div class="d-flex flex-column gap-2 mt-auto">
+                    <button class="btn-card-whatsapp" onclick="orderOnWhatsApp('${product.name}', ${defaultVariation.price}, '${defaultVariation.name}')">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.974.551 1.834.814 2.8.814 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.766-5.772-5.766zm6.819 5.767c-.001 3.766-3.054 6.819-6.819 6.819-1.157 0-2.29-.296-3.29-.861l-3.663.96 1.002-3.666c-.633-1.042-.969-2.247-.968-3.252.001-3.766 3.054-6.819 6.819-6.819 3.765 0 6.819 3.053 6.819 6.819z"/>
+                      </svg>
+                      <span>Order on WhatsApp</span>
+                    </button>
+                    <button class="btn btn-sm btn-outline-dark rounded-pill py-1" style="font-size: 0.78rem;" onclick="addToCart('${product.id}')">
+                      Add to Cart
+                    </button>
                   </div>
                   
-                  <div class="premium-price-row">
-                    <strong class="premium-price" id="price-${product.id}">₹${hasVariations ? defaultVariation.price : 0}</strong>
-                    <button class="premium-add-btn" onclick="addToCartFromCard('${product.id}')">Add</button>
-                    <select id="var-${product.id}" style="display:none;">
-                        ${product.variations.map(v => `<option value="${v.id}">${v.name}</option>`).join('')}
-                    </select>
-                  </div>
+                  <select id="var-${product.id}" style="display:none;">
+                    ${(product.variations || []).map(v => `<option value="${v.id}">${v.name}</option>`).join('')}
+                  </select>
                 </div>
-              </article>
-            </div>
+              </div>
             `;
             container.innerHTML += card;
         });
     });
-
-    function selectSize(productId, variationId, price, btnEl) {
-        const selectEl = document.getElementById(`var-${productId}`);
-        if (selectEl) selectEl.value = variationId;
-        
-        const priceEl = document.getElementById(`price-${productId}`);
-        if (priceEl) priceEl.textContent = `₹${price}`;
-        
-        const btnContainer = btnEl.parentElement;
-        btnContainer.querySelectorAll('.premium-size-btn').forEach(b => b.classList.remove('active'));
-        btnEl.classList.add('active');
-    }
-    
-    function addToCartFromCard(productId) {
-        addToCart(productId);
-    }
   </script>
 </body>
 </html>

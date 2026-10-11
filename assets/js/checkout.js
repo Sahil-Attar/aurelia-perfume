@@ -1,7 +1,7 @@
 // Checkout script
 
 function renderCheckoutSummary() {
-    const summaryContainer = document.getElementById("checkout-summary-items");
+    const summaryContainer = document.getElementById("checkout-summary-items") || document.getElementById("checkout-items");
     if (!summaryContainer) return;
     
     const cart = getCart();
@@ -16,7 +16,7 @@ function renderCheckoutSummary() {
     
     cart.forEach(item => {
         const product = getProductById(item.id);
-        const variation = getProductVariation(item.id, item.variationId || "50ml"); // Fallback for old carts
+        const variation = getProductVariation(item.id, item.variationId || "3ml");
         
         if (product && variation) {
             const lineTotal = variation.price * item.quantity;
@@ -25,7 +25,7 @@ function renderCheckoutSummary() {
             html += `
                 <div class="d-flex justify-content-between mb-2 small">
                     <span>${product.name} (${variation.name}) × ${item.quantity}</span>
-                    <span>${formatCurrency(lineTotal)}</span>
+                    <span class="fw-bold">${formatCurrency(lineTotal)}</span>
                 </div>
             `;
         }
@@ -33,13 +33,19 @@ function renderCheckoutSummary() {
     
     summaryContainer.innerHTML = html;
     
-    // Calculate final totals using logic similar to cart
+    // Calculate final totals
     const appliedCoupon = localStorage.getItem(COUPON_KEY);
     let discount = 0;
     let finalTotal = 0;
     
-    document.getElementById("checkout-subtotal").textContent = formatCurrency(subtotal);
-    document.getElementById("checkout-shipping").textContent = formatCurrency(SHIPPING_FEE);
+    const subtotalEl = document.getElementById("checkout-subtotal") || document.getElementById("summary-subtotal");
+    const shippingEl = document.getElementById("checkout-shipping") || document.getElementById("summary-shipping");
+    const discountEl = document.getElementById("checkout-discount") || document.getElementById("summary-discount");
+    const discountRow = document.getElementById("checkout-discount-row") || document.getElementById("discount-row");
+    const totalEl = document.getElementById("checkout-total") || document.getElementById("summary-total");
+    
+    if (subtotalEl) subtotalEl.textContent = formatCurrency(subtotal);
+    if (shippingEl) shippingEl.textContent = formatCurrency(SHIPPING_FEE);
     
     if (appliedCoupon && VALID_COUPONS[appliedCoupon]) {
         const couponInfo = VALID_COUPONS[appliedCoupon];
@@ -53,15 +59,16 @@ function renderCheckoutSummary() {
     finalTotal = subtotal + SHIPPING_FEE - discount;
     if (finalTotal < 0) finalTotal = 0;
     
-    const discountRow = document.getElementById("checkout-discount-row");
-    if (discount > 0) {
-        document.getElementById("checkout-discount").textContent = `-${formatCurrency(discount)}`;
-        discountRow.style.display = "flex";
-    } else {
-        discountRow.style.display = "none";
+    if (discountEl && discountRow) {
+        if (discount > 0) {
+            discountEl.textContent = `-${formatCurrency(discount)}`;
+            discountRow.style.display = "flex";
+        } else {
+            discountRow.style.display = "none";
+        }
     }
     
-    document.getElementById("checkout-total").textContent = formatCurrency(finalTotal);
+    if (totalEl) totalEl.textContent = formatCurrency(finalTotal);
 }
 
 function generateOrderId() {
@@ -174,7 +181,8 @@ function placeOrder(event) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+    await loadProducts();
     if (document.getElementById("checkout-form")) {
         renderCheckoutSummary();
         document.getElementById("checkout-form").addEventListener("submit", placeOrder);
