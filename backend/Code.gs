@@ -1,0 +1,296 @@
+// Set this to your actual email address where you want to receive admin notifications
+var ADMIN_EMAIL = "attarsahil9999@gmail.com";
+// Set this to your Google Spreadsheet ID (found in the URL of your Sheet)
+var SPREADSHEET_ID = "1Ck5E2vmMjdgkThpQgMG68sRmwWglVtYaDF2BCJFgv2s";
+var PRODUCT_SPREADSHEET_ID = "1Ck5E2vmMjdgkThpQgMG68sRmwWglVtYaDF2BCJFgv2s"; // Sheet containing products
+
+function doGet(e) {
+  // Add CORS headers
+  var headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Content-Type": "application/json"
+  };
+
+  try {
+    if (PRODUCT_SPREADSHEET_ID === "YOUR_SPREADSHEET_ID_HERE") {
+      throw new Error("Spreadsheet ID not configured.");
+    }
+    var sheet = SpreadsheetApp.openById(PRODUCT_SPREADSHEET_ID).getSheetByName("Products");
+    if (!sheet) {
+      sheet = SpreadsheetApp.openById(PRODUCT_SPREADSHEET_ID).getActiveSheet(); // fallback
+    }
+    
+    var data = sheet.getDataRange().getValues();
+    var headersRow = data[0];
+    
+    var products = [];
+    for (var i = 1; i < data.length; i++) {
+      var row = data[i];
+      var rowData = {};
+      for (var j = 0; j < headersRow.length; j++) {
+        rowData[headersRow[j]] = row[j];
+      }
+      
+      // Check Is_Active
+      if (rowData["Is_Active"] == 1) {
+        // Construct variations based on the columns
+        var variations = [];
+        var sizes = [
+          { key: "Price_3ml", name: "3ml" },
+          { key: "Price_6ml", name: "6ml" },
+          { key: "Price_9ml", name: "9ml" },
+          { key: "Price_12ml", name: "12ml" },
+          { key: "Price_50ml", name: "50ml" }
+        ];
+        
+        sizes.forEach(function(size) {
+          if (rowData[size.key] && !isNaN(rowData[size.key])) {
+            variations.push({
+              id: size.name,
+              name: size.name,
+              price: parseFloat(rowData[size.key])
+            });
+          }
+        });
+
+        products.push({
+          id: rowData["ID"],
+          name: rowData["Name"],
+          category: rowData["Category"],
+          description: rowData["Description"],
+          label: rowData["Name"] ? rowData["Name"].toUpperCase() : "",
+          imageUrl: rowData["Image_URL"],
+          variations: variations
+        });
+      }
+    }
+    
+    return ContentService.createTextOutput(JSON.stringify({
+      "status": "success",
+      "data": products
+    })).setMimeType(ContentService.MimeType.JSON);
+    
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({
+      "status": "error",
+      "message": error.toString()
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function doPost(e) {
+  // Add CORS headers so your frontend can call this script
+  var headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Content-Type": "application/json"
+  };
+
+  try {
+    // Parse the incoming JSON data from checkout.js
+    var orderData = JSON.parse(e.postData.contents);
+    
+    // 1. Save to Google Sheets
+    if (SPREADSHEET_ID !== "YOUR_SPREADSHEET_ID_HERE") {
+      saveToSheet(orderData);
+    }
+    
+    // 2. Send Admin Email
+    sendAdminEmail(orderData);
+    
+    // 3. Send Customer Email
+    if (orderData.email && orderData.email.trim() !== "") {
+      sendCustomerEmail(orderData);
+    }
+    
+    return ContentService.createTextOutput(JSON.stringify({
+      "status": "success",
+      "message": "Emails sent successfully"
+    })).setMimeType(ContentService.MimeType.JSON);
+    
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({
+      "status": "error",
+      "message": error.toString()
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+// Handle OPTIONS request for CORS preflight
+function doOptions(e) {
+  return ContentService.createTextOutput("")
+    .setMimeType(ContentService.MimeType.JSON)
+    .setHeaders({
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type"
+    });
+}
+
+function saveToSheet(order) {
+  try {
+    var sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getActiveSheet();
+    
+    // Format items as a readable string
+    var itemsString = "";
+    order.items.forEach(function(item) {
+      var variationStr = item.variationId ? " (" + item.variationId + ")" : "";
+      itemsString += item.id + variationStr + " x" + item.quantity + "\n";
+    });
+    
+    // Create the row data array matching the 15 columns
+    var rowData = [
+      order.orderId,
+      new Date(order.date).toLocaleString(),
+      order.customer,
+      order.email || "N/A",
+      order.phone,
+      order.address,
+      order.city,
+      order.state,
+      order.pincode,
+      itemsString.trim(),
+      order.subtotal,
+      order.discount,
+      order.shipping,
+      order.total,
+      order.paymentMethod
+    ];
+    
+    // Append the row to the sheet
+    sheet.appendRow(rowData);
+  } catch(e) {
+    console.error("Error saving to sheet: " + e.message);
+    // We swallow the error so it doesn't prevent emails from sending if the sheet fails
+  }
+}
+
+function sendAdminEmail(order) {
+  var subject = "New Order Received: #" + order.orderId;
+  
+  var itemsHtml = "";
+  order.items.forEach(function(item) {
+    var variationStr = item.variationId ? " (" + item.variationId + ")" : "";
+    itemsHtml += "<li>" + item.id + variationStr + " x " + item.quantity + "</li>";
+  });
+  
+  var htmlBody = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd;">
+      <h2 style="color: #b8904a;">New Order Notification</h2>
+      <p><strong>Order ID:</strong> ${order.orderId}</p>
+      <p><strong>Date:</strong> ${new Date(order.date).toLocaleString()}</p>
+      <hr>
+      <h3>Customer Details:</h3>
+      <p><strong>Name:</strong> ${order.customer}</p>
+      <p><strong>Phone:</strong> ${order.phone}</p>
+      <p><strong>Email:</strong> ${order.email || 'N/A'}</p>
+      <p><strong>Address:</strong><br>${order.address}<br>${order.city}, ${order.state} ${order.pincode}</p>
+      <hr>
+      <h3>Order Summary:</h3>
+      <ul>${itemsHtml}</ul>
+      <p><strong>Subtotal:</strong> ${order.subtotal}</p>
+      <p><strong>Shipping:</strong> ${order.shipping}</p>
+      <p><strong>Discount:</strong> ${order.discount} ${order.couponCode ? '(' + order.couponCode + ')' : ''}</p>
+      <h3 style="color: #151515;">Total: ${order.total}</h3>
+      <p><strong>Payment Method:</strong> ${order.paymentMethod}</p>
+    </div>
+  `;
+  
+  MailApp.sendEmail({
+    to: ADMIN_EMAIL,
+    subject: subject,
+    htmlBody: htmlBody
+  });
+}
+
+function sendCustomerEmail(order) {
+  var subject = "Order Confirmation - Aurelia Fragrances #" + order.orderId;
+  
+  var itemsHtml = "";
+  order.items.forEach(function(item) {
+    var variationStr = item.variationId ? " (" + item.variationId + ")" : "";
+    itemsHtml += `
+      <tr>
+        <td style="padding: 10px; border-bottom: 1px solid #eee;">${item.id}${variationStr}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">${item.quantity}</td>
+      </tr>
+    `;
+  });
+  
+  var htmlBody = `
+    <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f8f5ef; padding: 40px 20px;">
+      <div style="background-color: #ffffff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        
+        <div style="text-align: center; margin-bottom: 30px;">
+          <h1 style="letter-spacing: 0.18em; font-weight: 700; color: #151515; margin: 0;">AURELIA</h1>
+        </div>
+        
+        <h2 style="color: #151515; font-size: 24px; margin-bottom: 10px;">Thank you for your order, ${order.customer}!</h2>
+        <p style="color: #6d6a64; line-height: 1.6;">We've received your order and are getting it ready for dispatch. You have selected <strong>${order.paymentMethod}</strong>.</p>
+        
+        <div style="background-color: #f8f5ef; padding: 20px; border-radius: 8px; margin: 30px 0;">
+          <p style="margin: 0 0 5px 0; color: #6d6a64; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Order Number</p>
+          <h3 style="margin: 0; color: #151515; font-size: 20px;">#${order.orderId}</h3>
+        </div>
+        
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+          <thead>
+            <tr>
+              <th style="text-align: left; padding: 10px; border-bottom: 2px solid #151515; color: #151515;">Item</th>
+              <th style="text-align: center; padding: 10px; border-bottom: 2px solid #151515; color: #151515;">Qty</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${itemsHtml}
+          </tbody>
+        </table>
+        
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr>
+            <td style="padding: 5px 0; color: #6d6a64;">Subtotal</td>
+            <td style="padding: 5px 0; text-align: right; color: #151515;">${order.subtotal}</td>
+          </tr>
+          <tr>
+            <td style="padding: 5px 0; color: #6d6a64;">Shipping</td>
+            <td style="padding: 5px 0; text-align: right; color: #151515;">${order.shipping}</td>
+          </tr>
+          ${order.discount !== '₹0.00' ? `
+          <tr>
+            <td style="padding: 5px 0; color: #28a745;">Discount ${order.couponCode ? '('+order.couponCode+')' : ''}</td>
+            <td style="padding: 5px 0; text-align: right; color: #28a745;">-${order.discount}</td>
+          </tr>
+          ` : ''}
+          <tr>
+            <td colspan="2" style="border-top: 1px solid #eee; padding-top: 15px; margin-top: 10px;"></td>
+          </tr>
+          <tr>
+            <td style="padding: 5px 0; font-weight: bold; font-size: 18px; color: #151515;">Total</td>
+            <td style="padding: 5px 0; text-align: right; font-weight: bold; font-size: 18px; color: #151515;">${order.total}</td>
+          </tr>
+        </table>
+        
+        <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #eee; text-align: center;">
+          <h4 style="margin: 0 0 10px 0; color: #151515;">Shipping Address</h4>
+          <p style="margin: 0; color: #6d6a64; line-height: 1.5;">
+            ${order.address}<br>
+            ${order.city}, ${order.state} ${order.pincode}
+          </p>
+        </div>
+        
+      </div>
+      
+      <div style="text-align: center; margin-top: 20px; color: #6d6a64; font-size: 12px;">
+        <p>&copy; 2026 Aurelia Fragrances. All rights reserved.</p>
+      </div>
+    </div>
+  `;
+  
+  MailApp.sendEmail({
+    to: order.email,
+    subject: subject,
+    htmlBody: htmlBody
+  });
+}
