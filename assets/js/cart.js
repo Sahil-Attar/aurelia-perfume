@@ -40,13 +40,17 @@ function renderCart() {
             // Handle fallback if item.cartItemId is missing (legacy cart support)
             const cartId = item.cartItemId || item.id;
             
+            const itemImgHtml = product.imageUrl 
+                ? `<img src="${product.imageUrl}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">` 
+                : `<div class="mini-bottle" data-label="${product.label}"></div>`;
+
             html += `
                 <div class="d-flex align-items-center mb-4 pb-4 border-bottom position-relative">
-                    <div class="cart-item-image me-3">
-                        <div class="mini-bottle" data-label="${product.label}"></div>
+                    <div class="cart-item-image me-3" style="width: 75px; height: 75px; border-radius: 12px; overflow: hidden; background: #FAF6EE; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid var(--border-subtle);">
+                        ${itemImgHtml}
                     </div>
                     <div class="flex-grow-1">
-                        <h5 class="mb-1">${product.name} <span class="text-muted fs-6">(${variation.name})</span></h5>
+                        <h5 class="mb-1 font-serif" style="font-size: 1.1rem; color: var(--primary-dark);">${product.name} <span class="text-muted fs-6">(${variation.name})</span></h5>
                         <p class="text-muted mb-2">${formatCurrency(variation.price)}</p>
                         
                         <div class="d-flex align-items-center">
@@ -172,7 +176,8 @@ function updateTotals(subtotal) {
     if (totalEl) totalEl.textContent = formatCurrency(finalTotal);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+    await loadProducts();
     if (document.getElementById("cart-items-container")) {
         renderCart();
     }

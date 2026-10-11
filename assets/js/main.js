@@ -1,10 +1,24 @@
 // Shared functionality across all pages
 
 const CART_KEY = "aurelia_cart";
+const COUPON_KEY = "aurelia_coupon";
+const SHIPPING_FEE = 50;
+
+// Scent Aura X WhatsApp business phone number
+const WHATSAPP_PHONE = "919876543210";
+
+// Predefined coupons
+const VALID_COUPONS = {
+    "AURELIA10": { type: "percent", value: 10, label: "10% Off" },
+    "SCENT10": { type: "percent", value: 10, label: "10% Off" },
+    "WELCOME50": { type: "flat", value: 50, label: "₹50 Off" },
+    "ATTAR50": { type: "flat", value: 50, label: "₹50 Off" }
+};
 
 // Format currency
 function formatCurrency(amount) {
-    return "₹" + amount.toFixed(2).replace(/\.00$/, "");
+    if (typeof amount !== 'number') amount = parseFloat(amount) || 0;
+    return "₹" + Math.round(amount);
 }
 
 // Get cart from local storage
@@ -15,30 +29,24 @@ function getCart() {
 // Update cart count badge in navbar
 function updateCartCount() {
     const cart = getCart();
-    const count = cart.reduce((total, item) => total + item.quantity, 0);
+    const count = cart.reduce((total, item) => total + (item.quantity || 1), 0);
     const badge = document.getElementById("cart-count-badge");
     if (badge) {
         badge.textContent = count;
-        // Optionally hide if 0
-        // badge.style.display = count > 0 ? 'inline-block' : 'none';
     }
 }
 
-// Add to Cart from product cards
+// Add to Cart from product details or cards
 function addToCart(productId) {
     let cart = getCart();
-    
-    // Look for a dropdown related to this product (e.g. on index or shop page)
     const selectEl = document.getElementById(`var-${productId}`);
-    let variationId = "50ml"; // default fallback
+    let variationId = "3ml";
     
     if (selectEl) {
         variationId = selectEl.value;
     }
     
-    // Create composite ID to store in cart (e.g., aurelia-noir_50ml)
     const cartItemId = `${productId}_${variationId}`;
-    
     const existingItem = cart.find(item => item.cartItemId === cartItemId);
     
     if (existingItem) {
@@ -57,7 +65,7 @@ function addToCart(productId) {
     showToast("Added to cart");
 }
 
-// Add to Cart with specific quantity (used on single product page)
+// Add to Cart with specific quantity
 function addToCartWithQty(productId, variationId, qty) {
     let cart = getCart();
     const cartItemId = `${productId}_${variationId}`;
@@ -105,22 +113,18 @@ function showToast(message) {
     const toast = document.createElement("div");
     toast.className = "custom-toast";
     toast.innerHTML = `
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
-        <strong>${message}</strong>
+        <span>${message}</span>
     `;
     
     container.appendChild(toast);
-    
-    // Trigger animation
     setTimeout(() => toast.classList.add("show"), 10);
-    
-    // Remove after 3 seconds
     setTimeout(() => {
         toast.classList.remove("show");
         setTimeout(() => toast.remove(), 300);
-    }, 3000);
+    }, 2800);
 }
 
 // Initialize on DOM Load

@@ -3,49 +3,60 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Order Confirmed | Aurelia Fragrances</title>
+  <title>Order Confirmed | Scent Aura X</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
   <style>
     .success-icon {
       width: 80px;
       height: 80px;
-      background: #f1ede5;
-      color: var(--gold);
+      background: #EFE8DC;
+      color: var(--primary-dark);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 30px;
+      border: 2px solid var(--gold-accent);
     }
   </style>
 </head>
 
-<body class="bg-light d-flex flex-column min-vh-100">
-  <nav class="navbar navbar-expand-lg sticky-top border-bottom bg-white">
-    <div class="container py-2 text-center">
-      <a class="navbar-brand brand mx-auto" href="/">AURELIA</a>
+<body style="background-color: var(--page-bg);" class="d-flex flex-column min-vh-100">
+  <header class="site-header">
+    <div class="header-container justify-content-center">
+      <a href="/" class="brand-wrapper">
+        <svg class="brand-logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 2L24.5 13.5L36 18L24.5 22.5L20 34L15.5 22.5L4 18L15.5 13.5L20 2Z" stroke="#D4AF37" stroke-width="2"/>
+          <path d="M20 8C20 8 26 15 26 21C26 24.3137 23.3137 27 20 27C16.6863 27 14 24.3137 14 21C14 15 20 8 20 8Z" fill="#D4AF37" fill-opacity="0.3" stroke="#D4AF37" stroke-width="1.5"/>
+          <circle cx="20" cy="20" r="3" fill="#D4AF37"/>
+        </svg>
+        <div class="brand-text-block">
+          <span class="brand-title">SCENT AURA X</span>
+          <span class="brand-tagline">PURE FRAGRANCE, LASTING IMPRESSION</span>
+        </div>
+      </a>
     </div>
-  </nav>
+  </header>
 
   <section class="py-5 flex-grow-1 d-flex align-items-center">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-6">
-          <div class="summary-card text-center py-5 px-4">
+          <div class="p-5 rounded-4 text-center" style="background: #FFFFFF; border: 1px solid var(--border-subtle); box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
             
             <div class="success-icon">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
             </div>
             
-            <h1 class="h2 mb-2 section-title">Order Confirmed</h1>
+            <h1 class="h2 mb-2 font-serif" style="color: var(--primary-dark);">Order Confirmed</h1>
             <p class="text-muted mb-4" id="success-customer-name">Thank you for your order.</p>
             
-            <div class="bg-light p-4 rounded-3 mb-4 text-start">
+            <div class="p-4 rounded-3 mb-4 text-start" style="background-color: #FAF6EE; border: 1px solid var(--border-subtle);">
               <p class="mb-1 text-muted small text-uppercase fw-bold">Your order number is:</p>
-              <h2 class="h4 mb-3" id="success-order-id">#AUR-XXXXXXXX</h2>
+              <h2 class="h4 mb-3 font-serif" style="color: var(--primary-dark);" id="success-order-id">#SAX-XXXXXXXX</h2>
               
               <div class="row">
                 <div class="col-6">
@@ -58,27 +69,23 @@
                 </div>
               </div>
               
-              <div id="success-items" class="mt-2 pt-3 border-top">
-                <!-- Items injected here -->
-              </div>
+              <p class="mb-0 small text-muted">
+                A confirmation has been recorded. We will dispatch your artisanal attar package soon.
+              </p>
             </div>
             
-            <p class="small text-muted mb-4">
-              We have received your order successfully.
-              <br>This is a frontend test order. No emails have been sent.
-            </p>
-          <div class="mt-5 pt-3">
-            <a href="shop" class="btn btn-primary rounded-pill px-5 py-3">Continue Shopping</a>
-          </div>  
+            <div class="d-flex flex-column gap-2">
+              <a href="shop" class="btn btn-hero-primary py-3 w-100 justify-content-center">Continue Shopping</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <footer class="footer py-4 mt-auto">
-    <div class="container text-center">
-      <span class="text-white-50 small">© 2026 Aurelia Fragrances</span>
+  <footer class="site-footer py-3 text-center">
+    <div class="container">
+      <span class="small" style="color: #9A958A;">© 2024 Scent Aura X. All Rights Reserved.</span>
     </div>
   </footer>
 
@@ -86,39 +93,21 @@
   <script src="assets/js/main.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const orderData = JSON.parse(localStorage.getItem("aurelia_latest_order"));
-      
-      if (!orderData) {
-        window.location.href = "/";
-        return;
+      const orderData = JSON.parse(sessionStorage.getItem("latest_order"));
+      if (orderData) {
+        document.getElementById("success-customer-name").textContent = `Thank you, ${orderData.customer}! We've received your order.`;
+        document.getElementById("success-order-id").textContent = `#${orderData.orderId}`;
+        document.getElementById("success-payment-method").textContent = orderData.paymentMethod;
+        document.getElementById("success-total").textContent = orderData.total;
       }
-      
-      document.getElementById("success-customer-name").textContent = `Thank you for your order, ${orderData.customer}.`;
-      document.getElementById("success-order-id").textContent = `#${orderData.orderId}`;
-      document.getElementById("success-payment-method").textContent = orderData.paymentMethod;
-      document.getElementById("success-total").textContent = orderData.total;
-      
-      const itemsContainer = document.getElementById("success-items");
-      let itemsHtml = '<p class="mb-2 text-muted small">Items:</p>';
-      
-      orderData.items.forEach(item => {
-        const product = getProductById(item.id);
-        const variation = getProductVariation(item.id, item.variationId || "50ml");
-        if (product && variation) {
-          itemsHtml += `
-            <div class="d-flex justify-content-between small mb-1">
-              <span>${product.name} (${variation.name}) × ${item.quantity}</span>
-              <span class="text-muted">${formatCurrency(variation.price * item.quantity)}</span>
-            </div>
-          `;
-        }
-      });
-      
-      itemsContainer.innerHTML = itemsHtml;
-      
-      // Optionally clean up latest order so refreshing doesn't show it forever
-      // localStorage.removeItem("aurelia_latest_order");
     });
+
+    function shareOrderWhatsApp() {
+      const orderData = JSON.parse(sessionStorage.getItem("latest_order"));
+      if (!orderData) return;
+      const text = `Hello Scent Aura X, I placed order *#${orderData.orderId}* for ${orderData.total}. Name: ${orderData.customer}. Please confirm tracking details when dispatched.`;
+      window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(text)}`, '_blank');
+    }
   </script>
 </body>
 </html>
