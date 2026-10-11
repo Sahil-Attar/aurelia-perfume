@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         
         // Populate variations pill buttons
         const pillsContainer = document.getElementById('product-variation-pills');
-        let selectedVariation = (product.variations && product.variations[0]) ? product.variations[0] : { id: "3ml", name: "3ml", price: 399 };
+        let selectedVariation = (product.variations && product.variations.length > 0) ? product.variations[0] : { id: "3ml", name: "3ml", price: 399 };
         
         if (pillsContainer && product.variations && product.variations.length > 0) {
             pillsContainer.innerHTML = '';
@@ -81,17 +81,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             let val = parseInt(qtyInput.value) || 1;
             qtyInput.value = val + 1;
         });
-        
-        // WhatsApp Direct Order Logic
-        const btnWhatsApp = document.getElementById('btn-order-whatsapp');
-        if (btnWhatsApp) {
-            btnWhatsApp.addEventListener('click', () => {
-                const qty = parseInt(qtyInput.value) || 1;
-                const total = selectedVariation.price * qty;
-                const msg = `Hello Scent Aura X, I want to order:\n\n*Product:* ${product.name}\n*Size:* ${selectedVariation.name}\n*Quantity:* ${qty}\n*Total Price:* ₹${total}\n\nPlease share delivery details.`;
-                window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
-            });
-        }
         
         // Add to Cart Logic
         const btnAddCart = document.getElementById('btn-add-cart');

@@ -55,14 +55,6 @@
           </svg>
           <span id="cart-count-badge" class="cart-counter">0</span>
         </a>
-
-        <!-- WhatsApp Pill -->
-        <a href="javascript:void(0)" onclick="openWhatsAppInquiry()" class="btn-whatsapp-pill">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.974.551 1.834.814 2.8.814 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.766-5.772-5.766zm6.819 5.767c-.001 3.766-3.054 6.819-6.819 6.819-1.157 0-2.29-.296-3.29-.861l-3.663.96 1.002-3.666c-.633-1.042-.969-2.247-.968-3.252.001-3.766 3.054-6.819 6.819-6.819 3.765 0 6.819 3.053 6.819 6.819z"/>
-          </svg>
-          <span>Order on WhatsApp</span>
-        </a>
       </div>
     </div>
   </header>
@@ -86,12 +78,6 @@
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
               </svg>
-            </a>
-            <a href="javascript:void(0)" onclick="openWhatsAppInquiry()" class="btn-hero-whatsapp">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="#071E18">
-                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.974.551 1.834.814 2.8.814 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.766-5.772-5.766zm6.819 5.767c-.001 3.766-3.054 6.819-6.819 6.819-1.157 0-2.29-.296-3.29-.861l-3.663.96 1.002-3.666c-.633-1.042-.969-2.247-.968-3.252.001-3.766 3.054-6.819 6.819-6.819 3.765 0 6.819 3.053 6.819 6.819z"/>
-              </svg>
-              <span>Order on WhatsApp</span>
             </a>
           </div>
 
@@ -380,12 +366,6 @@
         <!-- Col 4: Get in Touch -->
         <div>
           <h4 class="footer-col-title">Get in Touch</h4>
-          <a href="javascript:void(0)" onclick="openWhatsAppInquiry()" class="footer-contact-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.974.551 1.834.814 2.8.814 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.766-5.772-5.766zm6.819 5.767c-.001 3.766-3.054 6.819-6.819 6.819-1.157 0-2.29-.296-3.29-.861l-3.663.96 1.002-3.666c-.633-1.042-.969-2.247-.968-3.252.001-3.766 3.054-6.819 6.819-6.819 3.765 0 6.819 3.053 6.819 6.819z"/>
-            </svg>
-            <span>Order on WhatsApp</span>
-          </a>
           <a href="mailto:scentaurax@gmail.com" class="footer-contact-item">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="2" y="4" width="20" height="16" rx="2"></rect>
@@ -454,7 +434,7 @@
 
         container.innerHTML = "";
         
-        // Render 5 bestsellers matching reference layout
+        // Render 5 bestsellers with "Select Size" button navigating to product page
         loadedProducts.slice(0, 5).forEach((product, idx) => {
             const defaultVariation = (product.variations && product.variations[0]) ? product.variations[0] : { price: 399, name: "3ml", id: "3ml" };
             const isBestsellerBadge = idx === 0 || product.isBestseller;
@@ -470,24 +450,18 @@
                   <h3 class="product-item-title">
                     <a href="product?id=${product.id}">${product.name}</a>
                   </h3>
-                  <div class="product-item-price">₹${defaultVariation.price}</div>
+                  <div class="product-item-price">From ₹${defaultVariation.price}</div>
                   <div class="product-item-subtext">${subText}</div>
                   
-                  <div class="d-flex flex-column gap-2 mt-auto">
-                    <button class="btn-card-whatsapp" onclick="orderOnWhatsApp('${product.name}', ${defaultVariation.price}, '${defaultVariation.name}')">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.974.551 1.834.814 2.8.814 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.766-5.772-5.766zm6.819 5.767c-.001 3.766-3.054 6.819-6.819 6.819-1.157 0-2.29-.296-3.29-.861l-3.663.96 1.002-3.666c-.633-1.042-.969-2.247-.968-3.252.001-3.766 3.054-6.819 6.819-6.819 3.765 0 6.819 3.053 6.819 6.819z"/>
+                  <div class="mt-auto pt-2">
+                    <a href="product?id=${product.id}" class="btn-card-select-size">
+                      <span>Select Size</span>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
                       </svg>
-                      <span>Order on WhatsApp</span>
-                    </button>
-                    <button class="btn btn-sm btn-outline-dark rounded-pill py-1" style="font-size: 0.78rem;" onclick="addToCart('${product.id}')">
-                      Add to Cart
-                    </button>
+                    </a>
                   </div>
-                  
-                  <select id="var-${product.id}" style="display:none;">
-                    ${(product.variations || []).map(v => `<option value="${v.id}">${v.name}</option>`).join('')}
-                  </select>
                 </div>
               </div>
             `;

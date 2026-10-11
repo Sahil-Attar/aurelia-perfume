@@ -40,12 +40,6 @@
           </svg>
           <span id="cart-count-badge" class="cart-counter">0</span>
         </a>
-        <a href="javascript:void(0)" onclick="openWhatsAppInquiry()" class="btn-whatsapp-pill">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.974.551 1.834.814 2.8.814 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.766-5.772-5.766zm6.819 5.767c-.001 3.766-3.054 6.819-6.819 6.819-1.157 0-2.29-.296-3.29-.861l-3.663.96 1.002-3.666c-.633-1.042-.969-2.247-.968-3.252.001-3.766 3.054-6.819 6.819-6.819 3.765 0 6.819 3.053 6.819 6.819z"/>
-          </svg>
-          <span>WhatsApp</span>
-        </a>
       </div>
     </div>
   </header>
@@ -90,7 +84,7 @@
           </div>
         </div>
         
-        <!-- Right Column: Summary -->
+        <!-- Right Column: Summary (Only Proceed to Checkout) -->
         <div class="col-lg-5">
           <div class="p-4 rounded-4" style="background: #FFFFFF; border: 1px solid var(--border-subtle); box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
             <h2 class="h5 mb-4 text-uppercase fw-bold text-muted border-bottom pb-3">Cart Summary</h2>
@@ -111,19 +105,14 @@
             </div>
 
             <div class="d-flex justify-content-between mb-4 border-top pt-3">
-              <span class="fs-5 fw-bold" style="color: var(--primary-dark);">Total</span>
+              <span class="fs-5 fw-bold" style="color: var(--primary-dark);">Estimated Total</span>
               <span class="fs-4 fw-bold" style="color: var(--primary-dark);" id="summary-total">₹0</span>
             </div>
             
-            <!-- Checkout Button -->
-            <a href="checkout" class="btn w-100 py-3 rounded-pill fw-bold text-white mb-3" style="background-color: var(--primary-dark); font-size: 1rem;">
-              Proceed to Checkout
+            <!-- ONLY Proceed to Checkout Button -->
+            <a href="checkout" class="btn w-100 py-3 rounded-pill fw-bold text-white mb-2" style="background-color: var(--primary-dark); font-size: 1.05rem; box-shadow: 0 8px 24px rgba(7, 30, 24, 0.2);">
+              Proceed to Checkout →
             </a>
-
-            <!-- Quick WhatsApp Order Option -->
-            <button onclick="orderCartOnWhatsApp()" class="btn w-100 py-2 rounded-pill fw-bold" style="background-color: #E6D2B5; color: #071E18; border: 1px solid rgba(197, 160, 89, 0.4); font-size: 0.9rem;">
-              Order Entire Cart on WhatsApp
-            </button>
             
             <div class="text-center mt-3">
               <small class="text-muted">🔒 Safe & Secure Checkout</small>
@@ -151,21 +140,5 @@
   <script src="assets/js/products.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/cart.js"></script>
-  <script>
-    function orderCartOnWhatsApp() {
-      const cart = getCart();
-      if (!cart || cart.length === 0) return;
-      let text = "Hello Scent Aura X, I would like to place an order for:\n\n";
-      cart.forEach(item => {
-        const prod = getProductById(item.id);
-        const name = prod ? prod.name : item.id;
-        text += `• ${name} (${item.variationId}) x ${item.quantity}\n`;
-      });
-      const totalEl = document.getElementById('summary-total');
-      if (totalEl) text += `\n*Total Amount:* ${totalEl.textContent}`;
-      text += "\n\nPlease confirm order and delivery details.";
-      window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(text)}`, '_blank');
-    }
-  </script>
 </body>
 </html>

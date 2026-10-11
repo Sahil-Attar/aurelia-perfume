@@ -638,34 +638,40 @@ h1, h2, h3, h4, .font-serif, .section-heading {
   flex-grow: 1;
 }
 
-/* WhatsApp Order Button inside Cards */
-.btn-card-whatsapp {
+/* Select Size Button inside Cards */
+.btn-card-select-size {
   background-color: var(--primary-dark);
   color: #FFFFFF;
   border: 1px solid var(--primary-dark);
   border-radius: 999px;
-  padding: 9px 12px;
-  font-size: 0.8rem;
+  padding: 10px 14px;
+  font-size: 0.84rem;
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
+  gap: 8px;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.25s ease;
   width: 100%;
 }
 
-.btn-card-whatsapp:hover {
+.btn-card-select-size:hover {
   background-color: #113D32;
   color: #FFFFFF;
   border-color: #113D32;
+  transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(7, 30, 24, 0.2);
 }
 
-.btn-card-whatsapp svg {
-  color: #25D366;
+.btn-card-select-size svg {
+  color: var(--gold-accent);
+  transition: transform 0.2s ease;
+}
+
+.btn-card-select-size:hover svg {
+  transform: translateX(3px);
 }
 
 /* --- OUR STORY BANNER --- */

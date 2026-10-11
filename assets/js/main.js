@@ -1,7 +1,19 @@
 // Shared functionality across all pages
 
 const CART_KEY = "aurelia_cart";
-const WHATSAPP_PHONE = "919876543210"; // Update with owner phone number
+const COUPON_KEY = "aurelia_coupon";
+const SHIPPING_FEE = 50;
+
+// Scent Aura X WhatsApp business phone number
+const WHATSAPP_PHONE = "919876543210";
+
+// Predefined coupons
+const VALID_COUPONS = {
+    "AURELIA10": { type: "percent", value: 10, label: "10% Off" },
+    "SCENT10": { type: "percent", value: 10, label: "10% Off" },
+    "WELCOME50": { type: "flat", value: 50, label: "₹50 Off" },
+    "ATTAR50": { type: "flat", value: 50, label: "₹50 Off" }
+};
 
 // Format currency
 function formatCurrency(amount) {
@@ -24,25 +36,9 @@ function updateCartCount() {
     }
 }
 
-// Direct WhatsApp order for single product
-function orderOnWhatsApp(productName, price, variationName) {
-    const text = encodeURIComponent(
-        `Hello Scent Aura X, I would like to order:\n\n*Product:* ${productName}\n*Size:* ${variationName || 'Standard'}\n*Price:* ₹${price}\n\nPlease share delivery details and payment process.`
-    );
-    window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${text}`, '_blank');
-}
-
-// General WhatsApp contact
-function openWhatsAppInquiry() {
-    const text = encodeURIComponent("Hello Scent Aura X! I am interested in exploring your pure alcohol-free attar collection.");
-    window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${text}`, '_blank');
-}
-
-// Add to Cart from product cards
+// Add to Cart from product details or cards
 function addToCart(productId) {
     let cart = getCart();
-    
-    // Look for selected size or dropdown
     const selectEl = document.getElementById(`var-${productId}`);
     let variationId = "3ml";
     

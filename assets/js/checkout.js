@@ -1,7 +1,54 @@
-// Checkout script
+// Checkout logic with robust cart calculation, coupon support, and WhatsApp order submission
+
+function getAppliedCoupon() {
+    return localStorage.getItem(COUPON_KEY) || "";
+}
+
+function calculateCheckoutTotals() {
+    const cart = getCart();
+    let subtotal = 0;
+    
+    cart.forEach(item => {
+        const product = getProductById(item.id);
+        const variation = getProductVariation(item.id, item.variationId || "3ml");
+        if (variation && typeof variation.price === 'number') {
+            subtotal += variation.price * (item.quantity || 1);
+        } else if (product && product.variations && product.variations.length > 0) {
+            subtotal += product.variations[0].price * (item.quantity || 1);
+        }
+    });
+
+    const appliedCode = getAppliedCoupon();
+    let discount = 0;
+    let couponLabel = "";
+
+    if (appliedCode && VALID_COUPONS[appliedCode]) {
+        const coupon = VALID_COUPONS[appliedCode];
+        couponLabel = coupon.label || appliedCode;
+        if (coupon.type === "percent") {
+            discount = Math.round(subtotal * (coupon.value / 100));
+        } else if (coupon.type === "flat") {
+            discount = coupon.value;
+        }
+    }
+
+    if (discount > subtotal) discount = subtotal;
+
+    const shipping = subtotal > 0 ? SHIPPING_FEE : 0;
+    const finalTotal = Math.max(0, subtotal + shipping - discount);
+
+    return {
+        subtotal: subtotal,
+        shipping: shipping,
+        discount: discount,
+        appliedCode: appliedCode,
+        couponLabel: couponLabel,
+        total: finalTotal
+    };
+}
 
 function renderCheckoutSummary() {
-    const summaryContainer = document.getElementById("checkout-summary-items") || document.getElementById("checkout-items");
+    const summaryContainer = document.getElementById("checkout-items");
     if (!summaryContainer) return;
     
     const cart = getCart();
@@ -12,20 +59,28 @@ function renderCheckoutSummary() {
     }
     
     let html = "";
-    let subtotal = 0;
     
     cart.forEach(item => {
         const product = getProductById(item.id);
-        const variation = getProductVariation(item.id, item.variationId || "3ml");
+        const variation = getProductVariation(item.id, item.variationId || "3ml") || 
+                          (product && product.variations ? product.variations[0] : { name: "3ml", price: 399 });
         
         if (product && variation) {
-            const lineTotal = variation.price * item.quantity;
-            subtotal += lineTotal;
-            
+            const lineTotal = variation.price * (item.quantity || 1);
+            const imgHtml = product.imageUrl 
+                ? `<img src="${product.imageUrl}" alt="${product.name}" style="width: 44px; height: 44px; border-radius: 8px; object-fit: cover; border: 1px solid var(--border-subtle);">` 
+                : '';
+
             html += `
-                <div class="d-flex justify-content-between mb-2 small">
-                    <span>${product.name} (${variation.name}) × ${item.quantity}</span>
-                    <span class="fw-bold">${formatCurrency(lineTotal)}</span>
+                <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
+                    <div class="d-flex align-items-center gap-2">
+                        ${imgHtml}
+                        <div>
+                            <div class="fw-bold small text-dark">${product.name}</div>
+                            <div class="text-muted" style="font-size: 0.76rem;">Size: ${variation.name} | Qty: ${item.quantity}</div>
+                        </div>
+                    </div>
+                    <span class="fw-bold text-dark small">${formatCurrency(lineTotal)}</span>
                 </div>
             `;
         }
@@ -33,42 +88,61 @@ function renderCheckoutSummary() {
     
     summaryContainer.innerHTML = html;
     
-    // Calculate final totals
-    const appliedCoupon = localStorage.getItem(COUPON_KEY);
-    let discount = 0;
-    let finalTotal = 0;
+    // Calculate and populate financial rows
+    const totals = calculateCheckoutTotals();
     
-    const subtotalEl = document.getElementById("checkout-subtotal") || document.getElementById("summary-subtotal");
-    const shippingEl = document.getElementById("checkout-shipping") || document.getElementById("summary-shipping");
-    const discountEl = document.getElementById("checkout-discount") || document.getElementById("summary-discount");
-    const discountRow = document.getElementById("checkout-discount-row") || document.getElementById("discount-row");
-    const totalEl = document.getElementById("checkout-total") || document.getElementById("summary-total");
+    const subtotalEl = document.getElementById("summary-subtotal");
+    const shippingEl = document.getElementById("summary-shipping");
+    const discountEl = document.getElementById("summary-discount");
+    const discountRow = document.getElementById("discount-row");
+    const totalEl = document.getElementById("summary-total");
     
-    if (subtotalEl) subtotalEl.textContent = formatCurrency(subtotal);
-    if (shippingEl) shippingEl.textContent = formatCurrency(SHIPPING_FEE);
-    
-    if (appliedCoupon && VALID_COUPONS[appliedCoupon]) {
-        const couponInfo = VALID_COUPONS[appliedCoupon];
-        if (couponInfo.type === "percent") {
-            discount = subtotal * (couponInfo.value / 100);
-        } else if (couponInfo.type === "flat") {
-            discount = couponInfo.value;
-        }
-    }
-    
-    finalTotal = subtotal + SHIPPING_FEE - discount;
-    if (finalTotal < 0) finalTotal = 0;
+    if (subtotalEl) subtotalEl.textContent = formatCurrency(totals.subtotal);
+    if (shippingEl) shippingEl.textContent = formatCurrency(totals.shipping);
     
     if (discountEl && discountRow) {
-        if (discount > 0) {
-            discountEl.textContent = `-${formatCurrency(discount)}`;
+        if (totals.discount > 0) {
+            discountEl.innerHTML = `
+                <span class="text-success fw-bold">-${formatCurrency(totals.discount)}</span>
+                <span class="badge bg-light text-success ms-1">${totals.appliedCode}</span>
+                <button type="button" class="btn btn-sm btn-link text-danger p-0 ms-2 text-decoration-none" onclick="removeCheckoutCoupon()">✕</button>
+            `;
             discountRow.style.display = "flex";
         } else {
             discountRow.style.display = "none";
         }
     }
     
-    if (totalEl) totalEl.textContent = formatCurrency(finalTotal);
+    if (totalEl) totalEl.textContent = formatCurrency(totals.total);
+}
+
+// Coupon Handling in Checkout
+function applyCheckoutCoupon() {
+    const inputEl = document.getElementById("checkout-coupon-input");
+    const msgEl = document.getElementById("checkout-coupon-message");
+    if (!inputEl) return;
+    
+    const code = inputEl.value.trim().toUpperCase();
+    if (!code) {
+        if (msgEl) msgEl.innerHTML = `<span class="text-danger small">Please enter a coupon code.</span>`;
+        return;
+    }
+
+    if (VALID_COUPONS[code]) {
+        localStorage.setItem(COUPON_KEY, code);
+        if (msgEl) msgEl.innerHTML = `<span class="text-success small">Coupon <strong>${code}</strong> applied!</span>`;
+        inputEl.value = "";
+        renderCheckoutSummary();
+    } else {
+        if (msgEl) msgEl.innerHTML = `<span class="text-danger small">Invalid coupon code. Try SCENT10 or WELCOME50</span>`;
+    }
+}
+
+function removeCheckoutCoupon() {
+    localStorage.removeItem(COUPON_KEY);
+    const msgEl = document.getElementById("checkout-coupon-message");
+    if (msgEl) msgEl.innerHTML = "";
+    renderCheckoutSummary();
 }
 
 function generateOrderId() {
@@ -77,108 +151,122 @@ function generateOrderId() {
                       (date.getMonth() + 1).toString().padStart(2, '0') + 
                       date.getDate().toString().padStart(2, '0');
     const random = Math.floor(100 + Math.random() * 900);
-    return `AUR-${dateString}-${random}`;
+    return `SAX-${dateString}-${random}`;
 }
 
+// Place Order and Send Form Data via WhatsApp
 function placeOrder(event) {
-    event.preventDefault();
+    if (event) event.preventDefault();
     
     const cart = getCart();
     if (cart.length === 0) {
         alert("Your cart is empty.");
+        window.location.href = "shop";
         return;
     }
     
     const form = document.getElementById("checkout-form");
     if (!form.checkValidity()) {
         form.classList.add('was-validated');
+        // Scroll to first invalid field
+        const firstInvalid = form.querySelector(':invalid');
+        if (firstInvalid) firstInvalid.focus();
         return;
     }
     
-    // Additional validation for pincode and phone
-    const phone = document.getElementById("phone").value;
-    const pincode = document.getElementById("pincode").value;
+    const fullName = document.getElementById("fullName").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const email = (document.getElementById("email") ? document.getElementById("email").value.trim() : "") || "N/A";
+    const address = document.getElementById("address").value.trim();
+    const city = document.getElementById("city").value.trim();
+    const state = document.getElementById("state").value.trim();
+    const pincode = document.getElementById("pincode").value.trim();
     
     if (!/^[0-9]{10}$/.test(phone)) {
         alert("Please enter a valid 10-digit mobile number.");
+        document.getElementById("phone").focus();
         return;
     }
     
     if (!/^[0-9]{6}$/.test(pincode)) {
         alert("Please enter a valid 6-digit pincode.");
+        document.getElementById("pincode").focus();
         return;
     }
     
-    // Construct Order Object
-    const appliedCoupon = localStorage.getItem(COUPON_KEY);
+    const totals = calculateCheckoutTotals();
+    const orderId = generateOrderId();
     
+    // Construct order items list for WhatsApp
+    let itemsText = "";
+    cart.forEach((item, index) => {
+        const prod = getProductById(item.id);
+        const name = prod ? prod.name : item.id;
+        const variation = getProductVariation(item.id, item.variationId) || { name: item.variationId || "3ml", price: 0 };
+        itemsText += `${index + 1}. *${name}* (${variation.name}) x ${item.quantity} = ₹${variation.price * item.quantity}\n`;
+    });
+
+    // Construct full WhatsApp message with all delivery details and totals
+    let waMessage = `✨ *NEW ORDER: #${orderId}* ✨\n`;
+    waMessage += `━━━━━━━━━━━━━━━━━━━━━\n`;
+    waMessage += `👤 *CUSTOMER DETAILS*\n`;
+    waMessage += `• *Name:* ${fullName}\n`;
+    waMessage += `• *Mobile:* ${phone}\n`;
+    if (email && email !== "N/A") waMessage += `• *Email:* ${email}\n`;
+    waMessage += `\n📍 *SHIPPING ADDRESS*\n`;
+    waMessage += `${address}\n`;
+    waMessage += `${city}, ${state} - ${pincode}\n`;
+    waMessage += `━━━━━━━━━━━━━━━━━━━━━\n`;
+    waMessage += `🛍️ *ORDERED ITEMS*\n`;
+    waMessage += itemsText;
+    waMessage += `━━━━━━━━━━━━━━━━━━━━━\n`;
+    waMessage += `💰 *ORDER SUMMARY*\n`;
+    waMessage += `• Subtotal: ₹${totals.subtotal}\n`;
+    waMessage += `• Shipping: ₹${totals.shipping}\n`;
+    if (totals.discount > 0) {
+        waMessage += `• Discount (${totals.appliedCode}): -₹${totals.discount}\n`;
+    }
+    waMessage += `• *TOTAL AMOUNT: ₹${totals.total}*\n`;
+    waMessage += `• *Payment Method:* Order via WhatsApp\n`;
+    waMessage += `━━━━━━━━━━━━━━━━━━━━━\n`;
+    waMessage += `Please confirm my order and share delivery / payment updates. Thank you!`;
+
+    // Save order data in sessionStorage/localStorage for success screen
     const orderData = {
-        orderId: generateOrderId(),
+        orderId: orderId,
         date: new Date().toISOString(),
-        customer: document.getElementById("fullName").value,
+        customer: fullName,
         phone: phone,
-        email: document.getElementById("email").value || "",
-        address: document.getElementById("address").value,
-        city: document.getElementById("city").value,
-        state: document.getElementById("state").value,
+        email: email,
+        address: address,
+        city: city,
+        state: state,
         pincode: pincode,
         items: cart,
-        subtotal: document.getElementById("checkout-subtotal").textContent,
-        shipping: document.getElementById("checkout-shipping").textContent,
-        couponCode: appliedCoupon || "",
-        discount: document.getElementById("checkout-discount") ? document.getElementById("checkout-discount").textContent : "₹0.00",
-        total: document.getElementById("checkout-total").textContent,
-        paymentMethod: "Cash on Delivery",
+        subtotal: formatCurrency(totals.subtotal),
+        shipping: formatCurrency(totals.shipping),
+        couponCode: totals.appliedCode,
+        discount: formatCurrency(totals.discount),
+        total: formatCurrency(totals.total),
+        paymentMethod: "Order on WhatsApp",
         status: "Pending"
     };
-    
-    // Store in localStorage
-    let orders = JSON.parse(localStorage.getItem("aurelia_orders")) || [];
-    orders.push(orderData);
-    localStorage.setItem("aurelia_orders", JSON.stringify(orders));
-    
-    // Store latest order for the success page
-    localStorage.setItem("aurelia_latest_order", JSON.stringify(orderData));
-    
-    // Clear cart and coupon
-    clearCart();
-    
-    // ------------------------------------------------------------------------
-    // EMAIL INTEGRATION (Google Apps Script)
-    // ------------------------------------------------------------------------
-    // Replace this URL with your actual Google Apps Script Web App URL
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwsT7yWwrh20W25pU3DZ5-wGbiyr200hFlYdAQ4xbVyXNjRntPCixvi6u5YkrU5N4Q/exec";
-    
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const originalBtnText = submitBtn.innerHTML;
-    
-    // Only attempt to send if the URL has been updated
-    if (SCRIPT_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL") {
-        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Processing...';
-        submitBtn.disabled = true;
-        
-        fetch(SCRIPT_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "text/plain;charset=utf-8",
-            },
-            body: JSON.stringify(orderData)
-        })
-        .then(response => {
-            // Google Apps Script might return a CORS redirect, so we just assume success if fetch resolves
-            console.log("Email request sent.");
-            window.location.href = "order-success";
-        })
-        .catch(error => {
-            console.error("Error sending email:", error);
-            // Still redirect to success page even if email fails, so user isn't stuck
-            window.location.href = "order-success";
-        });
-    } else {
-        // If no URL is set, just redirect immediately
-        console.warn("Google Apps Script URL not set. Skipping email notification.");
+
+    sessionStorage.setItem("latest_order", JSON.stringify(orderData));
+
+    // Clear cart & coupon
+    localStorage.removeItem(CART_KEY);
+    localStorage.removeItem(COUPON_KEY);
+    updateCartCount();
+
+    // Open WhatsApp
+    const waUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(waMessage)}`;
+    window.open(waUrl, '_blank');
+
+    // Redirect to Order Success screen
+    setTimeout(() => {
         window.location.href = "order-success";
-    }
+    }, 400);
 }
 
 document.addEventListener("DOMContentLoaded", async () => {

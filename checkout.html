@@ -11,7 +11,7 @@
 <body style="background-color: var(--page-bg);">
   <!-- Header -->
   <header class="site-header">
-    <div class="header-container justify-content-center">
+    <div class="header-container justify-content-between">
       <a href="/" class="brand-wrapper">
         <svg class="brand-logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M20 2L24.5 13.5L36 18L24.5 22.5L20 34L15.5 22.5L4 18L15.5 13.5L20 2Z" stroke="#D4AF37" stroke-width="2"/>
@@ -23,14 +23,39 @@
           <span class="brand-tagline">PURE FRAGRANCE, LASTING IMPRESSION</span>
         </div>
       </a>
+
+      <ul class="nav-links d-none d-md-flex">
+        <li><a href="/">Home</a></li>
+        <li><a href="shop">Shop</a></li>
+      </ul>
+
+      <div class="header-actions">
+        <a href="cart" class="header-icon-btn position-relative" aria-label="Cart">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span id="cart-count-badge" class="cart-counter">0</span>
+        </a>
+      </div>
     </div>
   </header>
 
   <section class="py-5">
     <div class="container" style="max-width: 1040px;">
+      <div class="mb-4">
+        <a href="cart" class="text-decoration-none text-muted small fw-bold d-inline-flex align-items-center gap-1">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          <span>Back to Cart</span>
+        </a>
+      </div>
+
       <div class="row g-5">
         
-        <!-- Left Column: Form -->
+        <!-- Left Column: Delivery Form -->
         <div class="col-lg-7">
           <div class="p-4 rounded-4" style="background: #FFFFFF; border: 1px solid var(--border-subtle); box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
             <h2 class="h5 mb-4 text-uppercase fw-bold text-muted border-bottom pb-3">Delivery Information</h2>
@@ -84,40 +109,51 @@
                 </div>
               </div>
               
-              <h2 class="h5 mb-4 mt-4 text-uppercase fw-bold text-muted border-bottom pb-3">Payment Method</h2>
+              <!-- Payment Section: Single Direct "Order on WhatsApp" Button with instructions -->
+              <h2 class="h5 mb-3 mt-4 text-uppercase fw-bold text-muted border-bottom pb-3">Complete Order</h2>
               
-              <div class="mb-4">
-                <div class="form-check p-3 border rounded-3 mb-2" style="background: #FAF6EE; border-color: rgba(197, 160, 89, 0.4) !important;">
-                  <input class="form-check-input" type="radio" name="paymentMethod" id="cod" value="Cash on Delivery" checked>
-                  <label class="form-check-label fw-bold" for="cod">
-                    Cash on Delivery (COD)
-                  </label>
-                  <div class="small text-muted mt-1">Pay with cash when your package is delivered to your doorstep.</div>
+              <div class="p-3 rounded-3 mb-4" style="background-color: #FAF6EE; border: 1px solid rgba(197, 160, 89, 0.4);">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366">
+                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.974.551 1.834.814 2.8.814 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.766-5.772-5.766zm6.819 5.767c-.001 3.766-3.054 6.819-6.819 6.819-1.157 0-2.29-.296-3.29-.861l-3.663.96 1.002-3.666c-.633-1.042-.969-2.247-.968-3.252.001-3.766 3.054-6.819 6.819-6.819 3.765 0 6.819 3.053 6.819 6.819z"/>
+                  </svg>
+                  <strong style="color: var(--primary-dark); font-size: 0.95rem;">Direct WhatsApp Confirmation</strong>
                 </div>
-                
-                <div class="form-check p-3 border rounded-3" style="background: #FAF6EE; border-color: rgba(197, 160, 89, 0.4) !important;">
-                  <input class="form-check-input" type="radio" name="paymentMethod" id="upi" value="UPI / Online Payment">
-                  <label class="form-check-label fw-bold" for="upi">
-                    UPI / QR Code Payment
-                  </label>
-                  <div class="small text-muted mt-1">GPay, PhonePe, Paytm, or direct bank transfer.</div>
-                </div>
+                <p class="small text-muted mb-0" style="line-height: 1.5;">
+                  Clicking the button below will securely send your delivery details and cart summary directly to our WhatsApp support team for fast order confirmation & dispatch.
+                </p>
               </div>
-              
-              <button type="submit" id="btn-submit-order" class="btn w-100 py-3 rounded-pill fw-bold text-white fs-5" style="background-color: var(--primary-dark);">
-                Confirm Order
+
+              <!-- Only WhatsApp Order Button here -->
+              <button type="submit" id="btn-submit-order" class="btn w-100 py-3 rounded-pill fw-bold text-white fs-5 d-flex align-items-center justify-content-center gap-2" style="background-color: var(--primary-dark); box-shadow: 0 8px 24px rgba(7, 30, 24, 0.25);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#25D366">
+                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.974.551 1.834.814 2.8.814 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.766-5.772-5.766zm6.819 5.767c-.001 3.766-3.054 6.819-6.819 6.819-1.157 0-2.29-.296-3.29-.861l-3.663.96 1.002-3.666c-.633-1.042-.969-2.247-.968-3.252.001-3.766 3.054-6.819 6.819-6.819 3.765 0 6.819 3.053 6.819 6.819z"/>
+                </svg>
+                <span>Order on WhatsApp</span>
               </button>
             </form>
           </div>
         </div>
         
-        <!-- Right Column: Order Summary -->
+        <!-- Right Column: Order Summary & Coupon Code Box -->
         <div class="col-lg-5">
           <div class="p-4 rounded-4" style="background: #FFFFFF; border: 1px solid var(--border-subtle); box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
             <h2 class="h5 mb-4 text-uppercase fw-bold text-muted border-bottom pb-3">Order Summary</h2>
             
-            <div id="checkout-items" class="mb-4">
+            <div id="checkout-items" class="mb-3">
               <!-- Rendered via checkout.js -->
+            </div>
+
+            <!-- Coupon Code Section in Order Summary -->
+            <div class="mb-4 pt-2 border-top">
+              <label class="form-label fw-bold small text-muted text-uppercase mb-2">Have a Coupon Code?</label>
+              <div class="input-group">
+                <input type="text" id="checkout-coupon-input" class="form-control text-uppercase" placeholder="Enter coupon code (e.g. SCENT10)">
+                <button type="button" class="btn fw-bold px-3" style="background-color: var(--primary-dark); color: #fff;" onclick="applyCheckoutCoupon()">
+                  Apply
+                </button>
+              </div>
+              <div id="checkout-coupon-message" class="mt-2"></div>
             </div>
             
             <div class="border-top pt-3 mb-3">
@@ -129,7 +165,7 @@
                 <span class="text-muted">Shipping</span>
                 <span id="summary-shipping" class="fw-bold">₹50</span>
               </div>
-              <div id="discount-row" class="d-flex justify-content-between mb-2" style="display: none !important;">
+              <div id="discount-row" class="d-flex justify-content-between mb-2" style="display: none;">
                 <span class="text-muted">Discount</span>
                 <span id="summary-discount" class="text-success fw-bold"></span>
               </div>
@@ -138,6 +174,10 @@
             <div class="d-flex justify-content-between border-top pt-3">
               <span class="fs-5 fw-bold" style="color: var(--primary-dark);">Total Amount</span>
               <span id="summary-total" class="fs-4 fw-bold" style="color: var(--primary-dark);">₹0</span>
+            </div>
+
+            <div class="text-center mt-3 pt-2 text-muted small">
+              🔒 Safe & verified WhatsApp order fulfillment
             </div>
           </div>
         </div>
