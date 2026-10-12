@@ -103,18 +103,18 @@ async function loadProducts() {
 
     try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 3500);
-        
+        const timeoutId = setTimeout(() => controller.abort(), 4000);
+
         const response = await fetch(API_URL, { signal: controller });
         clearTimeout(timeoutId);
-        
+
         const json = await response.json();
         if (json.status === "success" && Array.isArray(json.data) && json.data.length > 0) {
             // Merge sheet products with our rich default items if sheet only has 1 test item
             const fetchedList = json.data.map(item => {
                 if (!item.imageUrl) {
-                    const match = DEFAULT_PRODUCTS.find(d => 
-                        String(d.id).toLowerCase() === String(item.id).toLowerCase() || 
+                    const match = DEFAULT_PRODUCTS.find(d =>
+                        String(d.id).toLowerCase() === String(item.id).toLowerCase() ||
                         d.name.toLowerCase() === (item.name || "").toLowerCase()
                     );
                     item.imageUrl = match ? match.imageUrl : "assets/images/prod-oud-royal.jpg";
@@ -181,14 +181,14 @@ function getProductVariation(productId, variationId) {
     if (!product || !product.variations || product.variations.length === 0) {
         return { id: variationId || "3ml", name: variationId || "3ml", price: 399 };
     }
-    
+
     if (!variationId) return product.variations[0];
-    
+
     const vStr = String(variationId).trim().toLowerCase();
-    const found = product.variations.find(v => 
-        String(v.id || '').trim().toLowerCase() === vStr || 
+    const found = product.variations.find(v =>
+        String(v.id || '').trim().toLowerCase() === vStr ||
         String(v.name || '').trim().toLowerCase() === vStr
     );
-    
+
     return found || product.variations[0];
 }

@@ -1098,6 +1098,7 @@ h1, h2, h3, h4, .font-serif, .section-heading {
   .footer-grid {
     grid-template-columns: 1fr;
   }
+<<<<<<< HEAD
 }
 
 @media (max-width: 680px) {
@@ -1119,6 +1120,11 @@ h1, h2, h3, h4, .font-serif, .section-heading {
   .nav-links a {
     font-size: 0.84rem;
   }
+=======
+  .nav-links {
+    display: none;
+  }
+>>>>>>> origin/main
 }
 
 @media (max-width: 500px) {

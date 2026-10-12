@@ -46,6 +46,7 @@ function addToCart(productId) {
         variationId = selectEl.value;
     }
     
+<<<<<<< HEAD
     addToCartWithQty(productId, variationId, 1);
 }
 
@@ -76,22 +77,61 @@ function addToCartWithQty(productId, variationId, qty) {
         cart[existingIndex].price = safePrice;
         cart[existingIndex].imageUrl = safeImg;
         cart[existingIndex].cartItemId = cartItemId;
+=======
+    const cartItemId = `${productId}_${variationId}`;
+    const existingItem = cart.find(item => item.cartItemId === cartItemId);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+>>>>>>> origin/main
     } else {
         cart.push({ 
             cartItemId: cartItemId, 
             id: productId, 
+<<<<<<< HEAD
             name: safeName,
             variationId: safeVarId, 
             variationName: safeVarName,
             price: safePrice,
             imageUrl: safeImg,
             quantity: parsedQty 
+=======
+            variationId: variationId, 
+            quantity: 1 
+>>>>>>> origin/main
         });
     }
     
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
     updateCartCount();
+<<<<<<< HEAD
     showToast(`Added ${parsedQty} item(s) to cart`);
+=======
+    showToast("Added to cart");
+}
+
+// Add to Cart with specific quantity
+function addToCartWithQty(productId, variationId, qty) {
+    let cart = getCart();
+    const cartItemId = `${productId}_${variationId}`;
+    
+    const existingItem = cart.find(item => item.cartItemId === cartItemId);
+    
+    if (existingItem) {
+        existingItem.quantity += qty;
+    } else {
+        cart.push({ 
+            cartItemId: cartItemId, 
+            id: productId, 
+            variationId: variationId, 
+            quantity: qty 
+        });
+    }
+    
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    updateCartCount();
+    showToast(`Added ${qty} item(s) to cart`);
+>>>>>>> origin/main
 }
 
 // Update price display when variation changes
