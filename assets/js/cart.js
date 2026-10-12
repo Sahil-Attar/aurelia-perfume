@@ -1,6 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Cart page functionality - constants (COUPON_KEY, SHIPPING_FEE, VALID_COUPONS, CART_KEY) are defined in main.js
 =======
+=======
+>>>>>>> origin/main
 const COUPON_KEY = "aurelia_coupon";
 const SHIPPING_FEE = 50;
 
@@ -8,12 +11,19 @@ const VALID_COUPONS = {
     "AURELIA10": { type: "percent", value: 10 },
     "WELCOME50": { type: "flat", value: 50 }
 };
+<<<<<<< HEAD
+>>>>>>> origin/main
+=======
 >>>>>>> origin/main
 
 // Render cart items
 function renderCart() {
     const cartContainer = document.getElementById("cart-items-container");
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    const cartSummary = document.getElementById("cart-summary-container");
+>>>>>>> origin/main
 =======
     const cartSummary = document.getElementById("cart-summary-container");
 >>>>>>> origin/main
@@ -24,6 +34,7 @@ function renderCart() {
     
     const cart = getCart();
     
+<<<<<<< HEAD
 <<<<<<< HEAD
     if (!cart || cart.length === 0) {
         if (emptyState) emptyState.style.display = "block";
@@ -84,6 +95,8 @@ function renderCart() {
     if (cartContent) cartContent.style.display = "flex"; // For grid/row layout
     
 =======
+=======
+>>>>>>> origin/main
     if (cart.length === 0) {
         emptyState.style.display = "block";
         cartContent.style.display = "none";
@@ -135,6 +148,9 @@ function renderCart() {
         }
     });
     
+<<<<<<< HEAD
+>>>>>>> origin/main
+=======
 >>>>>>> origin/main
     cartContainer.innerHTML = html;
     updateTotals(subtotal);
@@ -177,6 +193,7 @@ function clearCart() {
 // Apply coupon
 function applyCoupon() {
 <<<<<<< HEAD
+<<<<<<< HEAD
     const inputEl = document.getElementById("coupon-input");
     const messageEl = document.getElementById("coupon-message");
     if (!inputEl) return;
@@ -194,6 +211,8 @@ function applyCoupon() {
     } else {
         if (messageEl) messageEl.innerHTML = `<span class="text-danger small">Invalid coupon code.</span>`;
 =======
+=======
+>>>>>>> origin/main
     const input = document.getElementById("coupon-input").value.trim().toUpperCase();
     const messageEl = document.getElementById("coupon-message");
     
@@ -208,6 +227,9 @@ function applyCoupon() {
         renderCart();
     } else {
         messageEl.innerHTML = `<span class="text-danger small">Invalid coupon code.</span>`;
+<<<<<<< HEAD
+>>>>>>> origin/main
+=======
 >>>>>>> origin/main
     }
 }
@@ -217,9 +239,15 @@ function removeCoupon() {
     localStorage.removeItem(COUPON_KEY);
     const messageEl = document.getElementById("coupon-message");
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (messageEl) messageEl.innerHTML = "";
     const inputEl = document.getElementById("coupon-input");
     if (inputEl) inputEl.value = "";
+=======
+    if(messageEl) messageEl.innerHTML = "";
+    const inputEl = document.getElementById("coupon-input");
+    if(inputEl) inputEl.value = "";
+>>>>>>> origin/main
 =======
     if(messageEl) messageEl.innerHTML = "";
     const inputEl = document.getElementById("coupon-input");
@@ -240,16 +268,22 @@ function updateTotals(subtotal) {
     const totalEl = document.getElementById("summary-total");
     
 <<<<<<< HEAD
+<<<<<<< HEAD
     const shippingFee = subtotal > 0 ? SHIPPING_FEE : 0;
     if (subtotalEl) subtotalEl.textContent = formatCurrency(subtotal);
     if (shippingEl) shippingEl.textContent = formatCurrency(shippingFee);
     
     if (appliedCoupon && typeof VALID_COUPONS !== 'undefined' && VALID_COUPONS[appliedCoupon]) {
 =======
+=======
+>>>>>>> origin/main
     if (subtotalEl) subtotalEl.textContent = formatCurrency(subtotal);
     if (shippingEl) shippingEl.textContent = formatCurrency(SHIPPING_FEE);
     
     if (appliedCoupon && VALID_COUPONS[appliedCoupon]) {
+<<<<<<< HEAD
+>>>>>>> origin/main
+=======
 >>>>>>> origin/main
         const couponInfo = VALID_COUPONS[appliedCoupon];
         if (couponInfo.type === "percent") {
@@ -260,7 +294,11 @@ function updateTotals(subtotal) {
     }
     
 <<<<<<< HEAD
+<<<<<<< HEAD
     finalTotal = subtotal + shippingFee - discount;
+=======
+    finalTotal = subtotal + SHIPPING_FEE - discount;
+>>>>>>> origin/main
 =======
     finalTotal = subtotal + SHIPPING_FEE - discount;
 >>>>>>> origin/main
@@ -273,11 +311,17 @@ function updateTotals(subtotal) {
                 <button class="btn btn-sm btn-link text-muted p-0 ms-2" onclick="removeCoupon()">[Remove]</button>
             `;
 <<<<<<< HEAD
+<<<<<<< HEAD
             const discountRow = document.getElementById("discount-row");
             if (discountRow) discountRow.style.display = "flex";
         } else {
             const discountRow = document.getElementById("discount-row");
             if (discountRow) discountRow.style.display = "none";
+=======
+            document.getElementById("discount-row").style.display = "flex";
+        } else {
+            document.getElementById("discount-row").style.display = "none";
+>>>>>>> origin/main
 =======
             document.getElementById("discount-row").style.display = "flex";
         } else {
@@ -289,6 +333,7 @@ function updateTotals(subtotal) {
     if (totalEl) totalEl.textContent = formatCurrency(finalTotal);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 async function initCart() {
     if (document.getElementById("cart-items-container")) {
@@ -308,10 +353,15 @@ if (document.readyState === "loading") {
     initCart();
 }
 =======
+=======
+>>>>>>> origin/main
 document.addEventListener("DOMContentLoaded", async () => {
     await loadProducts();
     if (document.getElementById("cart-items-container")) {
         renderCart();
     }
 });
+<<<<<<< HEAD
+>>>>>>> origin/main
+=======
 >>>>>>> origin/main

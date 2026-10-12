@@ -47,6 +47,7 @@ function addToCart(productId) {
     }
     
 <<<<<<< HEAD
+<<<<<<< HEAD
     addToCartWithQty(productId, variationId, 1);
 }
 
@@ -78,16 +79,22 @@ function addToCartWithQty(productId, variationId, qty) {
         cart[existingIndex].imageUrl = safeImg;
         cart[existingIndex].cartItemId = cartItemId;
 =======
+=======
+>>>>>>> origin/main
     const cartItemId = `${productId}_${variationId}`;
     const existingItem = cart.find(item => item.cartItemId === cartItemId);
     
     if (existingItem) {
         existingItem.quantity += 1;
+<<<<<<< HEAD
+>>>>>>> origin/main
+=======
 >>>>>>> origin/main
     } else {
         cart.push({ 
             cartItemId: cartItemId, 
             id: productId, 
+<<<<<<< HEAD
 <<<<<<< HEAD
             name: safeName,
             variationId: safeVarId, 
@@ -99,14 +106,21 @@ function addToCartWithQty(productId, variationId, qty) {
             variationId: variationId, 
             quantity: 1 
 >>>>>>> origin/main
+=======
+            variationId: variationId, 
+            quantity: 1 
+>>>>>>> origin/main
         });
     }
     
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
     updateCartCount();
 <<<<<<< HEAD
+<<<<<<< HEAD
     showToast(`Added ${parsedQty} item(s) to cart`);
 =======
+=======
+>>>>>>> origin/main
     showToast("Added to cart");
 }
 
@@ -131,6 +145,9 @@ function addToCartWithQty(productId, variationId, qty) {
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
     updateCartCount();
     showToast(`Added ${qty} item(s) to cart`);
+<<<<<<< HEAD
+>>>>>>> origin/main
+=======
 >>>>>>> origin/main
 }
 

@@ -12,6 +12,7 @@ function calculateCheckoutTotals() {
         const product = getProductById(item.id);
         const variation = getProductVariation(item.id, item.variationId || "3ml");
 <<<<<<< HEAD
+<<<<<<< HEAD
         let unitPrice = 399;
         if (variation && typeof variation.price === 'number') {
             unitPrice = variation.price;
@@ -22,11 +23,16 @@ function calculateCheckoutTotals() {
         }
         subtotal += unitPrice * (parseInt(item.quantity) || 1);
 =======
+=======
+>>>>>>> origin/main
         if (variation && typeof variation.price === 'number') {
             subtotal += variation.price * (item.quantity || 1);
         } else if (product && product.variations && product.variations.length > 0) {
             subtotal += product.variations[0].price * (item.quantity || 1);
         }
+<<<<<<< HEAD
+>>>>>>> origin/main
+=======
 >>>>>>> origin/main
     });
 
@@ -66,8 +72,13 @@ function renderCheckoutSummary() {
     const cart = getCart();
     
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (!cart || cart.length === 0) {
         window.location.href = "cart.html";
+=======
+    if (cart.length === 0) {
+        window.location.href = "cart";
+>>>>>>> origin/main
 =======
     if (cart.length === 0) {
         window.location.href = "cart";
@@ -79,6 +90,7 @@ function renderCheckoutSummary() {
     
     cart.forEach(item => {
         const product = getProductById(item.id);
+<<<<<<< HEAD
 <<<<<<< HEAD
         const variation = getProductVariation(item.id, item.variationId || "3ml");
         
@@ -102,6 +114,8 @@ function renderCheckoutSummary() {
             </div>
         `;
 =======
+=======
+>>>>>>> origin/main
         const variation = getProductVariation(item.id, item.variationId || "3ml") || 
                           (product && product.variations ? product.variations[0] : { name: "3ml", price: 399 });
         
@@ -124,6 +138,9 @@ function renderCheckoutSummary() {
                 </div>
             `;
         }
+<<<<<<< HEAD
+>>>>>>> origin/main
+=======
 >>>>>>> origin/main
     });
     
@@ -307,7 +324,11 @@ function placeOrder(event) {
     // Redirect to Order Success screen
     setTimeout(() => {
 <<<<<<< HEAD
+<<<<<<< HEAD
         window.location.href = "order-success.html";
+=======
+        window.location.href = "order-success";
+>>>>>>> origin/main
 =======
         window.location.href = "order-success";
 >>>>>>> origin/main
@@ -316,6 +337,10 @@ function placeOrder(event) {
 
 document.addEventListener("DOMContentLoaded", async () => {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    await loadProducts();
+>>>>>>> origin/main
 =======
     await loadProducts();
 >>>>>>> origin/main
@@ -324,10 +349,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("checkout-form").addEventListener("submit", placeOrder);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     await loadProducts();
     if (document.getElementById("checkout-form")) {
         renderCheckoutSummary();
     }
+=======
+>>>>>>> origin/main
 =======
 >>>>>>> origin/main
 });
