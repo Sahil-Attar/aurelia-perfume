@@ -11,8 +11,6 @@ function calculateCheckoutTotals() {
     cart.forEach(item => {
         const product = getProductById(item.id);
         const variation = getProductVariation(item.id, item.variationId || "3ml");
-<<<<<<< HEAD
-<<<<<<< HEAD
         let unitPrice = 399;
         if (variation && typeof variation.price === 'number') {
             unitPrice = variation.price;
@@ -22,18 +20,6 @@ function calculateCheckoutTotals() {
             unitPrice = product.variations[0].price;
         }
         subtotal += unitPrice * (parseInt(item.quantity) || 1);
-=======
-=======
->>>>>>> origin/main
-        if (variation && typeof variation.price === 'number') {
-            subtotal += variation.price * (item.quantity || 1);
-        } else if (product && product.variations && product.variations.length > 0) {
-            subtotal += product.variations[0].price * (item.quantity || 1);
-        }
-<<<<<<< HEAD
->>>>>>> origin/main
-=======
->>>>>>> origin/main
     });
 
     const appliedCode = getAppliedCoupon();
@@ -71,18 +57,8 @@ function renderCheckoutSummary() {
     
     const cart = getCart();
     
-<<<<<<< HEAD
-<<<<<<< HEAD
     if (!cart || cart.length === 0) {
         window.location.href = "cart.html";
-=======
-    if (cart.length === 0) {
-        window.location.href = "cart";
->>>>>>> origin/main
-=======
-    if (cart.length === 0) {
-        window.location.href = "cart";
->>>>>>> origin/main
         return;
     }
     
@@ -90,8 +66,6 @@ function renderCheckoutSummary() {
     
     cart.forEach(item => {
         const product = getProductById(item.id);
-<<<<<<< HEAD
-<<<<<<< HEAD
         const variation = getProductVariation(item.id, item.variationId || "3ml");
         
         const prodName = (product && product.name) ? product.name : (item.name || "Attar Fragrance");
@@ -113,35 +87,6 @@ function renderCheckoutSummary() {
                 <span class="fw-bold text-dark small">${formatCurrency(lineTotal)}</span>
             </div>
         `;
-=======
-=======
->>>>>>> origin/main
-        const variation = getProductVariation(item.id, item.variationId || "3ml") || 
-                          (product && product.variations ? product.variations[0] : { name: "3ml", price: 399 });
-        
-        if (product && variation) {
-            const lineTotal = variation.price * (item.quantity || 1);
-            const imgHtml = product.imageUrl 
-                ? `<img src="${product.imageUrl}" alt="${product.name}" style="width: 44px; height: 44px; border-radius: 8px; object-fit: cover; border: 1px solid var(--border-subtle);">` 
-                : '';
-
-            html += `
-                <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
-                    <div class="d-flex align-items-center gap-2">
-                        ${imgHtml}
-                        <div>
-                            <div class="fw-bold small text-dark">${product.name}</div>
-                            <div class="text-muted" style="font-size: 0.76rem;">Size: ${variation.name} | Qty: ${item.quantity}</div>
-                        </div>
-                    </div>
-                    <span class="fw-bold text-dark small">${formatCurrency(lineTotal)}</span>
-                </div>
-            `;
-        }
-<<<<<<< HEAD
->>>>>>> origin/main
-=======
->>>>>>> origin/main
     });
     
     summaryContainer.innerHTML = html;
@@ -323,39 +268,17 @@ function placeOrder(event) {
 
     // Redirect to Order Success screen
     setTimeout(() => {
-<<<<<<< HEAD
-<<<<<<< HEAD
         window.location.href = "order-success.html";
-=======
-        window.location.href = "order-success";
->>>>>>> origin/main
-=======
-        window.location.href = "order-success";
->>>>>>> origin/main
     }, 400);
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    await loadProducts();
->>>>>>> origin/main
-=======
-    await loadProducts();
->>>>>>> origin/main
     if (document.getElementById("checkout-form")) {
         renderCheckoutSummary();
         document.getElementById("checkout-form").addEventListener("submit", placeOrder);
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
     await loadProducts();
     if (document.getElementById("checkout-form")) {
         renderCheckoutSummary();
     }
-=======
->>>>>>> origin/main
-=======
->>>>>>> origin/main
 });

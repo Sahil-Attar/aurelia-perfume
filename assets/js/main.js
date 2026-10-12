@@ -46,8 +46,6 @@ function addToCart(productId) {
         variationId = selectEl.value;
     }
     
-<<<<<<< HEAD
-<<<<<<< HEAD
     addToCartWithQty(productId, variationId, 1);
 }
 
@@ -78,77 +76,22 @@ function addToCartWithQty(productId, variationId, qty) {
         cart[existingIndex].price = safePrice;
         cart[existingIndex].imageUrl = safeImg;
         cart[existingIndex].cartItemId = cartItemId;
-=======
-=======
->>>>>>> origin/main
-    const cartItemId = `${productId}_${variationId}`;
-    const existingItem = cart.find(item => item.cartItemId === cartItemId);
-    
-    if (existingItem) {
-        existingItem.quantity += 1;
-<<<<<<< HEAD
->>>>>>> origin/main
-=======
->>>>>>> origin/main
     } else {
         cart.push({ 
             cartItemId: cartItemId, 
             id: productId, 
-<<<<<<< HEAD
-<<<<<<< HEAD
             name: safeName,
             variationId: safeVarId, 
             variationName: safeVarName,
             price: safePrice,
             imageUrl: safeImg,
             quantity: parsedQty 
-=======
-            variationId: variationId, 
-            quantity: 1 
->>>>>>> origin/main
-=======
-            variationId: variationId, 
-            quantity: 1 
->>>>>>> origin/main
         });
     }
     
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
     updateCartCount();
-<<<<<<< HEAD
-<<<<<<< HEAD
     showToast(`Added ${parsedQty} item(s) to cart`);
-=======
-=======
->>>>>>> origin/main
-    showToast("Added to cart");
-}
-
-// Add to Cart with specific quantity
-function addToCartWithQty(productId, variationId, qty) {
-    let cart = getCart();
-    const cartItemId = `${productId}_${variationId}`;
-    
-    const existingItem = cart.find(item => item.cartItemId === cartItemId);
-    
-    if (existingItem) {
-        existingItem.quantity += qty;
-    } else {
-        cart.push({ 
-            cartItemId: cartItemId, 
-            id: productId, 
-            variationId: variationId, 
-            quantity: qty 
-        });
-    }
-    
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    updateCartCount();
-    showToast(`Added ${qty} item(s) to cart`);
-<<<<<<< HEAD
->>>>>>> origin/main
-=======
->>>>>>> origin/main
 }
 
 // Update price display when variation changes

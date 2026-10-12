@@ -1,12 +1,6 @@
 // Set your deployed Web App URL here after you deploy your Google Apps Script
 const API_URL = "https://script.google.com/macros/s/AKfycbwsT7yWwrh20W25pU3DZ5-wGbiyr200hFlYdAQ4xbVyXNjRntPCixvi6u5YkrU5N4Q/exec";
 
-<<<<<<< HEAD
-=======
-let products = [];
-let isProductsLoaded = false;
-
->>>>>>> origin/main
 // Default rich product collection matching the luxury Scent Aura X line & design
 const DEFAULT_PRODUCTS = [
     {
@@ -100,48 +94,29 @@ const DEFAULT_PRODUCTS = [
     }
 ];
 
-<<<<<<< HEAD
 let products = [...DEFAULT_PRODUCTS];
 let isProductsLoaded = false;
 
 // Fetch products from Google Sheets API with graceful fallback to curated products
 async function loadProducts() {
     if (isProductsLoaded && products.length > DEFAULT_PRODUCTS.length) return products;
-=======
-// Fetch products from Google Sheets API with graceful fallback to curated products
-async function loadProducts() {
-    if (isProductsLoaded && products.length > 0) return products;
->>>>>>> origin/main
 
     try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 4000);
-<<<<<<< HEAD
-
-        const response = await fetch(API_URL, { signal: controller });
-        clearTimeout(timeoutId);
-
-=======
+        const timeoutId = setTimeout(() => controller.abort(), 3500);
         
         const response = await fetch(API_URL, { signal: controller });
         clearTimeout(timeoutId);
         
->>>>>>> origin/main
         const json = await response.json();
         if (json.status === "success" && Array.isArray(json.data) && json.data.length > 0) {
             // Merge sheet products with our rich default items if sheet only has 1 test item
             const fetchedList = json.data.map(item => {
-<<<<<<< HEAD
                 if (!item.imageUrl) {
-                    const match = DEFAULT_PRODUCTS.find(d =>
-                        String(d.id).toLowerCase() === String(item.id).toLowerCase() ||
+                    const match = DEFAULT_PRODUCTS.find(d => 
+                        String(d.id).toLowerCase() === String(item.id).toLowerCase() || 
                         d.name.toLowerCase() === (item.name || "").toLowerCase()
                     );
-=======
-                // If imageUrl is empty, pick matching image from catalogue
-                if (!item.imageUrl) {
-                    const match = DEFAULT_PRODUCTS.find(d => d.id === item.id || d.name.toLowerCase() === (item.name || "").toLowerCase());
->>>>>>> origin/main
                     item.imageUrl = match ? match.imageUrl : "assets/images/prod-oud-royal.jpg";
                 }
                 return item;
@@ -150,15 +125,11 @@ async function loadProducts() {
             // Combine fetched products with default items that aren't duplicates
             const combined = [...fetchedList];
             DEFAULT_PRODUCTS.forEach(dp => {
-<<<<<<< HEAD
                 const dpId = String(dp.id).toLowerCase().replace(/_/g, '-');
                 if (!combined.some(p => {
                     const pId = String(p.id).toLowerCase().replace(/_/g, '-');
                     return pId === dpId || String(p.name).toLowerCase() === String(dp.name).toLowerCase();
                 })) {
-=======
-                if (!combined.some(p => p.id === dp.id)) {
->>>>>>> origin/main
                     combined.push(dp);
                 }
             });
@@ -170,18 +141,13 @@ async function loadProducts() {
         console.warn("Using offline / curated product catalogue:", e);
     }
 
-<<<<<<< HEAD
     if (!products || products.length === 0) {
         products = [...DEFAULT_PRODUCTS];
     }
-=======
-    products = [...DEFAULT_PRODUCTS];
->>>>>>> origin/main
     isProductsLoaded = true;
     return products;
 }
 
-<<<<<<< HEAD
 // Helper to get product by ID with resilient matching (handles number/string, underscore vs dash, name match)
 function getProductById(id) {
     if (id === undefined || id === null || id === "") return null;
@@ -207,37 +173,22 @@ function getProductById(id) {
     }
 
     return found || null;
-=======
-// Helper to get product by ID
-function getProductById(id) {
-    if (!products || products.length === 0) {
-        return DEFAULT_PRODUCTS.find(p => p.id === id);
-    }
-    return products.find(p => p.id === id) || DEFAULT_PRODUCTS.find(p => p.id === id);
->>>>>>> origin/main
 }
 
 // Helper to get variation details
 function getProductVariation(productId, variationId) {
     const product = getProductById(productId);
-<<<<<<< HEAD
     if (!product || !product.variations || product.variations.length === 0) {
         return { id: variationId || "3ml", name: variationId || "3ml", price: 399 };
     }
-
+    
     if (!variationId) return product.variations[0];
-
+    
     const vStr = String(variationId).trim().toLowerCase();
-    const found = product.variations.find(v =>
-        String(v.id || '').trim().toLowerCase() === vStr ||
+    const found = product.variations.find(v => 
+        String(v.id || '').trim().toLowerCase() === vStr || 
         String(v.name || '').trim().toLowerCase() === vStr
     );
-
+    
     return found || product.variations[0];
-=======
-    if (product && product.variations) {
-        return product.variations.find(v => v.id === variationId);
-    }
-    return null;
->>>>>>> origin/main
 }
