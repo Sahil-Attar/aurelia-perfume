@@ -1,10 +1,4 @@
-const COUPON_KEY = "aurelia_coupon";
-const SHIPPING_FEE = 50;
-
-const VALID_COUPONS = {
-    "AURELIA10": { type: "percent", value: 10 },
-    "WELCOME50": { type: "flat", value: 50 }
-};
+// Cart page functionality - constants (COUPON_KEY, SHIPPING_FEE, VALID_COUPONS, CART_KEY) are defined in main.js
 
 // Render cart items
 function renderCart() {
@@ -114,20 +108,22 @@ function clearCart() {
 
 // Apply coupon
 function applyCoupon() {
-    const input = document.getElementById("coupon-input").value.trim().toUpperCase();
+    const inputEl = document.getElementById("coupon-input");
     const messageEl = document.getElementById("coupon-message");
+    if (!inputEl) return;
     
+    const input = inputEl.value.trim().toUpperCase();
     if (!input) {
-        messageEl.innerHTML = `<span class="text-danger small">Please enter a coupon code.</span>`;
+        if (messageEl) messageEl.innerHTML = `<span class="text-danger small">Please enter a coupon code.</span>`;
         return;
     }
     
-    if (VALID_COUPONS[input]) {
+    if (VALID_COUPONS && VALID_COUPONS[input]) {
         localStorage.setItem(COUPON_KEY, input);
-        messageEl.innerHTML = `<span class="text-success small">Coupon applied successfully!</span>`;
+        if (messageEl) messageEl.innerHTML = `<span class="text-success small">Coupon applied successfully!</span>`;
         renderCart();
     } else {
-        messageEl.innerHTML = `<span class="text-danger small">Invalid coupon code.</span>`;
+        if (messageEl) messageEl.innerHTML = `<span class="text-danger small">Invalid coupon code.</span>`;
     }
 }
 
@@ -135,9 +131,9 @@ function applyCoupon() {
 function removeCoupon() {
     localStorage.removeItem(COUPON_KEY);
     const messageEl = document.getElementById("coupon-message");
-    if(messageEl) messageEl.innerHTML = "";
+    if (messageEl) messageEl.innerHTML = "";
     const inputEl = document.getElementById("coupon-input");
-    if(inputEl) inputEl.value = "";
+    if (inputEl) inputEl.value = "";
     renderCart();
 }
 
@@ -152,10 +148,11 @@ function updateTotals(subtotal) {
     const discountEl = document.getElementById("summary-discount");
     const totalEl = document.getElementById("summary-total");
     
+    const shippingFee = subtotal > 0 ? SHIPPING_FEE : 0;
     if (subtotalEl) subtotalEl.textContent = formatCurrency(subtotal);
-    if (shippingEl) shippingEl.textContent = formatCurrency(SHIPPING_FEE);
+    if (shippingEl) shippingEl.textContent = formatCurrency(shippingFee);
     
-    if (appliedCoupon && VALID_COUPONS[appliedCoupon]) {
+    if (appliedCoupon && typeof VALID_COUPONS !== 'undefined' && VALID_COUPONS[appliedCoupon]) {
         const couponInfo = VALID_COUPONS[appliedCoupon];
         if (couponInfo.type === "percent") {
             discount = subtotal * (couponInfo.value / 100);
@@ -164,7 +161,7 @@ function updateTotals(subtotal) {
         }
     }
     
-    finalTotal = subtotal + SHIPPING_FEE - discount;
+    finalTotal = subtotal + shippingFee - discount;
     if (finalTotal < 0) finalTotal = 0;
     
     if (discountEl) {
@@ -173,21 +170,31 @@ function updateTotals(subtotal) {
                 <span class="text-success">-${formatCurrency(discount)}</span>
                 <button class="btn btn-sm btn-link text-muted p-0 ms-2" onclick="removeCoupon()">[Remove]</button>
             `;
-            document.getElementById("discount-row").style.display = "flex";
+            const discountRow = document.getElementById("discount-row");
+            if (discountRow) discountRow.style.display = "flex";
         } else {
-            document.getElementById("discount-row").style.display = "none";
+            const discountRow = document.getElementById("discount-row");
+            if (discountRow) discountRow.style.display = "none";
         }
     }
     
     if (totalEl) totalEl.textContent = formatCurrency(finalTotal);
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
+async function initCart() {
     if (document.getElementById("cart-items-container")) {
         renderCart();
     }
-    await loadProducts();
+    if (typeof loadProducts === "function") {
+        await loadProducts();
+    }
     if (document.getElementById("cart-items-container")) {
         renderCart();
     }
-});
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initCart);
+} else {
+    initCart();
+}
