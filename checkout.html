@@ -79,19 +79,20 @@
               <div class="row g-3 mb-4">
                 <div class="col-12">
                   <label class="form-label fw-bold small">Full Name *</label>
-                  <input type="text" id="fullName" class="form-control" required placeholder="e.g. Rahul Sharma">
+                  <input type="text" id="fullName" class="form-control" required placeholder="e.g. John Doe">
                   <div class="invalid-feedback">Please enter your full name.</div>
                 </div>
                 
                 <div class="col-md-6">
                   <label class="form-label fw-bold small">Mobile Number *</label>
-                  <input type="tel" id="phone" class="form-control" pattern="[0-9]{10}" required placeholder="10-digit mobile number">
+                  <input type="tel" id="phone" class="form-control" pattern="^[0-9]{10}$" maxlength="10" inputmode="numeric" required placeholder="10-digit mobile number">
                   <div class="invalid-feedback">Please enter a valid 10-digit mobile number.</div>
                 </div>
                 
                 <div class="col-md-6">
                   <label class="form-label fw-bold small">Email Address <span class="text-muted">(Optional)</span></label>
                   <input type="email" id="email" class="form-control" placeholder="name@example.com">
+                  <div class="invalid-feedback">Please enter a valid email address.</div>
                 </div>
               </div>
               
