@@ -45,15 +45,23 @@ function renderCart() {
                     <h5 class="mb-1 font-serif" style="font-size: 1.1rem; color: var(--primary-dark);">${prodName} <span class="text-muted fs-6">(${varName})</span></h5>
                     <p class="text-muted mb-2">${formatCurrency(unitPrice)}</p>
                     
-                    <div class="d-flex align-items-center">
-                        <button class="qty-btn" type="button" onclick="updateQuantity('${cartId}', -1)">-</button>
-                        <input type="text" class="qty-input" value="${qty}" readonly>
-                        <button class="qty-btn" type="button" onclick="updateQuantity('${cartId}', 1)">+</button>
+                    <div class="cart-qty-control mt-1">
+                        <button class="cart-qty-btn" type="button" aria-label="Decrease quantity" onclick="updateQuantity('${cartId}', -1)">-</button>
+                        <input type="text" class="cart-qty-input" value="${qty}" readonly>
+                        <button class="cart-qty-btn" type="button" aria-label="Increase quantity" onclick="updateQuantity('${cartId}', 1)">+</button>
                     </div>
                 </div>
-                <div class="text-end">
-                    <div class="fw-bold mb-3">${formatCurrency(lineTotal)}</div>
-                    <button class="btn btn-sm btn-link text-danger text-decoration-none p-0" type="button" onclick="removeFromCart('${cartId}')">Remove</button>
+                <div class="text-end d-flex flex-column align-items-end justify-content-between">
+                    <div class="fw-bold mb-3 fs-6" style="color: var(--primary-dark);">${formatCurrency(lineTotal)}</div>
+                    <button class="cart-remove-btn" type="button" onclick="removeFromCart('${cartId}')">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                        </svg>
+                        <span>Remove</span>
+                    </button>
                 </div>
             </div>
         `;

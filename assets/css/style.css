@@ -994,7 +994,7 @@ h1, h2, h3, h4, .font-serif, .section-heading {
 }
 
 .qty-control-box {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   border: 1.5px solid #D5CEBF;
   border-radius: 999px;
@@ -1011,11 +1011,15 @@ h1, h2, h3, h4, .font-serif, .section-heading {
   color: var(--primary-dark);
   font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .qty-control-box button:hover {
   background: #E6DEC2;
+  transform: scale(1.04);
 }
 
 .qty-control-box input {
@@ -1025,6 +1029,100 @@ h1, h2, h3, h4, .font-serif, .section-heading {
   text-align: center;
   font-weight: 700;
   color: var(--primary-dark);
+}
+
+/* Cart Specific Quantity Controls */
+.cart-qty-control {
+  display: inline-flex;
+  align-items: center;
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 999px;
+  padding: 3px;
+  box-shadow: 0 2px 8px rgba(7, 30, 24, 0.04);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cart-qty-control:hover {
+  border-color: #D5CEBF;
+  box-shadow: 0 3px 10px rgba(7, 30, 24, 0.08);
+}
+
+.cart-qty-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: #F4EFE6;
+  color: var(--primary-dark);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cart-qty-btn:hover {
+  background: var(--primary-dark);
+  color: #FFFFFF;
+  transform: scale(1.05);
+}
+
+.cart-qty-btn:active {
+  transform: scale(0.95);
+}
+
+.cart-qty-input {
+  width: 38px;
+  border: none;
+  background: transparent;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--primary-dark);
+  padding: 0;
+  outline: none;
+}
+
+/* Cart Item Remove Button */
+.cart-remove-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #B91C1C;
+  background-color: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.cart-remove-btn:hover {
+  background-color: #DC2626;
+  color: #FFFFFF;
+  border-color: #DC2626;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+  transform: translateY(-1px);
+}
+
+.cart-remove-btn:active {
+  transform: translateY(0);
+}
+
+.cart-remove-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.cart-remove-btn:hover svg {
+  stroke: #FFFFFF;
+  transform: scale(1.1);
 }
 
 .btn-detail-whatsapp {
