@@ -179,21 +179,36 @@ function placeOrder(event) {
     
     const fullName = document.getElementById("fullName").value.trim();
     const phone = document.getElementById("phone").value.trim();
-    const email = (document.getElementById("email") ? document.getElementById("email").value.trim() : "") || "N/A";
+    const emailRaw = document.getElementById("email") ? document.getElementById("email").value.trim() : "";
+    const email = emailRaw || "N/A";
     const address = document.getElementById("address").value.trim();
     const city = document.getElementById("city").value.trim();
     const state = document.getElementById("state").value.trim();
     const pincode = document.getElementById("pincode").value.trim();
     
+    // Strict mobile number validation (exactly 10 digits, only numbers)
     if (!/^[0-9]{10}$/.test(phone)) {
-        alert("Please enter a valid 10-digit mobile number.");
-        document.getElementById("phone").focus();
+        form.classList.add('was-validated');
+        const phoneInput = document.getElementById("phone");
+        phoneInput.classList.add("is-invalid");
+        phoneInput.focus();
+        return;
+    }
+    
+    // Email validation if entered
+    if (emailRaw && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailRaw)) {
+        form.classList.add('was-validated');
+        const emailInput = document.getElementById("email");
+        emailInput.classList.add("is-invalid");
+        emailInput.focus();
         return;
     }
     
     if (!/^[0-9]{6}$/.test(pincode)) {
-        alert("Please enter a valid 6-digit pincode.");
-        document.getElementById("pincode").focus();
+        form.classList.add('was-validated');
+        const pinInput = document.getElementById("pincode");
+        pinInput.classList.add("is-invalid");
+        pinInput.focus();
         return;
     }
     
@@ -273,9 +288,44 @@ function placeOrder(event) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-    if (document.getElementById("checkout-form")) {
+    const form = document.getElementById("checkout-form");
+    if (form) {
         renderCheckoutSummary();
-        document.getElementById("checkout-form").addEventListener("submit", placeOrder);
+        form.addEventListener("submit", placeOrder);
+
+        // Real-time restriction: Numbers only and maximum 10 digits for mobile
+        const phoneInput = document.getElementById("phone");
+        if (phoneInput) {
+            phoneInput.addEventListener("input", (e) => {
+                // Strip all non-digit characters
+                e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
+                if (e.target.value.length === 10) {
+                    phoneInput.classList.remove("is-invalid");
+                }
+            });
+        }
+
+        // Pincode restriction: Numbers only and maximum 6 digits
+        const pinInput = document.getElementById("pincode");
+        if (pinInput) {
+            pinInput.addEventListener("input", (e) => {
+                e.target.value = e.target.value.replace(/\D/g, "").slice(0, 6);
+                if (e.target.value.length === 6) {
+                    pinInput.classList.remove("is-invalid");
+                }
+            });
+        }
+
+        // Real-time clear invalid on valid email
+        const emailInput = document.getElementById("email");
+        if (emailInput) {
+            emailInput.addEventListener("input", (e) => {
+                const val = e.target.value.trim();
+                if (!val || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+                    emailInput.classList.remove("is-invalid");
+                }
+            });
+        }
     }
     await loadProducts();
     if (document.getElementById("checkout-form")) {
