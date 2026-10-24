@@ -5,7 +5,7 @@ const COUPON_KEY = "aurelia_coupon";
 const SHIPPING_FEE = 50;
 
 // Scent Aura X WhatsApp business phone number
-const WHATSAPP_PHONE = "919876543210";
+const WHATSAPP_PHONE = "919021336695";
 
 // Predefined coupons
 const VALID_COUPONS = {
@@ -41,11 +41,11 @@ function addToCart(productId) {
     let cart = getCart();
     const selectEl = document.getElementById(`var-${productId}`);
     let variationId = "3ml";
-    
+
     if (selectEl) {
         variationId = selectEl.value;
     }
-    
+
     addToCartWithQty(productId, variationId, 1);
 }
 
@@ -54,19 +54,19 @@ function addToCartWithQty(productId, variationId, qty) {
     let cart = getCart();
     const product = getProductById(productId);
     const variation = getProductVariation(productId, variationId);
-    
+
     const safeVarId = variation ? variation.id : (variationId || "3ml");
     const safeVarName = variation ? variation.name : safeVarId;
     const safePrice = variation ? variation.price : (product && product.variations ? product.variations[0].price : 399);
     const safeName = product ? product.name : "Attar Fragrance";
     const safeImg = (product && product.imageUrl) ? product.imageUrl : "assets/images/prod-oud-royal.jpg";
     const cartItemId = `${productId}_${safeVarId}`;
-    
-    const existingIndex = cart.findIndex(item => 
-        (item.cartItemId && item.cartItemId === cartItemId) || 
+
+    const existingIndex = cart.findIndex(item =>
+        (item.cartItemId && item.cartItemId === cartItemId) ||
         (String(item.id).toLowerCase() === String(productId).toLowerCase() && String(item.variationId).toLowerCase() === String(safeVarId).toLowerCase())
     );
-    
+
     const parsedQty = Math.max(1, parseInt(qty) || 1);
 
     if (existingIndex > -1) {
@@ -77,18 +77,18 @@ function addToCartWithQty(productId, variationId, qty) {
         cart[existingIndex].imageUrl = safeImg;
         cart[existingIndex].cartItemId = cartItemId;
     } else {
-        cart.push({ 
-            cartItemId: cartItemId, 
-            id: productId, 
+        cart.push({
+            cartItemId: cartItemId,
+            id: productId,
             name: safeName,
-            variationId: safeVarId, 
+            variationId: safeVarId,
             variationName: safeVarName,
             price: safePrice,
             imageUrl: safeImg,
-            quantity: parsedQty 
+            quantity: parsedQty
         });
     }
-    
+
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
     updateCartCount();
     showToast(`Added ${parsedQty} item(s) to cart`);
@@ -115,7 +115,7 @@ function showToast(message) {
         container.className = "toast-container";
         document.body.appendChild(container);
     }
-    
+
     const toast = document.createElement("div");
     toast.className = "custom-toast";
     toast.innerHTML = `
@@ -124,7 +124,7 @@ function showToast(message) {
         </svg>
         <span>${message}</span>
     `;
-    
+
     container.appendChild(toast);
     setTimeout(() => toast.classList.add("show"), 10);
     setTimeout(() => {
