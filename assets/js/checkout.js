@@ -168,47 +168,207 @@ function placeOrder(event) {
         return;
     }
     
+// Verified Indian States and Union Territories list for country authenticity
+const VALID_INDIAN_STATES = [
+    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat",
+    "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh",
+    "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
+    "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand",
+    "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu",
+    "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"
+];
+
+let isPincodeVerified = false;
+let verifiedPostOffices = [];
+
+// Fetch postal records from India Post API
+async function verifyIndianPincode(pincode) {
+    const pinInput = document.getElementById("pincode");
+    const pinSpinner = document.getElementById("pincode-spinner");
+    const pinFeedback = document.getElementById("pincode-feedback");
+    const pinStatus = document.getElementById("pincode-status");
+    const cityInput = document.getElementById("city");
+    const stateInput = document.getElementById("state");
+
+    if (!pinInput || !/^[1-8][0-9]{5}$/.test(pincode)) {
+        isPincodeVerified = false;
+        verifiedPostOffices = [];
+        return false;
+    }
+
+    if (pinSpinner) pinSpinner.style.display = "inline-block";
+    if (pinStatus) pinStatus.textContent = "Verifying with India Post...";
+
+    try {
+        const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
+        const data = await response.json();
+
+        if (pinSpinner) pinSpinner.style.display = "none";
+
+        if (Array.isArray(data) && data[0] && data[0].Status === "Success" && Array.isArray(data[0].PostOffice) && data[0].PostOffice.length > 0) {
+            isPincodeVerified = true;
+            verifiedPostOffices = data[0].PostOffice;
+            const primaryOffice = verifiedPostOffices[0];
+
+            // Auto-fill City/District & State
+            if (cityInput && (!cityInput.value.trim() || cityInput.dataset.autofilled === "true")) {
+                cityInput.value = primaryOffice.District || primaryOffice.Division || primaryOffice.Name;
+                cityInput.dataset.autofilled = "true";
+                cityInput.classList.remove("is-invalid");
+                cityInput.classList.add("is-valid");
+            }
+            if (stateInput && (!stateInput.value.trim() || stateInput.dataset.autofilled === "true")) {
+                stateInput.value = primaryOffice.State;
+                stateInput.dataset.autofilled = "true";
+                stateInput.classList.remove("is-invalid");
+                stateInput.classList.add("is-valid");
+            }
+
+            pinInput.classList.remove("is-invalid");
+            pinInput.classList.add("is-valid");
+            if (pinStatus) {
+                pinStatus.textContent = `✓ ${primaryOffice.District}, ${primaryOffice.State}`;
+                pinStatus.className = "text-success fw-semibold";
+            }
+            return true;
+        } else {
+            isPincodeVerified = false;
+            verifiedPostOffices = [];
+            pinInput.classList.remove("is-valid");
+            pinInput.classList.add("is-invalid");
+            if (pinFeedback) pinFeedback.textContent = "Invalid PIN code. Not found in India Post records.";
+            if (pinStatus) {
+                pinStatus.textContent = "✗ Invalid Indian PIN code";
+                pinStatus.className = "text-danger";
+            }
+            return false;
+        }
+    } catch (err) {
+        if (pinSpinner) pinSpinner.style.display = "none";
+        // Graceful fallback in case India Post API has network latency
+        isPincodeVerified = true;
+        pinInput.classList.remove("is-invalid");
+        if (pinStatus) pinStatus.textContent = "";
+        return true;
+    }
+}
+
+// Place order on WhatsApp
+async function placeOrder(event) {
+    if (event) event.preventDefault();
+    
+    const cart = getCart();
+    if (!cart || cart.length === 0) {
+        alert("Your cart is empty. Please add items to checkout.");
+        window.location.href = "shop.html";
+        return;
+    }
+    
     const form = document.getElementById("checkout-form");
-    if (!form.checkValidity()) {
-        form.classList.add('was-validated');
-        // Scroll to first invalid field
-        const firstInvalid = form.querySelector(':invalid');
-        if (firstInvalid) firstInvalid.focus();
-        return;
-    }
-    
-    const fullName = document.getElementById("fullName").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const emailRaw = document.getElementById("email") ? document.getElementById("email").value.trim() : "";
+    const fullNameInput = document.getElementById("fullName");
+    const phoneInput = document.getElementById("phone");
+    const emailInput = document.getElementById("email");
+    const addressInput = document.getElementById("address");
+    const cityInput = document.getElementById("city");
+    const stateInput = document.getElementById("state");
+    const pinInput = document.getElementById("pincode");
+    const pinFeedback = document.getElementById("pincode-feedback");
+
+    const fullName = fullNameInput ? fullNameInput.value.trim() : "";
+    const phone = phoneInput ? phoneInput.value.trim() : "";
+    const emailRaw = emailInput ? emailInput.value.trim() : "";
     const email = emailRaw || "N/A";
-    const address = document.getElementById("address").value.trim();
-    const city = document.getElementById("city").value.trim();
-    const state = document.getElementById("state").value.trim();
-    const pincode = document.getElementById("pincode").value.trim();
-    
-    // Strict mobile number validation (exactly 10 digits, only numbers)
+    const address = addressInput ? addressInput.value.trim() : "";
+    const city = cityInput ? cityInput.value.trim() : "";
+    const state = stateInput ? stateInput.value.trim() : "";
+    const pincode = pinInput ? pinInput.value.trim() : "";
+
+    let hasErrors = false;
+
+    // 1. Full name validation
+    if (!fullName || fullName.length < 2) {
+        fullNameInput.classList.add("is-invalid");
+        hasErrors = true;
+    } else {
+        fullNameInput.classList.remove("is-invalid");
+        fullNameInput.classList.add("is-valid");
+    }
+
+    // 2. Strict mobile validation: 10 digits only
     if (!/^[0-9]{10}$/.test(phone)) {
-        form.classList.add('was-validated');
-        const phoneInput = document.getElementById("phone");
         phoneInput.classList.add("is-invalid");
-        phoneInput.focus();
-        return;
+        hasErrors = true;
+    } else {
+        phoneInput.classList.remove("is-invalid");
+        phoneInput.classList.add("is-valid");
     }
-    
-    // Email validation if entered
-    if (emailRaw && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailRaw)) {
-        form.classList.add('was-validated');
-        const emailInput = document.getElementById("email");
-        emailInput.classList.add("is-invalid");
-        emailInput.focus();
-        return;
+
+    // 3. Email validation: ONLY if user entered something
+    if (emailRaw) {
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailRaw)) {
+            emailInput.classList.add("is-invalid");
+            emailInput.classList.remove("is-valid");
+            hasErrors = true;
+        } else {
+            emailInput.classList.remove("is-invalid");
+            emailInput.classList.add("is-valid");
+        }
+    } else {
+        // Empty optional email: clear any error or success highlights
+        emailInput.classList.remove("is-invalid");
+        emailInput.classList.remove("is-valid");
     }
-    
-    if (!/^[0-9]{6}$/.test(pincode)) {
-        form.classList.add('was-validated');
-        const pinInput = document.getElementById("pincode");
+
+    // 4. Street Address validation
+    if (!address || address.length < 5) {
+        addressInput.classList.add("is-invalid");
+        hasErrors = true;
+    } else {
+        addressInput.classList.remove("is-invalid");
+        addressInput.classList.add("is-valid");
+    }
+
+    // 5. Pincode validation: must be 6 digits and start with 1-8
+    if (!/^[1-8][0-9]{5}$/.test(pincode)) {
         pinInput.classList.add("is-invalid");
-        pinInput.focus();
+        pinInput.classList.remove("is-valid");
+        if (pinFeedback) pinFeedback.textContent = "Please enter a valid 6-digit Indian PIN code.";
+        hasErrors = true;
+    } else if (!isPincodeVerified) {
+        // Verify online with India Post
+        const verified = await verifyIndianPincode(pincode);
+        if (!verified) {
+            hasErrors = true;
+        }
+    }
+
+    // 6. City / District validation: minimum 2 characters, no pure numbers
+    if (!city || city.length < 2 || /^\d+$/.test(city)) {
+        cityInput.classList.add("is-invalid");
+        cityInput.classList.remove("is-valid");
+        hasErrors = true;
+    } else {
+        cityInput.classList.remove("is-invalid");
+        cityInput.classList.add("is-valid");
+    }
+
+    // 7. State validation: check against Indian States/UTs or verified postal state
+    const normalizedState = state.toLowerCase().replace(/[^a-z]/g, "");
+    const isValidState = VALID_INDIAN_STATES.some(s => s.toLowerCase().replace(/[^a-z]/g, "").includes(normalizedState) || normalizedState.includes(s.toLowerCase().replace(/[^a-z]/g, "")));
+
+    if (!state || state.length < 3 || /^\d+$/.test(state) || (!isValidState && verifiedPostOffices.length === 0)) {
+        stateInput.classList.add("is-invalid");
+        stateInput.classList.remove("is-valid");
+        hasErrors = true;
+    } else {
+        stateInput.classList.remove("is-invalid");
+        stateInput.classList.add("is-valid");
+    }
+
+    if (hasErrors) {
+        form.classList.add('was-validated');
+        const firstInvalid = form.querySelector('.is-invalid, :invalid');
+        if (firstInvalid) firstInvalid.focus();
         return;
     }
     
@@ -297,36 +457,74 @@ document.addEventListener("DOMContentLoaded", async () => {
         const phoneInput = document.getElementById("phone");
         if (phoneInput) {
             phoneInput.addEventListener("input", (e) => {
-                // Strip all non-digit characters
                 e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
                 if (e.target.value.length === 10) {
                     phoneInput.classList.remove("is-invalid");
+                    phoneInput.classList.add("is-valid");
+                } else {
+                    phoneInput.classList.remove("is-valid");
                 }
             });
         }
 
-        // Pincode restriction: Numbers only and maximum 6 digits
+        // Pincode restriction: Numbers only, maximum 6 digits, auto-query India Post on 6 digits
         const pinInput = document.getElementById("pincode");
         if (pinInput) {
-            pinInput.addEventListener("input", (e) => {
+            pinInput.addEventListener("input", async (e) => {
                 e.target.value = e.target.value.replace(/\D/g, "").slice(0, 6);
-                if (e.target.value.length === 6) {
-                    pinInput.classList.remove("is-invalid");
+                const code = e.target.value;
+
+                if (code.length === 6) {
+                    await verifyIndianPincode(code);
+                } else {
+                    isPincodeVerified = false;
+                    pinInput.classList.remove("is-valid");
+                    const pinStatus = document.getElementById("pincode-status");
+                    if (pinStatus) pinStatus.textContent = "";
                 }
             });
         }
 
-        // Real-time clear invalid on valid email
+        // Real-time email validation: Only validates if user types something
         const emailInput = document.getElementById("email");
         if (emailInput) {
             emailInput.addEventListener("input", (e) => {
                 const val = e.target.value.trim();
-                if (!val || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+                if (!val) {
                     emailInput.classList.remove("is-invalid");
+                    emailInput.classList.remove("is-valid");
+                } else if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+                    emailInput.classList.remove("is-invalid");
+                    emailInput.classList.add("is-valid");
+                } else {
+                    emailInput.classList.remove("is-valid");
+                    emailInput.classList.add("is-invalid");
+                }
+            });
+        }
+
+        // City & State input change resets autofill flag
+        const cityInput = document.getElementById("city");
+        if (cityInput) {
+            cityInput.addEventListener("input", () => {
+                cityInput.dataset.autofilled = "false";
+                if (cityInput.value.trim().length >= 2) {
+                    cityInput.classList.remove("is-invalid");
+                }
+            });
+        }
+
+        const stateInput = document.getElementById("state");
+        if (stateInput) {
+            stateInput.addEventListener("input", () => {
+                stateInput.dataset.autofilled = "false";
+                if (stateInput.value.trim().length >= 3) {
+                    stateInput.classList.remove("is-invalid");
                 }
             });
         }
     }
+
     await loadProducts();
     if (document.getElementById("checkout-form")) {
         renderCheckoutSummary();

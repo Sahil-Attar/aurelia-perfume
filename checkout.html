@@ -102,25 +102,29 @@
                 <div class="col-12">
                   <label class="form-label fw-bold small">Street Address *</label>
                   <input type="text" id="address" class="form-control" required placeholder="House/Flat No., Building, Street">
-                  <div class="invalid-feedback">Please enter your address.</div>
+                  <div class="invalid-feedback">Please enter your complete street address.</div>
+                </div>
+
+                <div class="col-md-4">
+                  <label class="form-label fw-bold small">Pincode *</label>
+                  <div class="position-relative">
+                    <input type="tel" id="pincode" class="form-control" pattern="^[1-8][0-9]{5}$" maxlength="6" inputmode="numeric" required placeholder="6 digits (e.g. 110001)">
+                    <span id="pincode-spinner" class="spinner-border spinner-border-sm position-absolute text-muted" style="right: 12px; top: 12px; display: none;" role="status"></span>
+                  </div>
+                  <div id="pincode-feedback" class="invalid-feedback">Enter a valid 6-digit Indian PIN code.</div>
+                  <small id="pincode-status" class="text-muted" style="font-size: 0.75rem; display: block; margin-top: 3px;"></small>
                 </div>
                 
-                <div class="col-md-5">
-                  <label class="form-label fw-bold small">City *</label>
-                  <input type="text" id="city" class="form-control" required placeholder="City">
-                  <div class="invalid-feedback">Please enter your city.</div>
+                <div class="col-md-4">
+                  <label class="form-label fw-bold small">City / District *</label>
+                  <input type="text" id="city" class="form-control" required placeholder="City or District">
+                  <div class="invalid-feedback">Please enter a valid city or district.</div>
                 </div>
                 
                 <div class="col-md-4">
                   <label class="form-label fw-bold small">State *</label>
                   <input type="text" id="state" class="form-control" required placeholder="State">
-                  <div class="invalid-feedback">Please enter your state.</div>
-                </div>
-                
-                <div class="col-md-3">
-                  <label class="form-label fw-bold small">Pincode *</label>
-                  <input type="text" id="pincode" class="form-control" pattern="[0-9]{6}" required placeholder="6 digits">
-                  <div class="invalid-feedback">6-digit pincode.</div>
+                  <div class="invalid-feedback">Please enter a valid Indian state.</div>
                 </div>
               </div>
               
