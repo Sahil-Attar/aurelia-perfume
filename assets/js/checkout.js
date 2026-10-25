@@ -1,7 +1,37 @@
-// Checkout logic with robust cart calculation, coupon support, and WhatsApp order submission
+// Checkout logic with robust cart calculation, coupon support, postal verification, and WhatsApp order submission
+
+// Verified Indian States and Union Territories list for state validation
+const VALID_INDIAN_STATES = [
+    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat",
+    "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh",
+    "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
+    "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand",
+    "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu",
+    "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"
+];
+
+let isPincodeVerified = false;
+let verifiedPostOffices = [];
 
 function getAppliedCoupon() {
     return localStorage.getItem(COUPON_KEY) || "";
+}
+
+// Resilient product price resolver matching cart.js and product variations
+function getItemUnitPrice(item) {
+    const product = typeof getProductById === "function" ? getProductById(item.id) : null;
+    const variation = typeof getProductVariation === "function" ? getProductVariation(item.id, item.variationId || "3ml") : null;
+
+    if (variation && typeof variation.price === 'number' && !isNaN(variation.price)) {
+        return variation.price;
+    }
+    if (item.price !== undefined && item.price !== null && !isNaN(parseFloat(item.price))) {
+        return parseFloat(item.price);
+    }
+    if (product && product.variations && product.variations.length > 0 && typeof product.variations[0].price === 'number') {
+        return product.variations[0].price;
+    }
+    return 399;
 }
 
 function calculateCheckoutTotals() {
@@ -9,30 +39,22 @@ function calculateCheckoutTotals() {
     let subtotal = 0;
     
     cart.forEach(item => {
-        const product = getProductById(item.id);
-        const variation = getProductVariation(item.id, item.variationId || "3ml");
-        let unitPrice = 399;
-        if (variation && typeof variation.price === 'number') {
-            unitPrice = variation.price;
-        } else if (item.price && typeof item.price === 'number') {
-            unitPrice = item.price;
-        } else if (product && product.variations && product.variations.length > 0) {
-            unitPrice = product.variations[0].price;
-        }
-        subtotal += unitPrice * (parseInt(item.quantity) || 1);
+        const unitPrice = getItemUnitPrice(item);
+        const qty = Math.max(1, parseInt(item.quantity, 10) || 1);
+        subtotal += unitPrice * qty;
     });
 
     const appliedCode = getAppliedCoupon();
     let discount = 0;
     let couponLabel = "";
 
-    if (appliedCode && VALID_COUPONS[appliedCode]) {
+    if (appliedCode && typeof VALID_COUPONS !== 'undefined' && VALID_COUPONS[appliedCode]) {
         const coupon = VALID_COUPONS[appliedCode];
         couponLabel = coupon.label || appliedCode;
         if (coupon.type === "percent") {
             discount = Math.round(subtotal * (coupon.value / 100));
         } else if (coupon.type === "flat") {
-            discount = coupon.value;
+            discount = Math.min(coupon.value, subtotal);
         }
     }
 
@@ -65,14 +87,14 @@ function renderCheckoutSummary() {
     let html = "";
     
     cart.forEach(item => {
-        const product = getProductById(item.id);
-        const variation = getProductVariation(item.id, item.variationId || "3ml");
+        const product = typeof getProductById === "function" ? getProductById(item.id) : null;
+        const variation = typeof getProductVariation === "function" ? getProductVariation(item.id, item.variationId || "3ml") : null;
         
         const prodName = (product && product.name) ? product.name : (item.name || "Attar Fragrance");
         const varName = (variation && variation.name) ? variation.name : (item.variationName || item.variationId || "3ml");
-        const unitPrice = (variation && typeof variation.price === 'number') ? variation.price : (item.price || 399);
+        const unitPrice = getItemUnitPrice(item);
         const prodImg = (product && product.imageUrl) ? product.imageUrl : (item.imageUrl || "assets/images/prod-oud-royal.jpg");
-        const qty = parseInt(item.quantity) || 1;
+        const qty = Math.max(1, parseInt(item.quantity, 10) || 1);
         const lineTotal = unitPrice * qty;
 
         html += `
@@ -131,7 +153,7 @@ function applyCheckoutCoupon() {
         return;
     }
 
-    if (VALID_COUPONS[code]) {
+    if (typeof VALID_COUPONS !== 'undefined' && VALID_COUPONS[code]) {
         localStorage.setItem(COUPON_KEY, code);
         if (msgEl) msgEl.innerHTML = `<span class="text-success small">Coupon <strong>${code}</strong> applied!</span>`;
         inputEl.value = "";
@@ -156,30 +178,6 @@ function generateOrderId() {
     const random = Math.floor(100 + Math.random() * 900);
     return `SAX-${dateString}-${random}`;
 }
-
-// Place Order and Send Form Data via WhatsApp
-function placeOrder(event) {
-    if (event) event.preventDefault();
-    
-    const cart = getCart();
-    if (cart.length === 0) {
-        alert("Your cart is empty.");
-        window.location.href = "shop";
-        return;
-    }
-    
-// Verified Indian States and Union Territories list for country authenticity
-const VALID_INDIAN_STATES = [
-    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat",
-    "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh",
-    "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
-    "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand",
-    "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu",
-    "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"
-];
-
-let isPincodeVerified = false;
-let verifiedPostOffices = [];
 
 // Fetch postal records from India Post API
 async function verifyIndianPincode(pincode) {
@@ -253,6 +251,65 @@ async function verifyIndianPincode(pincode) {
     }
 }
 
+// Field validation helpers
+function validateCityField() {
+    const cityInput = document.getElementById("city");
+    if (!cityInput) return true;
+    const city = cityInput.value.trim();
+
+    // Must be at least 2 chars, letters/spaces/periods/hyphens, not pure numbers
+    const isValid = city.length >= 2 && !/^\d+$/.test(city) && /^[a-zA-Z\s.'-]+$/.test(city);
+
+    if (!isValid) {
+        cityInput.classList.add("is-invalid");
+        cityInput.classList.remove("is-valid");
+        return false;
+    } else {
+        cityInput.classList.remove("is-invalid");
+        cityInput.classList.add("is-valid");
+        return true;
+    }
+}
+
+function validateStateField() {
+    const stateInput = document.getElementById("state");
+    if (!stateInput) return true;
+    const state = stateInput.value.trim();
+
+    const normalizedState = state.toLowerCase().replace(/[^a-z]/g, "");
+    const isStateInList = VALID_INDIAN_STATES.some(s => {
+        const norm = s.toLowerCase().replace(/[^a-z]/g, "");
+        return norm === normalizedState || norm.includes(normalizedState) || normalizedState.includes(norm);
+    });
+
+    const isValid = state.length >= 3 && !/^\d+$/.test(state) && (isStateInList || verifiedPostOffices.length > 0);
+
+    if (!isValid) {
+        stateInput.classList.add("is-invalid");
+        stateInput.classList.remove("is-valid");
+        return false;
+    } else {
+        stateInput.classList.remove("is-invalid");
+        stateInput.classList.add("is-valid");
+        return true;
+    }
+}
+
+function validatePincodeFieldSync() {
+    const pinInput = document.getElementById("pincode");
+    const pinFeedback = document.getElementById("pincode-feedback");
+    if (!pinInput) return true;
+    const pincode = pinInput.value.trim();
+
+    if (!/^[1-8][0-9]{5}$/.test(pincode)) {
+        pinInput.classList.add("is-invalid");
+        pinInput.classList.remove("is-valid");
+        if (pinFeedback) pinFeedback.textContent = "Please enter a valid 6-digit Indian PIN code.";
+        return false;
+    }
+    return true;
+}
+
 // Place order on WhatsApp
 async function placeOrder(event) {
     if (event) event.preventDefault();
@@ -287,18 +344,24 @@ async function placeOrder(event) {
 
     // 1. Full name validation
     if (!fullName || fullName.length < 2) {
-        fullNameInput.classList.add("is-invalid");
+        if (fullNameInput) {
+            fullNameInput.classList.add("is-invalid");
+            fullNameInput.classList.remove("is-valid");
+        }
         hasErrors = true;
-    } else {
+    } else if (fullNameInput) {
         fullNameInput.classList.remove("is-invalid");
         fullNameInput.classList.add("is-valid");
     }
 
     // 2. Strict mobile validation: 10 digits only
     if (!/^[0-9]{10}$/.test(phone)) {
-        phoneInput.classList.add("is-invalid");
+        if (phoneInput) {
+            phoneInput.classList.add("is-invalid");
+            phoneInput.classList.remove("is-valid");
+        }
         hasErrors = true;
-    } else {
+    } else if (phoneInput) {
         phoneInput.classList.remove("is-invalid");
         phoneInput.classList.add("is-valid");
     }
@@ -306,32 +369,38 @@ async function placeOrder(event) {
     // 3. Email validation: ONLY if user entered something
     if (emailRaw) {
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailRaw)) {
-            emailInput.classList.add("is-invalid");
-            emailInput.classList.remove("is-valid");
+            if (emailInput) {
+                emailInput.classList.add("is-invalid");
+                emailInput.classList.remove("is-valid");
+            }
             hasErrors = true;
-        } else {
+        } else if (emailInput) {
             emailInput.classList.remove("is-invalid");
             emailInput.classList.add("is-valid");
         }
-    } else {
-        // Empty optional email: clear any error or success highlights
+    } else if (emailInput) {
         emailInput.classList.remove("is-invalid");
         emailInput.classList.remove("is-valid");
     }
 
     // 4. Street Address validation
     if (!address || address.length < 5) {
-        addressInput.classList.add("is-invalid");
+        if (addressInput) {
+            addressInput.classList.add("is-invalid");
+            addressInput.classList.remove("is-valid");
+        }
         hasErrors = true;
-    } else {
+    } else if (addressInput) {
         addressInput.classList.remove("is-invalid");
         addressInput.classList.add("is-valid");
     }
 
     // 5. Pincode validation: must be 6 digits and start with 1-8
     if (!/^[1-8][0-9]{5}$/.test(pincode)) {
-        pinInput.classList.add("is-invalid");
-        pinInput.classList.remove("is-valid");
+        if (pinInput) {
+            pinInput.classList.add("is-invalid");
+            pinInput.classList.remove("is-valid");
+        }
         if (pinFeedback) pinFeedback.textContent = "Please enter a valid 6-digit Indian PIN code.";
         hasErrors = true;
     } else if (!isPincodeVerified) {
@@ -342,32 +411,19 @@ async function placeOrder(event) {
         }
     }
 
-    // 6. City / District validation: minimum 2 characters, no pure numbers
-    if (!city || city.length < 2 || /^\d+$/.test(city)) {
-        cityInput.classList.add("is-invalid");
-        cityInput.classList.remove("is-valid");
+    // 6. City / District validation: minimum 2 characters, no pure numbers, valid letters
+    if (!validateCityField()) {
         hasErrors = true;
-    } else {
-        cityInput.classList.remove("is-invalid");
-        cityInput.classList.add("is-valid");
     }
 
     // 7. State validation: check against Indian States/UTs or verified postal state
-    const normalizedState = state.toLowerCase().replace(/[^a-z]/g, "");
-    const isValidState = VALID_INDIAN_STATES.some(s => s.toLowerCase().replace(/[^a-z]/g, "").includes(normalizedState) || normalizedState.includes(s.toLowerCase().replace(/[^a-z]/g, "")));
-
-    if (!state || state.length < 3 || /^\d+$/.test(state) || (!isValidState && verifiedPostOffices.length === 0)) {
-        stateInput.classList.add("is-invalid");
-        stateInput.classList.remove("is-valid");
+    if (!validateStateField()) {
         hasErrors = true;
-    } else {
-        stateInput.classList.remove("is-invalid");
-        stateInput.classList.add("is-valid");
     }
 
     if (hasErrors) {
-        form.classList.add('was-validated');
-        const firstInvalid = form.querySelector('.is-invalid, :invalid');
+        if (form) form.classList.add('was-validated');
+        const firstInvalid = form ? form.querySelector('.is-invalid, :invalid') : null;
         if (firstInvalid) firstInvalid.focus();
         return;
     }
@@ -378,10 +434,13 @@ async function placeOrder(event) {
     // Construct order items list for WhatsApp
     let itemsText = "";
     cart.forEach((item, index) => {
-        const prod = getProductById(item.id);
-        const name = prod ? prod.name : item.id;
-        const variation = getProductVariation(item.id, item.variationId) || { name: item.variationId || "3ml", price: 0 };
-        itemsText += `${index + 1}. *${name}* (${variation.name}) x ${item.quantity} = ₹${variation.price * item.quantity}\n`;
+        const prod = typeof getProductById === "function" ? getProductById(item.id) : null;
+        const name = prod ? prod.name : (item.name || item.id);
+        const variation = typeof getProductVariation === "function" ? getProductVariation(item.id, item.variationId) : null;
+        const varName = (variation && variation.name) ? variation.name : (item.variationName || item.variationId || "3ml");
+        const unitPrice = getItemUnitPrice(item);
+        const qty = Math.max(1, parseInt(item.quantity, 10) || 1);
+        itemsText += `${index + 1}. *${name}* (${varName}) x ${qty} = ₹${unitPrice * qty}\n`;
     });
 
     // Construct full WhatsApp message with all delivery details and totals
@@ -435,10 +494,13 @@ async function placeOrder(event) {
     // Clear cart & coupon
     localStorage.removeItem(CART_KEY);
     localStorage.removeItem(COUPON_KEY);
-    updateCartCount();
+    if (typeof updateCartCount === "function") {
+        updateCartCount();
+    }
 
     // Open WhatsApp
-    const waUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(waMessage)}`;
+    const waPhone = typeof WHATSAPP_PHONE !== "undefined" ? WHATSAPP_PHONE : "919021336695";
+    const waUrl = `https://wa.me/${waPhone}?text=${encodeURIComponent(waMessage)}`;
     window.open(waUrl, '_blank');
 
     // Redirect to Order Success screen
@@ -465,6 +527,43 @@ document.addEventListener("DOMContentLoaded", async () => {
                     phoneInput.classList.remove("is-valid");
                 }
             });
+            phoneInput.addEventListener("blur", () => {
+                if (/^[0-9]{10}$/.test(phoneInput.value.trim())) {
+                    phoneInput.classList.remove("is-invalid");
+                    phoneInput.classList.add("is-valid");
+                } else {
+                    phoneInput.classList.remove("is-valid");
+                    phoneInput.classList.add("is-invalid");
+                }
+            });
+        }
+
+        // Full name blur validation
+        const fullNameInput = document.getElementById("fullName");
+        if (fullNameInput) {
+            fullNameInput.addEventListener("blur", () => {
+                if (fullNameInput.value.trim().length >= 2) {
+                    fullNameInput.classList.remove("is-invalid");
+                    fullNameInput.classList.add("is-valid");
+                } else {
+                    fullNameInput.classList.remove("is-valid");
+                    fullNameInput.classList.add("is-invalid");
+                }
+            });
+        }
+
+        // Address blur validation
+        const addressInput = document.getElementById("address");
+        if (addressInput) {
+            addressInput.addEventListener("blur", () => {
+                if (addressInput.value.trim().length >= 5) {
+                    addressInput.classList.remove("is-invalid");
+                    addressInput.classList.add("is-valid");
+                } else {
+                    addressInput.classList.remove("is-valid");
+                    addressInput.classList.add("is-invalid");
+                }
+            });
         }
 
         // Pincode restriction: Numbers only, maximum 6 digits, auto-query India Post on 6 digits
@@ -481,6 +580,17 @@ document.addEventListener("DOMContentLoaded", async () => {
                     pinInput.classList.remove("is-valid");
                     const pinStatus = document.getElementById("pincode-status");
                     if (pinStatus) pinStatus.textContent = "";
+                }
+            });
+
+            pinInput.addEventListener("blur", async () => {
+                const code = pinInput.value.trim();
+                if (code.length === 6) {
+                    if (!isPincodeVerified) {
+                        await verifyIndianPincode(code);
+                    }
+                } else {
+                    validatePincodeFieldSync();
                 }
             });
         }
@@ -503,14 +613,17 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
         }
 
-        // City & State input change resets autofill flag
+        // City & State input change and blur validation
         const cityInput = document.getElementById("city");
         if (cityInput) {
             cityInput.addEventListener("input", () => {
                 cityInput.dataset.autofilled = "false";
-                if (cityInput.value.trim().length >= 2) {
+                if (cityInput.value.trim().length >= 2 && !/^\d+$/.test(cityInput.value.trim())) {
                     cityInput.classList.remove("is-invalid");
                 }
+            });
+            cityInput.addEventListener("blur", () => {
+                validateCityField();
             });
         }
 
@@ -518,14 +631,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (stateInput) {
             stateInput.addEventListener("input", () => {
                 stateInput.dataset.autofilled = "false";
-                if (stateInput.value.trim().length >= 3) {
+                if (stateInput.value.trim().length >= 3 && !/^\d+$/.test(stateInput.value.trim())) {
                     stateInput.classList.remove("is-invalid");
                 }
+            });
+            stateInput.addEventListener("blur", () => {
+                validateStateField();
             });
         }
     }
 
-    await loadProducts();
+    if (typeof loadProducts === "function") {
+        await loadProducts();
+    }
     if (document.getElementById("checkout-form")) {
         renderCheckoutSummary();
     }
