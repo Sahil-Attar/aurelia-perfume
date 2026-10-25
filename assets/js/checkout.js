@@ -366,21 +366,17 @@ async function placeOrder(event) {
         phoneInput.classList.add("is-valid");
     }
 
-    // 3. Email validation: ONLY if user entered something
-    if (emailRaw) {
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailRaw)) {
-            if (emailInput) {
-                emailInput.classList.add("is-invalid");
-                emailInput.classList.remove("is-valid");
-            }
-            hasErrors = true;
-        } else if (emailInput) {
-            emailInput.classList.remove("is-invalid");
-            emailInput.classList.add("is-valid");
+    // 3. Email validation: strictly required
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRaw || !emailRegex.test(emailRaw)) {
+        if (emailInput) {
+            emailInput.classList.add("is-invalid");
+            emailInput.classList.remove("is-valid");
         }
+        hasErrors = true;
     } else if (emailInput) {
         emailInput.classList.remove("is-invalid");
-        emailInput.classList.remove("is-valid");
+        emailInput.classList.add("is-valid");
     }
 
     // 4. Street Address validation
@@ -595,22 +591,33 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
         }
 
-        // Real-time email validation: Only validates if user types something
+        // Real-time and blur email validation (Required field)
         const emailInput = document.getElementById("email");
         if (emailInput) {
-            emailInput.addEventListener("input", (e) => {
-                const val = e.target.value.trim();
-                if (!val) {
-                    emailInput.classList.remove("is-invalid");
-                    emailInput.classList.remove("is-valid");
-                } else if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+            const validateEmail = () => {
+                const val = emailInput.value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (val && emailRegex.test(val)) {
                     emailInput.classList.remove("is-invalid");
                     emailInput.classList.add("is-valid");
+                    return true;
                 } else {
                     emailInput.classList.remove("is-valid");
                     emailInput.classList.add("is-invalid");
+                    return false;
+                }
+            };
+
+            emailInput.addEventListener("input", () => {
+                const val = emailInput.value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (emailRegex.test(val)) {
+                    emailInput.classList.remove("is-invalid");
+                    emailInput.classList.add("is-valid");
                 }
             });
+
+            emailInput.addEventListener("blur", validateEmail);
         }
 
         // City & State input change and blur validation
