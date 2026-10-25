@@ -117,14 +117,14 @@
                 
                 <div class="col-md-4">
                   <label class="form-label fw-bold small">City / District *</label>
-                  <input type="text" id="city" class="form-control" required placeholder="City or District">
-                  <div class="invalid-feedback">Please enter a valid city or district.</div>
+                  <input type="text" id="city" class="form-control" pattern="^[a-zA-Z\s.'-]{2,}$" minlength="2" required placeholder="City or District">
+                  <div id="city-feedback" class="invalid-feedback">Please enter a valid city or district (letters only, min 2 characters).</div>
                 </div>
                 
                 <div class="col-md-4">
                   <label class="form-label fw-bold small">State *</label>
-                  <input type="text" id="state" class="form-control" required placeholder="State">
-                  <div class="invalid-feedback">Please enter a valid Indian state.</div>
+                  <input type="text" id="state" class="form-control" pattern="^[a-zA-Z\s.'-]{3,}$" minlength="3" required placeholder="State">
+                  <div id="state-feedback" class="invalid-feedback">Please enter a valid Indian state or Union Territory.</div>
                 </div>
               </div>
               
