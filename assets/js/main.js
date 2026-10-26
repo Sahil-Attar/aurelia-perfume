@@ -26,7 +26,7 @@ function getCart() {
     return JSON.parse(localStorage.getItem(CART_KEY)) || [];
 }
 
-// Update cart count badge in navbar
+// Update cart count badge in navbar & mobile drawer
 function updateCartCount() {
     const cart = getCart();
     const count = cart.reduce((total, item) => total + (item.quantity || 1), 0);
@@ -34,6 +34,19 @@ function updateCartCount() {
     if (badge) {
         badge.textContent = count;
     }
+    const mobileCounter = document.querySelector(".mobile-drawer-cart-count");
+    if (mobileCounter) {
+        mobileCounter.textContent = count;
+    }
+}
+
+// Update copyright year dynamically on all pages
+function updateCopyrightYear() {
+    const yearEls = document.querySelectorAll("#current-year, .current-year");
+    const currentYear = new Date().getFullYear();
+    yearEls.forEach(el => {
+        el.textContent = currentYear;
+    });
 }
 
 // Add to Cart from product details or cards
@@ -192,6 +205,7 @@ function closeCartModal() {
 // Initialize on DOM Load
 document.addEventListener("DOMContentLoaded", () => {
     updateCartCount();
+    updateCopyrightYear();
     initMobileNav();
     initFaqAccordion();
 });
