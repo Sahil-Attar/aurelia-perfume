@@ -1521,3 +1521,648 @@ h1, h2, h3, h4, .font-serif, .section-heading {
     grid-template-columns: 1fr;
   }
 }
+
+/* ========================================================
+   SCENT AURA X HOMEPAGE REDESIGN ENHANCEMENTS
+   ======================================================== */
+
+/* Mobile Hamburger Toggle */
+.mobile-nav-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #E2DDD5;
+  cursor: pointer;
+  padding: 6px;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.mobile-nav-toggle:hover {
+  color: var(--gold-accent);
+}
+
+@media (max-width: 860px) {
+  .mobile-nav-toggle {
+    display: inline-flex;
+  }
+  .site-header .nav-links {
+    display: none;
+  }
+}
+
+/* Mobile Nav Drawer Backdrop & Menu */
+.mobile-nav-drawer {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 30, 24, 0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 10500;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-nav-drawer.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-nav-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 290px;
+  max-width: 85%;
+  height: 100%;
+  background: var(--primary-dark);
+  border-left: 1px solid rgba(197, 160, 89, 0.25);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.4);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-nav-drawer.open .mobile-nav-panel {
+  transform: translateX(0);
+}
+
+.mobile-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+  margin-bottom: 20px;
+}
+
+.mobile-nav-close {
+  background: transparent;
+  border: none;
+  color: #E2DDD5;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.2s;
+}
+
+.mobile-nav-close:hover {
+  color: var(--gold-accent);
+}
+
+.mobile-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mobile-nav-list a {
+  color: #E2DDD5;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.mobile-nav-list a:hover,
+.mobile-nav-list a.active {
+  background: rgba(197, 160, 89, 0.12);
+  color: var(--gold-accent);
+}
+
+/* Section 2: Hero Secondary CTA Button */
+.btn-hero-secondary {
+  background-color: transparent;
+  color: var(--primary-dark);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 12px 26px;
+  border-radius: 999px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid rgba(7, 30, 24, 0.6);
+  transition: all 0.25s ease;
+}
+
+.btn-hero-secondary:hover {
+  background-color: rgba(7, 30, 24, 0.05);
+  border-color: var(--primary-dark);
+  color: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+/* Section 5: Mini Attars & Combo Packs (EXACTLY TWO PROMOTIONAL CARDS) */
+.promo-cards-section {
+  padding: 60px 0;
+  background-color: var(--page-bg);
+}
+
+.promo-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.promo-card {
+  position: relative;
+  background: #FFFFFF;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.promo-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 42px rgba(7, 30, 24, 0.12);
+  border-color: var(--gold-primary);
+}
+
+.promo-card-img-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #EFE9DF;
+  position: relative;
+}
+
+.promo-card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.promo-card:hover .promo-card-img-wrap img {
+  transform: scale(1.05);
+}
+
+.promo-card-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(7, 30, 24, 0.88);
+  color: var(--gold-accent);
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.promo-card-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.promo-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 8px;
+}
+
+.promo-card-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.promo-card-btn {
+  background-color: var(--primary-dark);
+  color: #FFFFFF;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 11px 22px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  align-self: flex-start;
+  transition: all 0.25s ease;
+  border: 1px solid var(--primary-dark);
+}
+
+.promo-card:hover .promo-card-btn {
+  background-color: #113D32;
+  border-color: #113D32;
+  color: #FFFFFF;
+}
+
+.promo-card-btn svg {
+  color: var(--gold-accent);
+  transition: transform 0.2s ease;
+}
+
+.promo-card:hover .promo-card-btn svg {
+  transform: translateX(3px);
+}
+
+@media (max-width: 768px) {
+  .promo-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Section 6: Fragrance Discovery & Buying Guide */
+.guide-section {
+  padding: 60px 0;
+  background-color: #F4EFE6;
+  border-top: 1px solid rgba(197, 160, 89, 0.15);
+  border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+}
+
+.guide-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+}
+
+.guide-column-card {
+  background: #FFFFFF;
+  border-radius: 22px;
+  padding: 34px 30px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+}
+
+.guide-col-heading {
+  font-family: var(--font-serif);
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 8px;
+}
+
+.guide-col-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 24px;
+}
+
+.guide-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 28px;
+  flex-grow: 1;
+}
+
+.guide-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #FAF6EE;
+  border: 1px solid rgba(197, 160, 89, 0.2);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+}
+
+a.guide-item:hover {
+  background: #FFFFFF;
+  border-color: var(--gold-primary);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(7, 30, 24, 0.05);
+}
+
+.guide-item-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(197, 160, 89, 0.15);
+  color: var(--gold-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.guide-item-text strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--primary-dark);
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.guide-item-text span {
+  font-size: 0.82rem;
+  color: #666666;
+}
+
+@media (max-width: 860px) {
+  .guide-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Section 7: Why Shop with Scent Aura X? */
+.why-shop-section {
+  padding: 70px 0;
+  background-color: var(--primary-dark);
+  color: #FFFFFF;
+  border-top: 1px solid rgba(197, 160, 89, 0.18);
+  border-bottom: 1px solid rgba(197, 160, 89, 0.18);
+}
+
+.why-shop-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.why-shop-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(197, 160, 89, 0.22);
+  border-radius: 20px;
+  padding: 28px 22px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.why-shop-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--gold-accent);
+  transform: translateY(-4px);
+}
+
+.why-shop-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(197, 160, 89, 0.14);
+  color: var(--gold-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.why-shop-card h3 {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 8px;
+}
+
+.why-shop-card p {
+  font-size: 0.86rem;
+  color: #D3DDD8;
+  line-height: 1.55;
+  margin: 0;
+}
+
+@media (max-width: 992px) {
+  .why-shop-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .why-shop-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Section 8: Fragrance Discovery & Craftsmanship Notes */
+.discovery-notes-section {
+  padding: 60px 0;
+  background-color: var(--page-bg);
+}
+
+.discovery-notes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.discovery-note-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 30px 26px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+}
+
+.discovery-note-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-bottom: 12px;
+}
+
+.discovery-note-card h3 {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 10px;
+}
+
+.discovery-note-card p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 860px) {
+  .discovery-notes-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Section 9: FAQ Accordion */
+.faq-section {
+  padding: 65px 0;
+  background-color: #FAF6EE;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.faq-item {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.faq-item.active {
+  border-color: var(--gold-primary);
+  box-shadow: 0 8px 24px rgba(7, 30, 24, 0.06);
+}
+
+.faq-question-btn {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  cursor: pointer;
+  gap: 14px;
+}
+
+.faq-question-btn:focus-visible {
+  outline: 2px solid var(--gold-primary);
+  outline-offset: -2px;
+}
+
+.faq-chevron {
+  width: 22px;
+  height: 22px;
+  color: var(--gold-dark);
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-item.active .faq-chevron {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), padding 0.35s ease;
+  padding: 0 20px;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 300px;
+  padding: 0 20px 18px;
+}
+
+.faq-answer p {
+  font-size: 0.88rem;
+  color: #555555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 860px) {
+  .faq-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Section 10: Final CTA Banner */
+.final-cta-section {
+  padding: 65px 0;
+  background-color: var(--primary-dark);
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(197, 160, 89, 0.2);
+}
+
+.final-cta-container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.final-cta-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 14px;
+}
+
+.final-cta-desc {
+  font-size: 1.02rem;
+  color: #D3DDD8;
+  line-height: 1.65;
+  margin: 0 auto 30px;
+  max-width: 620px;
+}
+
+.btn-final-cta {
+  background-color: #E6D2B5;
+  color: #071E18;
+  font-size: 0.96rem;
+  font-weight: 700;
+  padding: 13px 32px;
+  border-radius: 999px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.25s ease;
+  border: 1px solid rgba(197, 160, 89, 0.4);
+}
+
+.btn-final-cta:hover {
+  background-color: #DCC3A1;
+  color: #071E18;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.btn-final-cta svg {
+  color: #071E18;
+  transition: transform 0.2s ease;
+}
+
+.btn-final-cta:hover svg {
+  transform: translateX(3px);
+}
+

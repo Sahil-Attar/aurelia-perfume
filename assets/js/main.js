@@ -192,4 +192,67 @@ function closeCartModal() {
 // Initialize on DOM Load
 document.addEventListener("DOMContentLoaded", () => {
     updateCartCount();
+    initMobileNav();
+    initFaqAccordion();
 });
+
+// Mobile Navigation Drawer Toggle
+function initMobileNav() {
+    const toggleBtn = document.getElementById("mobile-nav-toggle-btn");
+    const drawer = document.getElementById("mobile-nav-drawer");
+    const closeBtn = document.getElementById("mobile-nav-close-btn");
+    
+    if (!toggleBtn || !drawer) return;
+
+    const openMenu = () => {
+        drawer.classList.add("open");
+        document.body.style.overflow = "hidden";
+    };
+
+    const closeMenu = () => {
+        drawer.classList.remove("open");
+        document.body.style.overflow = "";
+    };
+
+    toggleBtn.addEventListener("click", openMenu);
+    if (closeBtn) closeBtn.addEventListener("click", closeMenu);
+
+    drawer.addEventListener("click", (e) => {
+        if (e.target === drawer) closeMenu();
+    });
+
+    // Close when clicking mobile nav links
+    const navLinks = drawer.querySelectorAll(".mobile-nav-list a");
+    navLinks.forEach(link => {
+        link.addEventListener("click", closeMenu);
+    });
+}
+
+// FAQ Accordion Keyboard & Click Logic
+function initFaqAccordion() {
+    const faqButtons = document.querySelectorAll(".faq-question-btn");
+    faqButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const faqItem = btn.closest(".faq-item");
+            const isCurrentlyActive = faqItem.classList.contains("active");
+
+            // Close other items in the same container if desired
+            document.querySelectorAll(".faq-item").forEach(item => {
+                if (item !== faqItem) {
+                    item.classList.remove("active");
+                    const qBtn = item.querySelector(".faq-question-btn");
+                    if (qBtn) qBtn.setAttribute("aria-expanded", "false");
+                }
+            });
+
+            if (isCurrentlyActive) {
+                faqItem.classList.remove("active");
+                btn.setAttribute("aria-expanded", "false");
+            } else {
+                faqItem.classList.add("active");
+                btn.setAttribute("aria-expanded", "true");
+            }
+        });
+    });
+}
+
