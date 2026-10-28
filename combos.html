@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Discover Scent Aura X curated attar combos. Explore 2 Combo and 3 Combo packs featuring our finest luxury roll-on fragrances." />
+  <title>Combos &amp; Bundle Packs | Scent Aura X</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/premium.css">
+  <style>
+    .combo-filter-btn {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      color: var(--primary-dark);
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .combo-filter-btn:hover,
+    .combo-filter-btn.active {
+      background: var(--primary-dark);
+      color: #FFFFFF;
+      border-color: var(--primary-dark);
+      box-shadow: 0 4px 14px rgba(7, 30, 24, 0.15);
+    }
+    .combo-badge-pill {
+      background-color: #E6D2B5;
+      color: #071E18;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 4px 12px;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ==========================================
+       SECTION 1: HEADER AND NAVIGATION
+       ========================================== -->
+  <header class="site-header">
+    <div class="header-container">
+      <!-- Logo / Brand Wordmark -->
+      <a href="index.html" class="brand-wrapper" aria-label="Scent Aura X Home">
+        <svg class="brand-logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M20 2L24.5 13.5L36 18L24.5 22.5L20 34L15.5 22.5L4 18L15.5 13.5L20 2Z" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M20 8C20 8 26 15 26 21C26 24.3137 23.3137 27 20 27C16.6863 27 14 24.3137 14 21C14 15 20 8 20 8Z" fill="#D4AF37" fill-opacity="0.3" stroke="#D4AF37" stroke-width="1.5"/>
+          <circle cx="20" cy="20" r="3" fill="#D4AF37"/>
+        </svg>
+        <div class="brand-text-block">
+          <span class="brand-title">SCENT AURA X</span>
+          <span class="brand-tagline">PURE FRAGRANCE, LASTING IMPRESSION</span>
+        </div>
+      </a>
+
+      <!-- Center Desktop Links -->
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="combos.html" class="active">Combos</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <!-- Right Header Actions (Search, Cart, Mobile Toggle) -->
+      <div class="header-actions">
+        <a href="shop.html" class="header-icon-btn" aria-label="Search Attars">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </a>
+
+        <a href="cart.html" class="header-icon-btn position-relative" aria-label="Shopping Cart">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span id="cart-count-badge" class="cart-counter">0</span>
+        </a>
+
+        <button type="button" class="mobile-nav-toggle" id="mobile-nav-toggle-btn" aria-label="Open mobile navigation menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-nav-drawer" id="mobile-nav-drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+    <div class="mobile-nav-panel">
+      <div class="mobile-nav-header">
+        <div class="d-flex align-items-center gap-2">
+          <svg class="brand-logo-icon" viewBox="0 0 40 40" fill="none" style="width: 24px; height: 24px;" aria-hidden="true">
+            <path d="M20 2L24.5 13.5L36 18L24.5 22.5L20 34L15.5 22.5L4 18L15.5 13.5L20 2Z" stroke="#D4AF37" stroke-width="2"/>
+            <path d="M20 8C20 8 26 15 26 21C26 24.3137 23.3137 27 20 27C16.6863 27 14 24.3137 14 21C14 15 20 8 20 8Z" fill="#D4AF37" fill-opacity="0.3" stroke="#D4AF37" stroke-width="1.5"/>
+          </svg>
+          <span class="brand-title" style="font-size: 1.05rem;">SCENT AURA X</span>
+        </div>
+        <button type="button" class="mobile-nav-close" id="mobile-nav-close-btn" aria-label="Close navigation menu">&times;</button>
+      </div>
+      <ul class="mobile-nav-list">
+        <li><a href="index.html"><span>Home</span> &rarr;</a></li>
+        <li><a href="shop.html"><span>Shop</span> &rarr;</a></li>
+        <li><a href="combos.html" class="active"><span>Combos</span> &rarr;</a></li>
+        <li><a href="about.html"><span>About</span> &rarr;</a></li>
+        <li><a href="contact.html"><span>Contact</span> &rarr;</a></li>
+      </ul>
+      <div class="mt-auto pt-4 border-top border-secondary">
+        <a href="cart.html" class="btn btn-sm w-100 py-2 rounded-pill fw-bold" style="background: var(--gold-accent); color: var(--primary-dark);">
+          View Cart (<span class="mobile-drawer-cart-count">0</span>)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Banner -->
+  <section class="py-5" style="background-color: var(--primary-dark); color: #fff; text-align: center; position: relative;">
+    <div class="container py-4">
+      <span class="section-label-gold" style="color: var(--gold-accent);">CURATED FRAGRANCE SETS</span>
+      <h1 class="font-serif mt-2 mb-3" style="font-size: clamp(2.2rem, 4vw, 3.2rem); color: #fff;">Attar Combos &amp; Value Packs</h1>
+      <p class="mx-auto" style="max-width: 640px; color: #D3DDD8; font-size: 1rem; line-height: 1.65;">
+        Discover pairs and trios specially curated to complement each other. Experience multiple signature notes at exclusive bundled prices.
+      </p>
+    </div>
+  </section>
+
+  <!-- Filter & Products Grid -->
+  <section class="py-5">
+    <div class="hero-container">
+      <!-- Combo Type Selector -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4 pb-3 border-bottom">
+        <div class="d-flex flex-wrap gap-2" id="combo-filter-buttons">
+          <button type="button" class="combo-filter-btn active" data-filter="all">All Combos</button>
+          <button type="button" class="combo-filter-btn" data-filter="2-combo">2 Combo Packs</button>
+          <button type="button" class="combo-filter-btn" data-filter="3-combo">3 Combo Packs</button>
+        </div>
+        <span class="text-muted small">Flat ₹50 Shipping across India</span>
+      </div>
+
+      <!-- Combos Grid -->
+      <div class="products-grid-row" id="combos-container" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+        <div class="col-12 text-center py-5">
+          <div class="spinner-border text-dark" role="status"></div>
+          <p class="mt-3 text-muted">Loading combos...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Combo Perks Callout -->
+  <section class="py-5" style="background: #FFFFFF; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
+    <div class="hero-container">
+      <div class="row g-4 text-center">
+        <div class="col-md-4">
+          <div class="p-3">
+            <h4 class="font-serif" style="color: var(--primary-dark); font-size: 1.25rem;">Curated Harmony</h4>
+            <p class="text-muted small mb-0 mt-2">Every combo pairs complementary notes — from refreshing daytime musks to regal evening ouds.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-3">
+            <h4 class="font-serif" style="color: var(--primary-dark); font-size: 1.25rem;">Value Pricing</h4>
+            <p class="text-muted small mb-0 mt-2">Enjoy significant bundle savings compared to buying individual bottles separately.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-3">
+            <h4 class="font-serif" style="color: var(--primary-dark); font-size: 1.25rem;">100% Pure Attar Oils</h4>
+            <p class="text-muted small mb-0 mt-2">Alcohol-free pure perfume oils in smooth roll-on bottles crafted for all-day staying power.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
+  <footer id="footer-contact" class="site-footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <!-- Col 1: Brand & Wordmark -->
+        <div>
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <svg class="brand-logo-icon" viewBox="0 0 40 40" fill="none" style="width: 28px; height: 28px;" aria-hidden="true">
+              <path d="M20 2L24.5 13.5L36 18L24.5 22.5L20 34L15.5 22.5L4 18L15.5 13.5L20 2Z" stroke="#D4AF37" stroke-width="2"/>
+              <path d="M20 8C20 8 26 15 26 21C26 24.3137 23.3137 27 20 27C16.6863 27 14 24.3137 14 21C14 15 20 8 20 8Z" fill="#D4AF37" fill-opacity="0.3" stroke="#D4AF37" stroke-width="1.5"/>
+            </svg>
+            <span class="brand-title" style="font-size: 1.15rem;">SCENT AURA X</span>
+          </div>
+          <div class="brand-tagline mb-3" style="font-size: 0.65rem;">PURE FRAGRANCE, LASTING IMPRESSION</div>
+          <p style="font-size: 0.84rem; color: #9A958A; line-height: 1.6; max-width: 280px;">
+            Handcrafted artisanal attar oils made with the finest natural extracts, pure distillation, and zero alcohol.
+          </p>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div>
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-links-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="combos.html">Combos</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Customer Care -->
+        <div>
+          <h4 class="footer-col-title">Customer Care</h4>
+          <ul class="footer-links-list">
+            <li><a href="checkout.html">Shipping Policy</a></li>
+            <li><a href="checkout.html">Returns &amp; Refund Policy</a></li>
+            <li><a href="contact.html#faq">FAQs</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Get in Touch & WhatsApp -->
+        <div>
+          <h4 class="footer-col-title">Get in Touch</h4>
+          <a href="mailto:scentaurax@gmail.com" class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+            </svg>
+            <span>scentaurax@gmail.com</span>
+          </a>
+          <a href="https://wa.me/919021336695" target="_blank" rel="noopener noreferrer" class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.974.551 1.834.814 2.8.814 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.766-5.772-5.766zm6.819 5.767c-.001 3.766-3.054 6.819-6.819 6.819-1.157 0-2.29-.296-3.29-.861l-3.663.96 1.002-3.666c-.633-1.042-.969-2.247-.968-3.252.001-3.766 3.054-6.819 6.819-6.819 3.765 0 6.819 3.053 6.819 6.819z"/>
+            </svg>
+            <span>WhatsApp: +91 90213 36695</span>
+          </a>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span>All Over India Delivery</span>
+          </div>
+        </div>
+
+        <!-- Col 5: Follow Us -->
+        <div>
+          <h4 class="footer-col-title">Follow Us</h4>
+          <div class="footer-social-icons">
+            <a href="#" class="footer-social-icon" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-icon" aria-label="YouTube">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-icon" aria-label="Facebook">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <span>&copy; <span id="current-year">2026</span> Scent Aura X. All Rights Reserved.</span>
+        <div>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms &amp; Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const container = document.getElementById("combos-container");
+        const loadedProducts = await loadProducts();
+        
+        const comboProducts = loadedProducts.filter(p => p.category === "Combos" || (p.comboType && p.comboType.includes("combo")));
+
+        let currentFilter = "all";
+
+        const renderCombos = () => {
+            const list = comboProducts.filter(p => {
+                if (currentFilter === "all") return true;
+                return p.comboType === currentFilter;
+            });
+
+            if (list.length === 0) {
+                container.innerHTML = `<div class="col-12 text-center py-5"><p class="text-muted">No combo offers found in this category.</p></div>`;
+                return;
+            }
+
+            container.innerHTML = "";
+            list.forEach(product => {
+                const defaultVariation = (product.variations && product.variations[0]) ? product.variations[0] : { price: 799, name: "3ml", id: "3ml" };
+                const shortDesc = product.description ? (product.description.length > 76 ? product.description.substring(0, 74) + "..." : product.description) : product.subCategory;
+                const badgeLabel = product.label || (product.comboType === "3-combo" ? "3 Combo" : "2 Combo");
+
+                const card = `
+                  <div class="attar-product-card">
+                    <span class="card-badge-bestseller" style="background-color: var(--primary-dark); color: var(--gold-accent); border: 1px solid rgba(197, 160, 89, 0.4);">${badgeLabel}</span>
+                    <a href="product.html?id=${product.id}" class="product-img-wrap" aria-label="${product.name}">
+                      <img src="${product.imageUrl}" alt="${product.name}">
+                    </a>
+                    <div class="product-card-details">
+                      <div class="product-item-meta-row">
+                        <span class="product-bottle-size-badge">${defaultVariation.name}</span>
+                      </div>
+                      <h3 class="product-item-title">
+                        <a href="product.html?id=${product.id}">${product.name}</a>
+                      </h3>
+                      <div class="product-item-price">From ₹${defaultVariation.price}</div>
+                      <div class="product-item-subtext">${shortDesc}</div>
+                      
+                      <div class="mt-auto pt-2 d-flex gap-2">
+                        <button type="button" class="btn-card-select-size" onclick="addToCartWithQty('${product.id}', '${defaultVariation.id}', 1)" aria-label="Add ${product.name} to Cart">
+                          <span>Add to Cart</span>
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                          </svg>
+                        </button>
+                        <a href="product.html?id=${product.id}" class="header-icon-btn" style="border: 1px solid var(--border-subtle); border-radius: 50%; width: 40px; height: 40px; color: var(--primary-dark);" title="View Details" aria-label="View Details for ${product.name}">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                `;
+                container.innerHTML += card;
+            });
+        };
+
+        renderCombos();
+
+        // Wire filter buttons
+        document.querySelectorAll("#combo-filter-buttons .combo-filter-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll("#combo-filter-buttons .combo-filter-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                currentFilter = btn.dataset.filter;
+                renderCombos();
+            });
+        });
+    });
+  </script>
+</body>
+</html>
