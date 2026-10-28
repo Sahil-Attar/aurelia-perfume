@@ -91,6 +91,70 @@ const DEFAULT_PRODUCTS = [
             { id: "3ml", name: "3ml", price: 49 },
             { id: "6ml", name: "6ml", price: 99 }
         ]
+    },
+    {
+        id: "royal-duo-combo",
+        name: "Royal Duo (2 Combo Pack)",
+        category: "Combos",
+        comboType: "2-combo",
+        subCategory: "Oud Royal + White Musk",
+        description: "The ultimate harmony of bold royalty and clean elegance. Includes Oud Royal (woody resin) and White Musk (velvety soft). Available in convenient roll-on bottles.",
+        label: "2 COMBO",
+        isBestseller: true,
+        imageUrl: "assets/images/prod-oud-royal.jpg",
+        variations: [
+            { id: "3ml", name: "2 x 3ml Bottles", price: 799 },
+            { id: "6ml", name: "2 x 6ml Bottles", price: 1499 },
+            { id: "12ml", name: "2 x 12ml Bottles", price: 2799 }
+        ]
+    },
+    {
+        id: "amber-rose-duo",
+        name: "Amber & Rose (2 Combo Pack)",
+        category: "Combos",
+        comboType: "2-combo",
+        subCategory: "Amber Oud + Rose Attar",
+        description: "A timeless romantic pair marrying warm benzoin amber with hydro-distilled Damascena rose petals. Perfect for special moments and couple gifting.",
+        label: "2 COMBO",
+        isBestseller: false,
+        imageUrl: "assets/images/prod-rose-attar.jpg",
+        variations: [
+            { id: "3ml", name: "2 x 3ml Bottles", price: 749 },
+            { id: "6ml", name: "2 x 6ml Bottles", price: 1399 },
+            { id: "12ml", name: "2 x 12ml Bottles", price: 2599 }
+        ]
+    },
+    {
+        id: "signature-trio-combo",
+        name: "Signature Trio (3 Combo Pack)",
+        category: "Combos",
+        comboType: "3-combo",
+        subCategory: "Oud Royal + White Musk + Rose Attar",
+        description: "Our signature 3-piece fragrance wardrobe: Regal Oud for evenings, Serene White Musk for workday freshness, and Pure Rose Attar for traditional elegance.",
+        label: "3 COMBO",
+        isBestseller: true,
+        imageUrl: "assets/images/hero-banner.jpg",
+        variations: [
+            { id: "3ml", name: "3 x 3ml Bottles", price: 1199 },
+            { id: "6ml", name: "3 x 6ml Bottles", price: 2199 },
+            { id: "12ml", name: "3 x 12ml Bottles", price: 3999 }
+        ]
+    },
+    {
+        id: "oriental-amber-trio",
+        name: "Oriental Amber Trio (3 Combo Pack)",
+        category: "Combos",
+        comboType: "3-combo",
+        subCategory: "Amber Oud + Kasturi Musk + Oud Royal",
+        description: "Three deep, long-lasting oriental masterpieces crafted for lovers of warm resins, deep woods, and bold botanical musk profiles.",
+        label: "3 COMBO",
+        isBestseller: false,
+        imageUrl: "assets/images/prod-amber-oud.jpg",
+        variations: [
+            { id: "3ml", name: "3 x 3ml Bottles", price: 1249 },
+            { id: "6ml", name: "3 x 6ml Bottles", price: 2299 },
+            { id: "12ml", name: "3 x 12ml Bottles", price: 4199 }
+        ]
     }
 ];
 
