@@ -623,6 +623,26 @@ h1, h2, h3, h4, .font-serif, .section-heading {
   color: var(--gold-dark);
 }
 
+.product-item-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.product-bottle-size-badge {
+  display: inline-block;
+  background-color: #F4ECE1;
+  color: var(--gold-dark);
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  font-size: 0.70rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .product-item-price {
   font-size: 1.15rem;
   font-weight: 700;

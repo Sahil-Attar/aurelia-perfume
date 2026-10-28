@@ -927,7 +927,7 @@
         productsToDisplay.forEach((product, idx) => {
             const defaultVariation = (product.variations && product.variations[0]) ? product.variations[0] : { price: 399, name: "3ml", id: "3ml" };
             const isBestsellerBadge = idx === 0 || product.isBestseller;
-            const subText = product.subCategory || "Pure & Long Lasting Attar";
+            const shortDesc = product.description ? (product.description.length > 72 ? product.description.substring(0, 70) + "..." : product.description) : (product.subCategory || "Pure concentrated perfume oil");
 
             const card = `
               <div class="attar-product-card">
@@ -936,11 +936,14 @@
                   <img src="${product.imageUrl}" alt="${product.name}">
                 </a>
                 <div class="product-card-details">
+                  <div class="product-item-meta-row">
+                    <span class="product-bottle-size-badge">${defaultVariation.name} Bottle</span>
+                  </div>
                   <h3 class="product-item-title">
                     <a href="product.html?id=${product.id}">${product.name}</a>
                   </h3>
-                  <div class="product-item-price">From ₹${defaultVariation.price} <span style="font-size: 0.72rem; color: #777; font-weight: normal;">(${defaultVariation.name})</span></div>
-                  <div class="product-item-subtext">${subText}</div>
+                  <div class="product-item-price">₹${defaultVariation.price}</div>
+                  <div class="product-item-subtext">${shortDesc}</div>
                   
                   <div class="mt-auto pt-2 d-flex gap-2">
                     <button type="button" class="btn-card-select-size" onclick="addToCartWithQty('${product.id}', '${defaultVariation.id}', 1)" aria-label="Add ${product.name} to Cart">
