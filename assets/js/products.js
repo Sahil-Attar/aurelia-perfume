@@ -161,22 +161,46 @@ const DEFAULT_PRODUCTS = [
 let products = [...DEFAULT_PRODUCTS];
 let isProductsLoaded = false;
 
+// Helper to convert Google Drive sharing links, Dropbox links, etc. into direct embeddable image URLs
+function formatProductImageUrl(url) {
+    if (!url || typeof url !== 'string') return "assets/images/prod-oud-royal.jpg";
+    let trimmed = url.trim();
+    if (!trimmed) return "assets/images/prod-oud-royal.jpg";
+
+    // Handle Google Drive links
+    // e.g. https://drive.google.com/file/d/FILE_ID/view?usp=drive_link
+    // or https://drive.google.com/open?id=FILE_ID
+    const driveMatch = trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || trimmed.match(/id=([a-zA-Z0-9_-]+)/);
+    if (driveMatch && driveMatch[1]) {
+        return `https://lh3.googleusercontent.com/d/${driveMatch[1]}`;
+    }
+
+    // Handle Dropbox links
+    if (trimmed.includes("dropbox.com")) {
+        return trimmed.replace("dl=0", "raw=1").replace("www.dropbox.com", "dl.dropboxusercontent.com");
+    }
+
+    return trimmed;
+}
+
 // Fetch products from Google Sheets API with graceful fallback to curated products
 async function loadProducts() {
     if (isProductsLoaded && products.length > DEFAULT_PRODUCTS.length) return products;
 
     try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 3500);
+        const timeoutId = setTimeout(() => controller.abort(), 4000);
         
         const response = await fetch(API_URL, { signal: controller });
         clearTimeout(timeoutId);
         
         const json = await response.json();
         if (json.status === "success" && Array.isArray(json.data) && json.data.length > 0) {
-            // Merge sheet products with our rich default items if sheet only has 1 test item
+            // Process and format image URLs for all items fetched from Google Sheet
             const fetchedList = json.data.map(item => {
-                if (!item.imageUrl) {
+                if (item.imageUrl) {
+                    item.imageUrl = formatProductImageUrl(item.imageUrl);
+                } else {
                     const match = DEFAULT_PRODUCTS.find(d => 
                         String(d.id).toLowerCase() === String(item.id).toLowerCase() || 
                         d.name.toLowerCase() === (item.name || "").toLowerCase()

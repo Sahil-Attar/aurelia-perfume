@@ -363,7 +363,7 @@
                   <div class="attar-product-card">
                     <span class="card-badge-bestseller" style="background-color: var(--primary-dark); color: var(--gold-accent); border: 1px solid rgba(197, 160, 89, 0.4);">${badgeLabel}</span>
                     <a href="product.html?id=${product.id}" class="product-img-wrap" aria-label="${product.name}">
-                      <img src="${product.imageUrl}" alt="${product.name}">
+                      <img src="${product.imageUrl}" alt="${product.name}" onerror="this.onerror=null;this.src='assets/images/prod-oud-royal.jpg';">
                     </a>
                     <div class="product-card-details">
                       <div class="product-item-meta-row">
