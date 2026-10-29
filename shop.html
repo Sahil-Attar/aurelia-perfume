@@ -276,7 +276,7 @@
               <div class="attar-product-card">
                 ${isBestsellerBadge ? '<span class="card-badge-bestseller">Bestseller</span>' : ''}
                 <a href="product.html?id=${product.id}" class="product-img-wrap">
-                  <img src="${product.imageUrl}" alt="${product.name}">
+                  <img src="${product.imageUrl}" alt="${product.name}" onerror="this.onerror=null;this.src='assets/images/prod-oud-royal.jpg';">
                 </a>
                 <div class="product-card-details">
                   <h3 class="product-item-title">

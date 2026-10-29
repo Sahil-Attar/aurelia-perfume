@@ -27,6 +27,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Image
         const imgEl = document.getElementById('product-img');
         if (imgEl && product.imageUrl) {
+            imgEl.onerror = function() {
+                this.onerror = null;
+                this.src = 'assets/images/prod-oud-royal.jpg';
+            };
             imgEl.src = product.imageUrl;
             imgEl.alt = product.name;
         }

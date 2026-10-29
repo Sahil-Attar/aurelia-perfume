@@ -55,13 +55,24 @@ function doGet(e) {
           }
         });
 
+        var rawImageUrl = rowData["Image_URL"] ? String(rowData["Image_URL"]).trim() : "";
+        var formattedImageUrl = rawImageUrl;
+        if (rawImageUrl) {
+          var driveMatch = rawImageUrl.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || rawImageUrl.match(/id=([a-zA-Z0-9_-]+)/);
+          if (driveMatch && driveMatch[1]) {
+            formattedImageUrl = "https://lh3.googleusercontent.com/d/" + driveMatch[1];
+          } else if (rawImageUrl.indexOf("dropbox.com") !== -1) {
+            formattedImageUrl = rawImageUrl.replace("dl=0", "raw=1").replace("www.dropbox.com", "dl.dropboxusercontent.com");
+          }
+        }
+
         products.push({
           id: rowData["ID"],
           name: rowData["Name"],
           category: rowData["Category"],
           description: rowData["Description"],
           label: rowData["Name"] ? rowData["Name"].toUpperCase() : "",
-          imageUrl: rowData["Image_URL"],
+          imageUrl: formattedImageUrl,
           variations: variations
         });
       }
