@@ -185,7 +185,7 @@ function formatProductImageUrl(url) {
 
 // Fetch products from Google Sheets API with graceful fallback to curated products
 async function loadProducts() {
-    if (isProductsLoaded && products.length > DEFAULT_PRODUCTS.length) return products;
+    if (isProductsLoaded) return products;
 
     try {
         const controller = new AbortController();
