@@ -143,7 +143,32 @@ function doOptions(e) {
 
 function saveToSheet(order) {
   try {
-    var sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getActiveSheet();
+    var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    var sheet = ss.getSheetByName("Orders");
+    if (!sheet) {
+      sheet = ss.insertSheet("Orders");
+    }
+    
+    // Automatically add header row if the Orders sheet is empty
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow([
+        "Order ID",
+        "Date",
+        "Customer Name",
+        "Email",
+        "Phone",
+        "Address",
+        "City",
+        "State",
+        "Pincode",
+        "Items Ordered",
+        "Subtotal",
+        "Discount",
+        "Shipping",
+        "Total",
+        "Payment Method"
+      ]);
+    }
     
     // Format items as a readable string
     var itemsString = "";
