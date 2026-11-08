@@ -5,7 +5,7 @@ const COUPON_KEY = "aurelia_coupon";
 const SHIPPING_FEE = 50;
 
 // Scent Aura X WhatsApp business phone number
-const WHATSAPP_PHONE = "919021336695";
+const WHATSAPP_PHONE = "918329737521";
 
 // Predefined coupons
 const VALID_COUPONS = {
@@ -152,7 +152,7 @@ function showAddedToCartModal(cartItems) {
             </div>
         `;
         document.body.appendChild(backdrop);
-        
+
         // Close on backdrop click (outside modal card)
         backdrop.addEventListener("click", (e) => {
             if (e.target === backdrop) {
@@ -215,7 +215,7 @@ function initMobileNav() {
     const toggleBtn = document.getElementById("mobile-nav-toggle-btn");
     const drawer = document.getElementById("mobile-nav-drawer");
     const closeBtn = document.getElementById("mobile-nav-close-btn");
-    
+
     if (!toggleBtn || !drawer) return;
 
     const openMenu = () => {

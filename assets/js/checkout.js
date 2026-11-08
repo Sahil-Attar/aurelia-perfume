@@ -37,7 +37,7 @@ function getItemUnitPrice(item) {
 function calculateCheckoutTotals() {
     const cart = getCart();
     let subtotal = 0;
-    
+
     cart.forEach(item => {
         const unitPrice = getItemUnitPrice(item);
         const qty = Math.max(1, parseInt(item.quantity, 10) || 1);
@@ -76,20 +76,20 @@ function calculateCheckoutTotals() {
 function renderCheckoutSummary() {
     const summaryContainer = document.getElementById("checkout-items");
     if (!summaryContainer) return;
-    
+
     const cart = getCart();
-    
+
     if (!cart || cart.length === 0) {
         window.location.href = "cart.html";
         return;
     }
-    
+
     let html = "";
-    
+
     cart.forEach(item => {
         const product = typeof getProductById === "function" ? getProductById(item.id) : null;
         const variation = typeof getProductVariation === "function" ? getProductVariation(item.id, item.variationId || "3ml") : null;
-        
+
         const prodName = (product && product.name) ? product.name : (item.name || "Attar Fragrance");
         const varName = (variation && variation.name) ? variation.name : (item.variationName || item.variationId || "3ml");
         const unitPrice = getItemUnitPrice(item);
@@ -110,21 +110,21 @@ function renderCheckoutSummary() {
             </div>
         `;
     });
-    
+
     summaryContainer.innerHTML = html;
-    
+
     // Calculate and populate financial rows
     const totals = calculateCheckoutTotals();
-    
+
     const subtotalEl = document.getElementById("summary-subtotal");
     const shippingEl = document.getElementById("summary-shipping");
     const discountEl = document.getElementById("summary-discount");
     const discountRow = document.getElementById("discount-row");
     const totalEl = document.getElementById("summary-total");
-    
+
     if (subtotalEl) subtotalEl.textContent = formatCurrency(totals.subtotal);
     if (shippingEl) shippingEl.textContent = formatCurrency(totals.shipping);
-    
+
     if (discountEl && discountRow) {
         if (totals.discount > 0) {
             discountEl.innerHTML = `
@@ -137,7 +137,7 @@ function renderCheckoutSummary() {
             discountRow.style.display = "none";
         }
     }
-    
+
     if (totalEl) totalEl.textContent = formatCurrency(totals.total);
 }
 
@@ -146,7 +146,7 @@ function applyCheckoutCoupon() {
     const inputEl = document.getElementById("checkout-coupon-input");
     const msgEl = document.getElementById("checkout-coupon-message");
     if (!inputEl) return;
-    
+
     const code = inputEl.value.trim().toUpperCase();
     if (!code) {
         if (msgEl) msgEl.innerHTML = `<span class="text-danger small">Please enter a coupon code.</span>`;
@@ -172,9 +172,9 @@ function removeCheckoutCoupon() {
 
 function generateOrderId() {
     const date = new Date();
-    const dateString = date.getFullYear().toString() + 
-                      (date.getMonth() + 1).toString().padStart(2, '0') + 
-                      date.getDate().toString().padStart(2, '0');
+    const dateString = date.getFullYear().toString() +
+        (date.getMonth() + 1).toString().padStart(2, '0') +
+        date.getDate().toString().padStart(2, '0');
     const random = Math.floor(100 + Math.random() * 900);
     return `SAX-${dateString}-${random}`;
 }
@@ -313,14 +313,14 @@ function validatePincodeFieldSync() {
 // Place order on WhatsApp
 async function placeOrder(event) {
     if (event) event.preventDefault();
-    
+
     const cart = getCart();
     if (!cart || cart.length === 0) {
         alert("Your cart is empty. Please add items to checkout.");
         window.location.href = "shop.html";
         return;
     }
-    
+
     const form = document.getElementById("checkout-form");
     const fullNameInput = document.getElementById("fullName");
     const phoneInput = document.getElementById("phone");
@@ -423,10 +423,10 @@ async function placeOrder(event) {
         if (firstInvalid) firstInvalid.focus();
         return;
     }
-    
+
     const totals = calculateCheckoutTotals();
     const orderId = generateOrderId();
-    
+
     // Construct order items list for WhatsApp
     let itemsText = "";
     cart.forEach((item, index) => {
@@ -495,7 +495,7 @@ async function placeOrder(event) {
     }
 
     // Open WhatsApp
-    const waPhone = typeof WHATSAPP_PHONE !== "undefined" ? WHATSAPP_PHONE : "919021336695";
+    const waPhone = typeof WHATSAPP_PHONE !== "undefined" ? WHATSAPP_PHONE : "918329737521";
     const waUrl = `https://wa.me/${waPhone}?text=${encodeURIComponent(waMessage)}`;
     window.open(waUrl, '_blank');
 
