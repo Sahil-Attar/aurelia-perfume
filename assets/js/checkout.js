@@ -176,7 +176,7 @@ function generateOrderId() {
         (date.getMonth() + 1).toString().padStart(2, '0') +
         date.getDate().toString().padStart(2, '0');
     const random = Math.floor(100 + Math.random() * 900);
-    return `SAX-${dateString}-${random}`;
+    return `${dateString}${random}`;
 }
 
 // Fetch postal records from India Post API
