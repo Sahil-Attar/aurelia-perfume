@@ -125,15 +125,10 @@
     <!-- Container for Product -->
     <div class="product-detail-card" id="product-container" style="display: none;">
       <div class="row g-5 align-items-center">
-        <!-- Left: Image Gallery (Amazon Style Vertical Thumbnails) -->
+        <!-- Left: Image Gallery (Amazon Style Vertical Thumbnails on the Left, Big Image on Right) -->
         <div class="col-lg-6">
           <div class="product-gallery-layout">
-            <!-- Main Featured Image Display -->
-            <div class="product-detail-image-box">
-              <img id="product-img" src="" alt="Attar Bottle">
-            </div>
-
-            <!-- Amazon-style Vertical Thumbnail Strip with Up/Down Arrows -->
+            <!-- Amazon-style Vertical Thumbnail Strip with Up/Down Arrows on LEFT side -->
             <div class="gallery-thumbs-wrapper" id="gallery-thumbs-wrapper">
               <button type="button" class="thumb-nav-btn thumb-nav-prev" id="thumb-arrow-up"
                 aria-label="Previous image">
@@ -151,6 +146,11 @@
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </button>
+            </div>
+
+            <!-- Main Featured Big Image Display -->
+            <div class="product-detail-image-box">
+              <img id="product-img" src="" alt="Attar Bottle">
             </div>
           </div>
         </div>
