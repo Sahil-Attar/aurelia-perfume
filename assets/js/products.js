@@ -208,13 +208,21 @@ async function loadProducts() {
                     item.imageUrl = match ? match.imageUrl : "assets/images/prod-oud-royal.jpg";
                 }
 
-                // Parse and format gallery images if present
+                // Parse and format gallery images from item.images or item.imageUrl
+                let rawList = [];
                 if (Array.isArray(item.images) && item.images.length > 0) {
-                    item.images = item.images.map(formatProductImageUrl);
+                    rawList = item.images;
                 } else if (typeof item.images === 'string' && item.images.trim()) {
-                    item.images = item.images.split(/[\n,;]+/).map(u => formatProductImageUrl(u.trim())).filter(Boolean);
-                } else {
-                    item.images = [item.imageUrl];
+                    rawList = item.images.split(/[\n,;]+/);
+                } else if (typeof item.imageUrl === 'string' && item.imageUrl.trim()) {
+                    // Split in case multiple URLs are passed directly in Image_URL
+                    rawList = item.imageUrl.split(/[\n,;]+/);
+                }
+
+                const cleanList = rawList.map(u => String(u).trim()).filter(Boolean).map(formatProductImageUrl);
+                item.images = cleanList.length > 0 ? cleanList : [item.imageUrl];
+                if (cleanList.length > 0) {
+                    item.imageUrl = cleanList[0];
                 }
 
                 return item;
