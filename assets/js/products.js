@@ -172,7 +172,7 @@ function formatProductImageUrl(url) {
     // or https://drive.google.com/open?id=FILE_ID
     const driveMatch = trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || trimmed.match(/id=([a-zA-Z0-9_-]+)/);
     if (driveMatch && driveMatch[1]) {
-        return `https://lh3.googleusercontent.com/d/${driveMatch[1]}`;
+        return `https://drive.usercontent.google.com/download?id=${driveMatch[1]}&export=view`;
     }
 
     // Handle Dropbox links
@@ -191,7 +191,7 @@ async function loadProducts() {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 4000);
         
-        const response = await fetch(API_URL, { signal: controller });
+        const response = await fetch(`${API_URL}?t=${Date.now()}`, { signal: controller });
         clearTimeout(timeoutId);
         
         const json = await response.json();
