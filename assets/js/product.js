@@ -24,12 +24,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             subtextEl.textContent = product.subCategory || "Rich, Long Lasting & Alcohol-Free";
         }
         
-        // Setup Gallery Images & Amazon-style Up/Down Selector
+        // Setup Gallery Images & Amazon-style Horizontal Bottom Thumbnails
         const imgEl = document.getElementById('product-img');
         const thumbsWrapper = document.getElementById('gallery-thumbs-wrapper');
         const thumbsTrack = document.getElementById('gallery-thumbs-track');
-        const btnArrowUp = document.getElementById('thumb-arrow-up');
-        const btnArrowDown = document.getElementById('thumb-arrow-down');
+        const btnArrowLeft = document.getElementById('thumb-arrow-left');
+        const btnArrowRight = document.getElementById('thumb-arrow-right');
+        const btnFullView = document.getElementById('btn-fullview-link');
+        const btnShare = document.getElementById('gallery-share-btn');
 
         const galleryImages = (product.images && product.images.length > 0) 
             ? product.images 
@@ -51,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 thumbItems.forEach((thumb, idx) => {
                     if (idx === currentImageIndex) {
                         thumb.classList.add('active');
-                        thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        thumb.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
                     } else {
                         thumb.classList.remove('active');
                     }
@@ -66,6 +68,60 @@ document.addEventListener("DOMContentLoaded", async () => {
             };
             imgEl.src = galleryImages[0];
             imgEl.alt = product.name;
+
+            // Clicking main image also triggers full view lightbox
+            imgEl.addEventListener('click', () => openLightbox(galleryImages[currentImageIndex]));
+        }
+
+        // Full view modal lightbox
+        const openLightbox = (src) => {
+            let modal = document.getElementById('image-lightbox-modal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'image-lightbox-modal';
+                modal.className = 'image-lightbox-modal';
+                modal.innerHTML = `
+                    <button type="button" class="image-lightbox-close" aria-label="Close">&times;</button>
+                    <div class="image-lightbox-content">
+                        <img id="lightbox-full-img" src="" alt="Full view">
+                    </div>
+                `;
+                document.body.appendChild(modal);
+
+                modal.querySelector('.image-lightbox-close').addEventListener('click', () => {
+                    modal.classList.remove('show');
+                });
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) modal.classList.remove('show');
+                });
+            }
+            const fullImg = document.getElementById('lightbox-full-img');
+            if (fullImg) fullImg.src = src;
+            modal.classList.add('show');
+        };
+
+        if (btnFullView) {
+            btnFullView.addEventListener('click', () => {
+                openLightbox(galleryImages[currentImageIndex]);
+            });
+        }
+
+        // Native share or copy link
+        if (btnShare) {
+            btnShare.addEventListener('click', async () => {
+                if (navigator.share) {
+                    try {
+                        await navigator.share({
+                            title: product.name,
+                            text: `Check out ${product.name} at Scent Aura X`,
+                            url: window.location.href
+                        });
+                    } catch (e) {}
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert("Product link copied to clipboard!");
+                }
+            });
         }
 
         // Render thumbnails if multiple images exist, or hide arrows if single image
@@ -97,16 +153,16 @@ document.addEventListener("DOMContentLoaded", async () => {
                     thumbsTrack.appendChild(thumbBtn);
                 });
 
-                // Arrow controls (Up / Down)
-                if (btnArrowUp) {
-                    btnArrowUp.addEventListener('click', () => {
+                // Arrow controls (Left / Right)
+                if (btnArrowLeft) {
+                    btnArrowLeft.addEventListener('click', () => {
                         const nextIdx = currentImageIndex > 0 ? currentImageIndex - 1 : galleryImages.length - 1;
                         updateMainImage(nextIdx);
                     });
                 }
 
-                if (btnArrowDown) {
-                    btnArrowDown.addEventListener('click', () => {
+                if (btnArrowRight) {
+                    btnArrowRight.addEventListener('click', () => {
                         const nextIdx = currentImageIndex < galleryImages.length - 1 ? currentImageIndex + 1 : 0;
                         updateMainImage(nextIdx);
                     });
