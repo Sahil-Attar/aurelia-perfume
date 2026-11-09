@@ -24,15 +24,96 @@ document.addEventListener("DOMContentLoaded", async () => {
             subtextEl.textContent = product.subCategory || "Rich, Long Lasting & Alcohol-Free";
         }
         
-        // Image
+        // Setup Gallery Images & Amazon-style Up/Down Selector
         const imgEl = document.getElementById('product-img');
-        if (imgEl && product.imageUrl) {
+        const thumbsWrapper = document.getElementById('gallery-thumbs-wrapper');
+        const thumbsTrack = document.getElementById('gallery-thumbs-track');
+        const btnArrowUp = document.getElementById('thumb-arrow-up');
+        const btnArrowDown = document.getElementById('thumb-arrow-down');
+
+        const galleryImages = (product.images && product.images.length > 0) 
+            ? product.images 
+            : (product.imageUrl ? [product.imageUrl] : ['assets/images/prod-oud-royal.jpg']);
+
+        let currentImageIndex = 0;
+
+        const updateMainImage = (index) => {
+            if (index < 0 || index >= galleryImages.length) return;
+            currentImageIndex = index;
+            if (imgEl) {
+                imgEl.src = galleryImages[currentImageIndex];
+                imgEl.alt = `${product.name} - View ${currentImageIndex + 1}`;
+            }
+
+            // Update active state in thumbnail strip
+            if (thumbsTrack) {
+                const thumbItems = thumbsTrack.querySelectorAll('.gallery-thumb-item');
+                thumbItems.forEach((thumb, idx) => {
+                    if (idx === currentImageIndex) {
+                        thumb.classList.add('active');
+                        thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    } else {
+                        thumb.classList.remove('active');
+                    }
+                });
+            }
+        };
+
+        if (imgEl) {
             imgEl.onerror = function() {
                 this.onerror = null;
                 this.src = 'assets/images/prod-oud-royal.jpg';
             };
-            imgEl.src = product.imageUrl;
+            imgEl.src = galleryImages[0];
             imgEl.alt = product.name;
+        }
+
+        // Render thumbnails if multiple images exist, or hide arrows if single image
+        if (thumbsWrapper && thumbsTrack) {
+            if (galleryImages.length > 1) {
+                thumbsWrapper.style.display = 'flex';
+                thumbsTrack.innerHTML = '';
+
+                galleryImages.forEach((imgUrl, idx) => {
+                    const thumbBtn = document.createElement('button');
+                    thumbBtn.type = 'button';
+                    thumbBtn.className = `gallery-thumb-item ${idx === 0 ? 'active' : ''}`;
+                    thumbBtn.setAttribute('aria-label', `Thumbnail image ${idx + 1}`);
+
+                    const thumbImg = document.createElement('img');
+                    thumbImg.src = imgUrl;
+                    thumbImg.alt = `${product.name} thumb ${idx + 1}`;
+                    thumbImg.onerror = function() {
+                        this.onerror = null;
+                        this.src = 'assets/images/prod-oud-royal.jpg';
+                    };
+
+                    thumbBtn.appendChild(thumbImg);
+
+                    // Click or hover to switch main image (Amazon style)
+                    thumbBtn.addEventListener('click', () => updateMainImage(idx));
+                    thumbBtn.addEventListener('mouseenter', () => updateMainImage(idx));
+
+                    thumbsTrack.appendChild(thumbBtn);
+                });
+
+                // Arrow controls (Up / Down)
+                if (btnArrowUp) {
+                    btnArrowUp.addEventListener('click', () => {
+                        const nextIdx = currentImageIndex > 0 ? currentImageIndex - 1 : galleryImages.length - 1;
+                        updateMainImage(nextIdx);
+                    });
+                }
+
+                if (btnArrowDown) {
+                    btnArrowDown.addEventListener('click', () => {
+                        const nextIdx = currentImageIndex < galleryImages.length - 1 ? currentImageIndex + 1 : 0;
+                        updateMainImage(nextIdx);
+                    });
+                }
+            } else {
+                thumbsWrapper.style.display = 'none';
+            }
         }
         
         // Populate variations pill buttons

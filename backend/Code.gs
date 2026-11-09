@@ -59,15 +59,24 @@ function doGet(e) {
         });
 
         var rawImageUrl = rowData["Image_URL"] ? String(rowData["Image_URL"]).trim() : "";
-        var formattedImageUrl = rawImageUrl;
+        var imagesList = [];
         if (rawImageUrl) {
-          var driveMatch = rawImageUrl.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || rawImageUrl.match(/id=([a-zA-Z0-9_-]+)/);
-          if (driveMatch && driveMatch[1]) {
-            formattedImageUrl = "https://lh3.googleusercontent.com/d/" + driveMatch[1];
-          } else if (rawImageUrl.indexOf("dropbox.com") !== -1) {
-            formattedImageUrl = rawImageUrl.replace("dl=0", "raw=1").replace("www.dropbox.com", "dl.dropboxusercontent.com");
-          }
+          var splitUrls = rawImageUrl.split(/[\n,;]+/);
+          splitUrls.forEach(function(u) {
+            var trimmedU = u.trim();
+            if (trimmedU) {
+              var driveMatch = trimmedU.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || trimmedU.match(/id=([a-zA-Z0-9_-]+)/);
+              if (driveMatch && driveMatch[1]) {
+                imagesList.push("https://drive.usercontent.google.com/download?id=" + driveMatch[1] + "&export=view");
+              } else if (trimmedU.indexOf("dropbox.com") !== -1) {
+                imagesList.push(trimmedU.replace("dl=0", "raw=1").replace("www.dropbox.com", "dl.dropboxusercontent.com"));
+              } else {
+                imagesList.push(trimmedU);
+              }
+            }
+          });
         }
+        var formattedImageUrl = imagesList.length > 0 ? imagesList[0] : "";
 
         products.push({
           id: rowData["ID"],
@@ -76,6 +85,7 @@ function doGet(e) {
           description: rowData["Description"],
           label: rowData["Name"] ? rowData["Name"].toUpperCase() : "",
           imageUrl: formattedImageUrl,
+          images: imagesList,
           variations: variations
         });
       }
