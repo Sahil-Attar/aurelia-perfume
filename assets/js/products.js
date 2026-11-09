@@ -167,6 +167,11 @@ function formatProductImageUrl(url) {
     let trimmed = url.trim();
     if (!trimmed) return "assets/images/prod-oud-royal.jpg";
 
+    // If it's already a direct Google drive usercontent download link, return it as is
+    if (trimmed.includes("drive.usercontent.google.com/download") || trimmed.includes("lh3.googleusercontent.com")) {
+        return trimmed;
+    }
+
     // Handle Google Drive links
     // e.g. https://drive.google.com/file/d/FILE_ID/view?usp=drive_link
     // or https://drive.google.com/open?id=FILE_ID
