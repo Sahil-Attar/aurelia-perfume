@@ -188,12 +188,12 @@ async function loadProducts() {
     if (isProductsLoaded) return products;
 
     try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 4000);
-        
-        const response = await fetch(`${API_URL}?t=${Date.now()}`, { signal: controller });
-        clearTimeout(timeoutId);
-        
+        const fetchPromise = fetch(`${API_URL}?t=${Date.now()}`);
+        const timeoutPromise = new Promise((_, reject) => 
+            setTimeout(() => reject(new Error("Products fetch timeout")), 6000)
+        );
+
+        const response = await Promise.race([fetchPromise, timeoutPromise]);
         const json = await response.json();
         if (json.status === "success" && Array.isArray(json.data) && json.data.length > 0) {
             // Process and format image URLs for all items fetched from Google Sheet
