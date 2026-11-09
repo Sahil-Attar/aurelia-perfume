@@ -1261,19 +1261,142 @@ h1, h2, h3, h4, .font-serif, .section-heading {
   border: 1px solid var(--border-subtle);
 }
 
+/* ========================================================
+   Amazon-Style Product Gallery with Vertical Thumbnails & Navigation
+   ======================================================== */
+.product-gallery-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+}
+
 .product-detail-image-box {
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   aspect-ratio: 1 / 1;
   border-radius: 20px;
   overflow: hidden;
   background-color: #F4EFE6;
   border: 1px solid var(--border-subtle);
+  position: relative;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
 }
 
 .product-detail-image-box img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: opacity 0.25s ease, transform 0.3s ease;
+}
+
+/* Vertical Thumbnails Column on the Right */
+.gallery-thumbs-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 76px;
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+.gallery-thumbs-track {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 380px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  padding: 4px 2px;
+}
+
+.gallery-thumbs-track::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.gallery-thumb-item {
+  width: 66px;
+  height: 66px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #E5DFD4;
+  background-color: #FAF7F2;
+  padding: 2px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-thumb-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.gallery-thumb-item:hover {
+  border-color: #D4AF37;
+  transform: translateY(-2px);
+}
+
+.gallery-thumb-item.active {
+  border-color: #D4AF37;
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.35);
+  transform: scale(1.04);
+}
+
+.thumb-nav-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid #D5CEBF;
+  color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.thumb-nav-btn:hover {
+  background: var(--primary-dark);
+  color: #FFFFFF;
+  border-color: var(--primary-dark);
+}
+
+@media (max-width: 576px) {
+  .product-gallery-layout {
+    flex-direction: column-reverse;
+  }
+
+  .gallery-thumbs-wrapper {
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .gallery-thumbs-track {
+    flex-direction: row;
+    max-height: none;
+    max-width: 280px;
+    overflow-x: auto;
+  }
+
+  .thumb-nav-prev svg {
+    transform: rotate(-90deg);
+  }
+
+  .thumb-nav-next svg {
+    transform: rotate(-90deg);
+  }
 }
 
 .variation-pill-group {
