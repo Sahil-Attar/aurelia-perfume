@@ -465,6 +465,23 @@ async function placeOrder(event) {
     waMessage += `Please confirm my order and share delivery / payment updates. Thank you!`;
 
     // Save order data in sessionStorage/localStorage for success screen
+    const detailedItems = cart.map(item => {
+        const prod = typeof getProductById === "function" ? getProductById(item.id) : null;
+        const name = prod ? prod.name : (item.name || item.id);
+        const variation = typeof getProductVariation === "function" ? getProductVariation(item.id, item.variationId) : null;
+        const varName = (variation && variation.name) ? variation.name : (item.variationName || item.variationId || "3ml");
+        const unitPrice = getItemUnitPrice(item);
+        const qty = Math.max(1, parseInt(item.quantity, 10) || 1);
+        return {
+            id: item.id,
+            name: name,
+            variationId: item.variationId || "3ml",
+            variationName: varName,
+            price: unitPrice,
+            quantity: qty
+        };
+    });
+
     const orderData = {
         orderId: orderId,
         date: new Date().toISOString(),
@@ -475,7 +492,7 @@ async function placeOrder(event) {
         city: city,
         state: state,
         pincode: pincode,
-        items: cart,
+        items: detailedItems,
         subtotal: formatCurrency(totals.subtotal),
         shipping: formatCurrency(totals.shipping),
         couponCode: totals.appliedCode,
@@ -486,6 +503,22 @@ async function placeOrder(event) {
     };
 
     sessionStorage.setItem("latest_order", JSON.stringify(orderData));
+
+    // Send order to Google Sheets / Apps Script backend
+    if (typeof API_URL !== "undefined" && API_URL) {
+        try {
+            fetch(API_URL, {
+                method: "POST",
+                mode: "no-cors", // Google Apps Script redirects require no-cors or standard text post
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(orderData)
+            }).catch(err => console.warn("Failed to record order in Google Sheet:", err));
+        } catch (e) {
+            console.warn("Error posting order to Google Sheet:", e);
+        }
+    }
 
     // Clear cart & coupon
     localStorage.removeItem(CART_KEY);
