@@ -33,8 +33,11 @@ function doGet(e) {
         rowData[headersRow[j]] = row[j];
       }
       
-      // Check Is_Active
-      if (rowData["Is_Active"] == 1) {
+      // Check Is_Active (default to 1 / active if column is empty or not provided)
+      var isActiveVal = rowData["Is_Active"];
+      var isActive = (isActiveVal === undefined || isActiveVal === null || isActiveVal === "" || isActiveVal == 1 || String(isActiveVal).toLowerCase() === "true");
+      
+      if (isActive && rowData["Name"]) {
         // Construct variations based on the columns
         var variations = [];
         var sizes = [
@@ -155,8 +158,8 @@ function saveToSheet(order) {
         "Order ID",
         "Date",
         "Customer Name",
-        "Email",
         "Phone",
+        "Email",
         "Address",
         "City",
         "State",
@@ -170,37 +173,40 @@ function saveToSheet(order) {
       ]);
     }
     
-    // Format items as a readable string
+    // Format items as a readable string with product details & quantity
     var itemsString = "";
-    order.items.forEach(function(item) {
-      var variationStr = item.variationId ? " (" + item.variationId + ")" : "";
-      itemsString += item.id + variationStr + " x" + item.quantity + "\n";
-    });
+    if (order.items && Array.isArray(order.items)) {
+      order.items.forEach(function(item, idx) {
+        var name = item.name || item.id;
+        var variationStr = item.variationId || item.variationName ? " (" + (item.variationName || item.variationId) + ")" : "";
+        var unitPrice = item.price ? " @ ₹" + item.price : "";
+        itemsString += (idx + 1) + ". " + name + variationStr + " x" + item.quantity + unitPrice + "\n";
+      });
+    }
     
-    // Create the row data array matching the 15 columns
+    // Create the row data array matching the columns: Order ID, Date, Name, Phone, Email, Address, City, State, Pincode, Product Details With Quantity, Subtotal, Discount, Shipping, Total, Payment Method
     var rowData = [
-      order.orderId,
-      new Date(order.date).toLocaleString(),
-      order.customer,
+      "#" + order.orderId,
+      order.date ? new Date(order.date).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }) : new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
+      order.customer || "",
+      "'" + (order.phone || ""),
       order.email || "N/A",
-      order.phone,
-      order.address,
-      order.city,
-      order.state,
-      order.pincode,
+      order.address || "",
+      order.city || "",
+      order.state || "",
+      order.pincode || "",
       itemsString.trim(),
-      order.subtotal,
-      order.discount,
-      order.shipping,
-      order.total,
-      order.paymentMethod
+      order.subtotal || "",
+      order.discount || "",
+      order.shipping || "",
+      order.total || "",
+      order.paymentMethod || "Order on WhatsApp"
     ];
     
     // Append the row to the sheet
     sheet.appendRow(rowData);
   } catch(e) {
     console.error("Error saving to sheet: " + e.message);
-    // We swallow the error so it doesn't prevent emails from sending if the sheet fails
   }
 }
 
