@@ -125,15 +125,33 @@
     <!-- Container for Product -->
     <div class="product-detail-card" id="product-container" style="display: none;">
       <div class="row g-5 align-items-center">
-        <!-- Left: Image Gallery (Amazon Style Vertical Thumbnails on the Left, Big Image on Right) -->
+        <!-- Left: Image Gallery (Amazon Style Large Main Image on Top, Horizontal Thumbnails Below) -->
         <div class="col-lg-6">
           <div class="product-gallery-layout">
-            <!-- Amazon-style Vertical Thumbnail Strip with Up/Down Arrows on LEFT side -->
+            <!-- Main Featured Big Image Display with Share Button -->
+            <div class="product-detail-image-box">
+              <button type="button" class="gallery-share-btn" id="gallery-share-btn" aria-label="Share product" title="Share">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                  <polyline points="16 6 12 2 8 6"></polyline>
+                  <line x1="12" y1="2" x2="12" y2="15"></line>
+                </svg>
+              </button>
+              <img id="product-img" src="" alt="Attar Bottle">
+            </div>
+
+            <!-- "Click to see full view" link -->
+            <div class="gallery-fullview-text">
+              <a href="javascript:void(0)" id="btn-fullview-link">
+                <span>Click to see full view</span>
+              </a>
+            </div>
+
+            <!-- Horizontal Thumbnail Strip Below Main Image -->
             <div class="gallery-thumbs-wrapper" id="gallery-thumbs-wrapper">
-              <button type="button" class="thumb-nav-btn thumb-nav-prev" id="thumb-arrow-up"
-                aria-label="Previous image">
+              <button type="button" class="thumb-nav-btn thumb-nav-prev" id="thumb-arrow-left" aria-label="Previous image">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="18 15 12 9 6 15"></polyline>
+                  <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
               </button>
 
@@ -141,16 +159,11 @@
                 <!-- Injected dynamically by product.js -->
               </div>
 
-              <button type="button" class="thumb-nav-btn thumb-nav-next" id="thumb-arrow-down" aria-label="Next image">
+              <button type="button" class="thumb-nav-btn thumb-nav-next" id="thumb-arrow-right" aria-label="Next image">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="6 9 12 15 18 9"></polyline>
+                  <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
               </button>
-            </div>
-
-            <!-- Main Featured Big Image Display -->
-            <div class="product-detail-image-box">
-              <img id="product-img" src="" alt="Attar Bottle">
             </div>
           </div>
         </div>
