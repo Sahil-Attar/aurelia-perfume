@@ -542,8 +542,8 @@ h1, h2, h3, h4, .font-serif, .section-heading {
 
 .products-grid-row {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
 
 .attar-product-card {
@@ -1706,8 +1706,10 @@ h1, h2, h3, h4, .font-serif, .section-heading {
 
 /* Responsive adjustments */
 @media (max-width: 1080px) {
-  .products-grid-row {
-    grid-template-columns: repeat(3, 1fr);
+  .products-grid-row,
+  #index-products-container,
+  #shop-products-container {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
   .categories-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1720,7 +1722,18 @@ h1, h2, h3, h4, .font-serif, .section-heading {
   }
 }
 
-@media (max-width: 768px) {
+/* Tablet / iPad Landscape & Portrait (769px to 1024px): 2 on row 1, 2 on row 2 */
+@media (min-width: 577px) and (max-width: 991px) {
+  .products-grid-row,
+  #index-products-container,
+  #shop-products-container {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px;
+  }
+}
+
+/* Mobile Devices (<= 576px): 1 per row & full-width buttons */
+@media (max-width: 576px) {
   .hero-grid {
     grid-template-columns: 1fr;
   }
