@@ -67,7 +67,7 @@ function doGet(e) {
             if (trimmedU) {
               var driveMatch = trimmedU.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || trimmedU.match(/id=([a-zA-Z0-9_-]+)/);
               if (driveMatch && driveMatch[1]) {
-                imagesList.push("https://drive.usercontent.google.com/download?id=" + driveMatch[1] + "&export=view");
+                imagesList.push("https://drive.google.com/thumbnail?id=" + driveMatch[1] + "&sz=w1000");
               } else if (trimmedU.indexOf("dropbox.com") !== -1) {
                 imagesList.push(trimmedU.replace("dl=0", "raw=1").replace("www.dropbox.com", "dl.dropboxusercontent.com"));
               } else {

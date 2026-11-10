@@ -167,17 +167,15 @@ function formatProductImageUrl(url) {
     let trimmed = url.trim();
     if (!trimmed) return "assets/images/prod-oud-royal.jpg";
 
-    // If it's already a direct Google drive usercontent download link, return it as is
-    if (trimmed.includes("drive.usercontent.google.com/download") || trimmed.includes("lh3.googleusercontent.com")) {
-        return trimmed;
-    }
+    // Extract Google Drive ID if present
+    const driveMatch = trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || 
+                       trimmed.match(/[?&]id=([a-zA-Z0-9_-]+)/) ||
+                       trimmed.match(/drive\.usercontent\.google\.com\/download\?id=([a-zA-Z0-9_-]+)/) ||
+                       trimmed.match(/lh3\.googleusercontent\.com\/d\/([a-zA-Z0-9_-]+)/);
 
-    // Handle Google Drive links
-    // e.g. https://drive.google.com/file/d/FILE_ID/view?usp=drive_link
-    // or https://drive.google.com/open?id=FILE_ID
-    const driveMatch = trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || trimmed.match(/id=([a-zA-Z0-9_-]+)/);
     if (driveMatch && driveMatch[1]) {
-        return `https://drive.usercontent.google.com/download?id=${driveMatch[1]}&export=view`;
+        // drive.google.com/thumbnail provides reliable embedded image serving without cross-origin blocks
+        return `https://drive.google.com/thumbnail?id=${driveMatch[1]}&sz=w1000`;
     }
 
     // Handle Dropbox links
