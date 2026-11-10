@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         };
 
         if (imgEl) {
+            imgEl.referrerPolicy = "no-referrer";
             imgEl.onerror = function() {
                 this.onerror = null;
                 this.src = 'assets/images/prod-oud-royal.jpg';
@@ -139,6 +140,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     const thumbImg = document.createElement('img');
                     thumbImg.src = imgUrl;
                     thumbImg.alt = `${product.name} thumb ${idx + 1}`;
+                    thumbImg.referrerPolicy = "no-referrer";
                     thumbImg.onerror = function() {
                         this.onerror = null;
                         this.src = 'assets/images/prod-oud-royal.jpg';
