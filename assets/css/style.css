@@ -2124,6 +2124,14 @@ h1, h2, h3, h4, .font-serif, .section-heading {
   .promo-cards-grid {
     grid-template-columns: 1fr;
   }
+  .promo-card-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    display: flex !important;
+    box-sizing: border-box !important;
+    align-self: stretch !important;
+  }
 }
 
 /* Section 6: Fragrance Discovery & Buying Guide */
