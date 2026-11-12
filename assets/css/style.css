@@ -1783,17 +1783,39 @@ h1, h2, h3, h4, .font-serif, .section-heading {
   .btn-banner-outline,
   .btn-card-select-size,
   .btn-card-add-cart,
+  .btn-hero-primary,
+  .btn-hero-secondary,
+  .btn-final-cta,
   .btn-order-cta,
   #btn-add-cart,
   .checkout-btn,
-  .btn-detail-cart {
+  .btn-detail-cart,
+  .product-detail-card .d-flex.flex-wrap.gap-3 a.btn {
     width: 100% !important;
     justify-content: center !important;
     text-align: center !important;
+    display: flex !important;
   }
-  .attar-product-card .d-flex.gap-2 {
+  .product-detail-card .d-flex.flex-wrap.gap-3 {
     flex-direction: column;
     width: 100%;
+  }
+  .product-detail-card .qty-control-box {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .product-detail-card .qty-control-box input {
+    flex: 1;
+    text-align: center;
+  }
+  .attar-product-card .mt-auto {
+    width: 100%;
+  }
+  .attar-product-card .btn-card-select-size {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
   }
 }
 

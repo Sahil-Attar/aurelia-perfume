@@ -198,7 +198,7 @@ function saveToSheet(order) {
     var rowData = [
       "#" + order.orderId,
       order.date ? new Date(order.date).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }) : new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
-      order.customer || "",
+      order.customer || "",  
       "'" + (order.phone || ""),
       order.email || "N/A",
       order.address || "",
