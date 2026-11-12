@@ -1783,6 +1783,7 @@ h1, h2, h3, h4, .font-serif, .section-heading {
   .btn-banner-outline,
   .btn-card-select-size,
   .btn-card-add-cart,
+  .promo-card-btn,
   .btn-hero-primary,
   .btn-hero-secondary,
   .btn-final-cta,
@@ -1795,6 +1796,7 @@ h1, h2, h3, h4, .font-serif, .section-heading {
     justify-content: center !important;
     text-align: center !important;
     display: flex !important;
+    box-sizing: border-box !important;
   }
   .product-detail-card .d-flex.flex-wrap.gap-3 {
     flex-direction: column;
@@ -2121,6 +2123,14 @@ h1, h2, h3, h4, .font-serif, .section-heading {
 @media (max-width: 768px) {
   .promo-cards-grid {
     grid-template-columns: 1fr;
+  }
+  .promo-card-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    display: flex !important;
+    box-sizing: border-box !important;
+    align-self: stretch !important;
   }
 }
 
